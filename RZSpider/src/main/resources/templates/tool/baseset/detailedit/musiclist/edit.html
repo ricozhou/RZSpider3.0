@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<!-- 上传插件 -->
+<link rel="stylesheet"
+	href="/ajax/plugins/bootstrap-fileinput/css/fileinput.css"
+	th:href="@{/ajax/plugins/bootstrap-fileinput/css/fileinput.css}" />
+<link href="/css/font-awesome.css" th:href="@{/css/font-awesome.css}"
+	rel="stylesheet" />
+<link href="/ajax/libs/iCheck/custom.css"
+	th:href="@{/ajax/libs/iCheck/custom.css}" rel="stylesheet" />
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-musiclist-edit">
+			<input id="musicId" name="musicId" th:value="${musiclist.musicId}"
+				type="hidden"> <input id="basesetId" name="basesetId"
+				th:value="${musiclist.basesetId}" type="hidden">
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><em class="gg-star"
+					style="color: red; font-style: normal;">*&nbsp;</em>歌曲链接：</label>
+				<div class="col-sm-8">
+					<label class="checkbox-inline i-checks" id="clickLabel1"> <input
+						type="radio" name="toolCodeType" value="0" id="radio1" /> 在线编辑
+					</label> <label class="checkbox-inline i-checks" id="clickLabel2">
+						<input type="radio" name="toolCodeType" value="1" id="radio2" />
+						MP3文件上传
+					</label>
+				</div>
+			</div>
+			<div class="form-group" id="url2">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-sm-8">
+					<input id="url" name="url" class="form-control" type="text"
+						placeholder="可直接填写网易云音乐链接" th:value="${musiclist.url}">
+				</div>
+			</div>
+			<div class="form-group" style="display: none" id="show2">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-sm-8">
+					<input id="file-5" class="file" type="file" name="file">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><em class="gg-star"
+					style="color: red; font-style: normal;">*&nbsp;</em>歌曲名：</label>
+				<div class="col-sm-8">
+					<input id="title" name="title" class="form-control" type="text"
+						th:value="${musiclist.title}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">歌手：</label>
+				<div class="col-sm-8">
+					<input id="author" name="author" class="form-control" type="text"
+						th:value="${musiclist.author}">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">歌曲封面链接：</label>
+				<div class="col-sm-8"
+					th:with="datas=${@dictService.selectDictData('tool_baseset_editType')}">
+					<div th:each="dict : ${datas}" th:class="${dict['cssClass']}">
+						<input type="radio" th:id="${dict['dictCode']}" name="editType"
+							th:value="${dict['dictValue']}"> <label
+							th:for="${dict['dictCode']}" th:text="${dict['dictLabel']}"></label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group" id="pic2">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-sm-8">
+					<input id="pic" name="pic" class="form-control" type="text"
+						placeholder="可直接填写网易云音乐封面链接" th:value="${musiclist.pic}">
+				</div>
+			</div>
+			<div class="form-group" style="display: none" id="show3">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-sm-8">
+					<input id="file-6" class="file" type="file" name="file">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">歌词：</label>
+				<div class="col-sm-8">
+					<textarea id="lrc" name="lrc" class="form-control" type="text"
+						rows="8" th:text="${musiclist.lrc}"></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="remark" name="remark" class="form-control" type="text"
+						th:value="${musiclist.remark}">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="form-control-static col-sm-offset-9">
+					<button type="submit" class="btn btn-primary">提交</button>
+					<button th:onclick="'javascript:layer_close()'"
+						class="btn btn-danger" type="button">关闭</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div th:include="include::footer"></div>
+	<script src="/rzspider/tool/baseset/detailedit/musiclist/edit.js"
+		th:src="@{/rzspider/tool/baseset/detailedit/musiclist/edit.js}">
+		
+	</script>
+	<script src="/ajax/plugins/bootstrap-fileinput/js/fileinput.min.js"
+		th:src="@{/ajax/plugins/bootstrap-fileinput/js/fileinput.min.js}"></script>
+	<script src="/ajax/plugins/bootstrap-fileinput/js/locales/zh.js"
+		th:src="@{/ajax/plugins/bootstrap-fileinput/js/locales/zh.js  }"></script>
+	<script src="/ajax/plugins/bootstrap-fileinput/js/locales/fr.js"
+		th:src="@{/ajax/plugins/bootstrap-fileinput/js/locales/fr.js  }"></script>
+	<script src="/ajax/libs/iCheck/icheck.min.js"
+		th:src="@{/ajax/libs/iCheck/icheck.min.js}"></script>
+	<script>
+		$(document).ready(function() {
+			$(".i-checks").iCheck({
+				checkboxClass : "icheckbox_square-green",
+				radioClass : "iradio_square-green",
+			})
+		});
+	</script>
+	<script>
+		var fileName;
+		var originalFileName = "未知";
+		// 上传文件
+		$("#file-5")
+				.fileinput(
+						{
+							language : 'zh', // 设置语言
+							uploadUrl : ctx
+									+ "tool/baseset/detailedit/musiclist/uploadMusicFile/0",
+							allowedFileExtensions : [ 'mp3', 'wav', 'midi',
+									'wma' ],// 接收的文件后缀
+							showUpload : true, // 是否显示上传按钮
+							showCaption : false,// 是否显示标题
+							browseClass : "btn btn-primary", // 按钮样式
+							dropZoneEnabled : true,//是否显示拖拽区域
+							uploadAsync : true,
+							showBrowse : true,
+							browseOnZoneClick : false,
+							maxFileCount : 1, // 表示允许同时上传的最大文件个数
+							enctype : 'multipart/form-data',
+							maxFileSize : 30000
+						// 单位为kb，如果为0表示不限制文件大小
+						})
+				.on(
+						"filebatchselected",
+						function(event, files) {
+							//返回文件名
+							originalFileName = (files[0].name).substring(0,
+									files[0].name.lastIndexOf('.'));
+						})
+				.on(
+						"fileuploaded",
+						function(event, data) {
+							//返回文件名
+							fileName = (data.response.code == 0) ? (data.response.msg)
+									: null;
+							//直接将值填入文本框
+							$('#title').val(originalFileName);
+							$('#url').val('/files/' + fileName);
+							selectFileOnline();
+						});
+	</script>
+	<script>
+		var imgFileName;
+		// 上传文件
+		$("#file-6")
+				.fileinput(
+						{
+							language : 'zh', // 设置语言
+							uploadUrl : ctx
+									+ "tool/baseset/detailedit/musiclist/uploadMusicFile/1",
+							allowedFileExtensions : [ 'jpg', 'png', 'jpeg',
+									'gif' ],// 接收的文件后缀
+							showUpload : true, // 是否显示上传按钮
+							showCaption : false,// 是否显示标题
+							browseClass : "btn btn-primary", // 按钮样式
+							dropZoneEnabled : true,//是否显示拖拽区域
+							uploadAsync : true,
+							showBrowse : true,
+							browseOnZoneClick : false,
+							maxFileCount : 1, // 表示允许同时上传的最大文件个数
+							enctype : 'multipart/form-data',
+							maxFileSize : 3000
+						// 单位为kb，如果为0表示不限制文件大小
+						})
+				.on(
+						"fileuploaded",
+						function(event, data) {
+							//返回文件名
+							imgFileName = (data.response.code == 0) ? (data.response.msg)
+									: null;
+							//直接将值填入文本框
+							$('#pic').val('/files/' + imgFileName);
+							selectImgOnline();
+						});
+	</script>
+</body>
+</html>

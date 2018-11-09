@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.rzspider.project.blog.blogcontent.mapper.BlogcontentTagsMapper">
+
+	<resultMap type="BlogcontentTags" id="BlogcontentTagsResult">
+		<result property="cid" column="cid" />
+		<result property="blogTagsId" column="blog_tags_id" />
+	</resultMap>
+
+	<insert id="batchBlogcontentTags">
+		insert into blog_blogtags_blogcontent(cid, blog_tags_id) values
+		<foreach item="item" index="index" collection="list"
+			separator=",">
+			(#{item.cid},#{item.blogTagsId})
+		</foreach>
+	</insert>
+	<delete id="deleteBlogcontentTagsById" parameterType="Long">
+		delete from
+		blog_blogtags_blogcontent where cid=#{cid}
+	</delete>
+	<delete id="deleteBlogcontentTagsByBlogTagsId" parameterType="Integer">
+		delete from
+		blog_blogtags_blogcontent where blog_tags_id=#{blogTagsId}
+	</delete>
+
+	<select id="selectCountBlogcontentTagsByRoleId" resultType="Integer">
+		select count(*) from blog_blogtags_blogcontent where cid=#{cid}
+	</select>
+
+	<delete id="deleteBlogcontentTags" parameterType="Long">
+		delete from blog_blogtags_blogcontent where cid in
+		<foreach collection="array" item="cid" open="(" separator=","
+			close=")">
+			#{cid}
+		</foreach>
+	</delete>
+	<delete id="batchDeleteBlogcontentTagsByBlogTagsId"
+		parameterType="Integer">
+		delete from blog_blogtags_blogcontent where blog_tags_id in
+		<foreach collection="array" item="blogTagsId" open="("
+			separator="," close=")">
+			#{blogTagsId}
+		</foreach>
+	</delete>
+</mapper>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzspider.project.common.spiderdata.mapper.SpiderdataMapper">
+
+	<resultMap type="Spiderdata" id="DataResult">
+		<result property="spiderDataId" column="spider_data_id" />
+		<result property="taskInfoId" column="task_info_id" />
+		<result property="jsonData" column="json_data" />
+		<result property="taskFlag" column="task_flag" />
+	</resultMap>
+
+	<select id="selectDataById" parameterType="Integer" resultMap="DataResult">
+		select spider_data_id, task_info_id, json_data, task_flag from
+		spider_data
+		where spider_data_id = #{spiderDataId}
+	</select>
+
+	<select id="selectDataList" parameterType="Spiderdata"
+		resultMap="DataResult">
+		select spider_data_id, task_info_id, json_data, task_flag from
+		spider_data
+		<where>
+			<if test="spiderDataId != null and spiderDataId != ''"> and spider_data_id = #{spiderDataId}</if>
+			<if test="taskInfoId != null and taskInfoId != ''"> and task_info_id = #{taskInfoId}</if>
+			<if test="jsonData != null and jsonData != ''"> and json_data = #{jsonData}</if>
+			<if test="taskFlag != null and taskFlag != ''"> and task_flag = #{taskFlag}</if>
+		</where>
+	</select>
+	<select id="selectDataListByTaskInfoIdAndFlag" parameterType="Spiderdata"
+		resultMap="DataResult">
+		select spider_data_id, task_info_id, json_data, task_flag
+		from
+		spider_data where task_info_id = #{taskInfoId} and task_flag =
+		#{taskFlag}
+	</select>
+
+	<insert id="insertData" parameterType="Spiderdata">
+		insert into spider_data (
+		task_info_id,
+		json_data,
+		task_flag
+		)values(
+		#{taskInfoId},
+		#{jsonData},
+		#{taskFlag}
+		)
+	</insert>
+
+	<update id="updateData" parameterType="Spiderdata">
+		update spider_data
+		<set>
+			<if test="taskInfoId != null and taskInfoId != ''">task_info_id = #{taskInfoId}, </if>
+			<if test="jsonData != null and jsonData != ''">json_data = #{jsonData}, </if>
+			<if test="taskFlag != null and taskFlag != ''">task_flag = #{taskFlag}</if>
+		</set>
+		where spider_data_id = #{spiderDataId}
+	</update>
+
+	<delete id="deleteDataById" parameterType="Integer">
+		delete from
+		spider_data where spider_data_id = #{value}
+	</delete>
+	<delete id="deleteSpiderDataByFlag" parameterType="Integer">
+		delete from
+		spider_data where task_flag = #{taskFlag}
+	</delete>
+	<delete id="deleteDataByTaskinfoId" parameterType="Spiderdata">
+		delete from
+		spider_data where task_info_id = #{taskInfoId} and task_flag =
+		#{taskFlag}
+	</delete>
+	<delete id="deleteAllDataByTaskinfoId" parameterType="Integer">
+		delete from
+		spider_data where task_info_id = #{taskInfoId}
+	</delete>
+
+	<delete id="batchDeleteData" parameterType="Integer">
+		delete from spider_data where spider_data_id in
+		<foreach item="spiderDataId" collection="array" open="("
+			separator="," close=")">
+			#{spiderDataId}
+		</foreach>
+	</delete>
+
+</mapper>

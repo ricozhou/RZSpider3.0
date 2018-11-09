@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-customspider-edit">
+			<input id="customSpiderId" name="customSpiderId"
+				th:value="${customspider.customSpiderId}" type="hidden"> <input
+				id="customSpiderType2" name="customSpiderType2"
+				th:value="${customspider.customSpiderType}" type="hidden"> <input
+				id="spiderDefaultParamsAll2" name="spiderDefaultParamsAll2"
+				th:value="${customspider.spiderDefaultParamsAll}" type="hidden">
+			<input id="spiderVersion" name="spiderVersion"
+				th:value="${customspider.spiderVersion}" type="hidden">
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><em class="gg-star"
+					style="color: red; font-style: normal;">*&nbsp;</em>自定义爬虫后台ID：</label>
+				<div class="col-sm-9">
+					<input disabled="disabled" id="customSpiderBackId"
+						name="customSpiderBackId"
+						th:value="${customspider.customSpiderBackId}" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><em class="gg-star"
+					style="color: red; font-style: normal;">*&nbsp;</em>自定义爬虫类型：</label>
+				<div class="col-sm-9">
+					<select class="form-control" name="customSpiderType"
+						id="customSpiderType" disabled="disabled">
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><em class="gg-star"
+					style="color: red; font-style: normal;">*&nbsp;</em>自定义爬虫版本号：</label> <label
+					class="col-sm-1 control-label">主版本：</label>
+				<div class="col-sm-2">
+					<div class="input-group spinner" data-trigger="spinner">
+						<input type="text" class="form-control text-center" value="1"
+							data-rule="quantity" id="spiderVersionOne">
+						<div class="input-group-addon">
+							<a href="javascript:;" class="spin-up" data-spin="up"><i
+								class="fa fa-caret-up"></i></a> <a href="javascript:;"
+								class="spin-down" data-spin="down"><i
+								class="fa fa-caret-down"></i></a>
+						</div>
+					</div>
+				</div>
+				<label class="col-sm-1 control-label">次版本：</label>
+				<div class="col-sm-2">
+					<div class="input-group spinner" data-trigger="spinner">
+						<input type="text" class="form-control text-center" value="0"
+							data-min="0" data-rule="quantity" id="spiderVersionTwo">
+						<div class="input-group-addon">
+							<a href="javascript:;" class="spin-up" data-spin="up"><i
+								class="fa fa-caret-up"></i></a> <a href="javascript:;"
+								class="spin-down" data-spin="down"><i
+								class="fa fa-caret-down"></i></a>
+						</div>
+					</div>
+				</div>
+				<label class="col-sm-1 control-label">修订号：</label>
+				<div class="col-sm-2">
+					<div class="input-group spinner" data-trigger="spinner">
+						<input type="text" class="form-control text-center" value="0"
+							data-min="0" data-rule="quantity" id="spiderVersionThree">
+						<div class="input-group-addon">
+							<a href="javascript:;" class="spin-up" data-spin="up"><i
+								class="fa fa-caret-up"></i></a> <a href="javascript:;"
+								class="spin-down" data-spin="down"><i
+								class="fa fa-caret-down"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">自定义爬虫描述：</label>
+				<div class="col-sm-9">
+					<input id="spiderDes" name="spiderDes" class="form-control"
+						type="text" th:value="${customspider.spiderDes}">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">自定义爬虫状态：</label>
+				<div class="col-sm-9">
+					<div class="onoffswitch">
+						<input type="checkbox"
+							th:checked="${customspider.customStatus == 0 ? true : false}"
+							class="onoffswitch-checkbox" id="status" name="status"> <label
+							class="onoffswitch-label" for="status"> <span
+							class="onoffswitch-inner"></span> <span
+							class="onoffswitch-switch"></span>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">默认参数设置：</label>
+				<div class="col-sm-9">
+					<button class="btn btn-info" type="button" data-toggle="tooltip"
+						title="新增" id="addSpiderDefaultParams2"
+						onclick="addSpiderDefaultParams(this)">
+						<span class="glyphicon glyphicon-plus"></span>
+					</button>
+					<label class="control-label">提示：enum枚举即下拉框，以#分割选项，第一项为默认选中，以=分割value，text，如：0#0=北京#1=上海#2=江苏</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">备注：</label>
+				<div class="col-sm-9">
+					<input id="remark" name="remark" th:value="${customspider.remark}"
+						class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="form-control-static col-sm-offset-9">
+					<button type="submit" class="btn btn-primary">提交</button>
+					<button th:onclick="'javascript:layer_close()'"
+						class="btn btn-danger" type="button">关闭</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div th:include="include::footer"></div>
+	<script src="/rzspider/spider/customspider/edit.js"
+		th:src="@{/rzspider/spider/customspider/edit.js}">
+		
+	</script>
+</body>
+</html>

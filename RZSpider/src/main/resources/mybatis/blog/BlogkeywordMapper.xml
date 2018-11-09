@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzspider.project.blog.blogkeyword.mapper.BlogkeywordMapper">
+
+	<resultMap type="Blogkeyword" id="BlogkeywordResult">
+		<result property="blogKeywordId" column="blog_keyword_id" />
+		<result property="keywordName" column="keyword_name" />
+		<result property="keywordCommentBan" column="keyword_comment_ban" />
+		<result property="keywordMessageBan" column="keyword_message_ban" />
+		<result property="keywordSuggestionBan" column="keyword_suggestion_ban" />
+		<result property="keywordReplace" column="keyword_replace" />
+		<result property="keywordReplaceWordName" column="keyword_replace_word_name" />
+		<result property="status" column="status" />
+		<result property="createBy" column="create_by" />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy" column="update_by" />
+		<result property="updateTime" column="update_time" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<select id="selectBlogkeywordById" parameterType="Integer"
+		resultMap="BlogkeywordResult">
+		select blog_keyword_id, keyword_name, keyword_comment_ban,
+		keyword_message_ban, keyword_suggestion_ban, keyword_replace,
+		keyword_replace_word_name, status, create_by, create_time, update_by,
+		update_time, remark from blog_blogkeyword
+		where blog_keyword_id =
+		#{blogKeywordId}
+	</select>
+	<select id="selectBlogkeywordByName" parameterType="String"
+		resultMap="BlogkeywordResult">
+		select blog_keyword_id, keyword_name from blog_blogkeyword
+		where
+		keyword_name = #{keywordName}
+	</select>
+
+	<select id="selectBlogkeywordList" parameterType="Blogkeyword"
+		resultMap="BlogkeywordResult">
+		select blog_keyword_id, keyword_name, keyword_comment_ban,
+		keyword_message_ban, keyword_suggestion_ban, keyword_replace,
+		keyword_replace_word_name, status, create_by, create_time, update_by,
+		update_time, remark from blog_blogkeyword
+		<where>
+			<if test="blogKeywordId != null and blogKeywordId != ''"> and blog_keyword_id = #{blogKeywordId}</if>
+			<if test="keywordName != null and keywordName != ''"> and keyword_name = #{keywordName}</if>
+			<if test="keywordCommentBan != null and keywordCommentBan != ''"> and keyword_comment_ban = #{keywordCommentBan}</if>
+			<if test="keywordMessageBan != null and keywordMessageBan != ''"> and keyword_message_ban = #{keywordMessageBan}</if>
+			<if test="keywordSuggestionBan != null and keywordSuggestionBan != ''"> and keyword_suggestion_ban = #{keywordSuggestionBan}
+			</if>
+			<if test="keywordReplace != null and keywordReplace != ''"> and keyword_replace = #{keywordReplace}</if>
+			<if test="keywordReplaceWordName != null and keywordReplaceWordName != ''"> and keyword_replace_word_name =
+				#{keywordReplaceWordName}
+			</if>
+			<if test="status != null and status != ''"> and status = #{status}</if>
+			<if test="createBy != null and createBy != ''"> and create_by = #{createBy}</if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+			<if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy}</if>
+			<if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+			<if test="remark != null and remark != ''"> and remark = #{remark}</if>
+			<if test="searchValue != null and searchValue != ''">
+				AND (keyword_name like concat(concat('%',
+				#{searchValue}),
+				'%') OR keyword_replace_word_name like
+				concat(concat('%', #{searchValue}), '%'))
+			</if>
+		</where>
+	</select>
+	<select id="selectBlogCommentkeywordList" parameterType="Blogkeyword"
+		resultMap="BlogkeywordResult">
+		select blog_keyword_id, keyword_name,keyword_replace,
+		keyword_replace_word_name from blog_blogkeyword
+		where
+		keyword_comment_ban = 0 and status =0
+	</select>
+
+	<select id="selectBlogMessagekeywordList" parameterType="Blogkeyword"
+		resultMap="BlogkeywordResult">
+		select blog_keyword_id, keyword_name,keyword_replace,
+		keyword_replace_word_name from blog_blogkeyword
+		where
+		keyword_message_ban = 0 and status =0
+	</select>
+
+	<select id="selectBlogSuggestionkeywordList" parameterType="Blogkeyword"
+		resultMap="BlogkeywordResult">
+		select blog_keyword_id, keyword_name,keyword_replace,
+		keyword_replace_word_name from blog_blogkeyword
+		where
+		keyword_suggestion_ban = 0 and status =0
+	</select>
+
+	<insert id="insertBlogkeyword" parameterType="Blogkeyword">
+		insert into
+		blog_blogkeyword (
+		keyword_name,
+		keyword_comment_ban,
+		keyword_message_ban,
+		keyword_suggestion_ban,
+		keyword_replace,
+		keyword_replace_word_name,
+		status,
+		create_by,
+		create_time,
+		update_by,
+		update_time,
+		remark
+		)values(
+		#{keywordName},
+		#{keywordCommentBan},
+		#{keywordMessageBan},
+		#{keywordSuggestionBan},
+		#{keywordReplace},
+		#{keywordReplaceWordName},
+		#{status},
+		#{createBy},
+		sysdate(),
+		#{updateBy},
+		sysdate(),
+		#{remark}
+		)
+	</insert>
+
+	<update id="updateBlogkeyword" parameterType="Blogkeyword">
+		update blog_blogkeyword
+		<set>
+			keyword_name = #{keywordName},
+			keyword_comment_ban =
+			#{keywordCommentBan},
+			keyword_message_ban = #{keywordMessageBan},
+			keyword_suggestion_ban = #{keywordSuggestionBan},
+			keyword_replace =
+			#{keywordReplace},
+			keyword_replace_word_name =
+			#{keywordReplaceWordName},
+			status = #{status},
+			update_by =
+			#{updateBy},
+			update_time =sysdate(),
+			remark = #{remark}
+		</set>
+		where blog_keyword_id = #{blogKeywordId}
+	</update>
+
+	<delete id="deleteBlogkeywordById" parameterType="Integer">
+		delete from
+		blog_blogkeyword where blog_keyword_id = #{value}
+	</delete>
+
+	<delete id="batchDeleteBlogkeyword" parameterType="Integer">
+		delete from blog_blogkeyword where blog_keyword_id in
+		<foreach item="blogKeywordId" collection="array" open="("
+			separator="," close=")">
+			#{blogKeywordId}
+		</foreach>
+	</delete>
+
+</mapper>

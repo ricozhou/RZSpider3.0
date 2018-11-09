@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzspider.project.spider.spidertask.mapper.SpidertaskMapper">
+
+	<resultMap type="Spidertask" id="SpidertaskResult">
+		<result property="taskId" column="task_id" />
+		<result property="taskName" column="task_name" />
+		<result property="spiderId" column="spider_id" />
+		<result property="spiderBackId" column="spider_back_id" />
+		<result property="spiderName" column="spider_name" />
+		<result property="spiderType" column="spider_type" />
+		<result property="createType" column="create_Type" />
+		<result property="status" column="status" />
+		<result property="taskStatus" column="task_status" />
+		<result property="jobStatus" column="job_status" />
+		<result property="taskExecfrequency" column="task_execfrequency" />
+		<result property="spiderDefaultParamsAll" column="spider_default_params_all" />
+		<result property="taskParams" column="task_params" />
+		<result property="cronExpression" column="cron_expression" />
+		<result property="times" column="times" />
+		<result property="taskExecfrequency2" column="task_execfrequency2" />
+		<result property="firstStartTime" column="first_start_time" />
+		<result property="userId" column="user_id" />
+		<result property="createBy" column="create_by" />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy" column="update_by" />
+		<result property="updateTime" column="update_time" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<select id="selectSpidertaskById" parameterType="Integer"
+		resultMap="SpidertaskResult">
+		select task_id, task_name, spider_id, spider_back_id,
+		spider_name,spider_Type,
+		create_Type, status, task_status,job_status,
+		task_execfrequency,
+		spider_default_params_all,task_params,cron_expression,times,task_execfrequency2,first_start_time,
+		user_id, create_by,
+		create_time,
+		update_by, update_time,
+		remark from
+		spider_spidertask
+		where
+		task_id =
+		#{taskId}
+	</select>
+
+	<select id="selectSpidertaskList" parameterType="Spidertask"
+		resultMap="SpidertaskResult">
+		select task_id, task_name, spider_id, spider_back_id,
+		spider_name,spider_type,
+		create_Type, status, task_status,job_status,
+		task_execfrequency,
+		spider_default_params_all,task_params,cron_expression,times,task_execfrequency2,first_start_time,
+		user_id, create_by,
+		create_time,
+		update_by, update_time, remark from
+		spider_spidertask
+		<where>
+			<if test="taskId != null and taskId != ''"> and task_id = #{taskId}</if>
+			<if test="taskName != null and taskName != ''"> and task_name = #{taskName}</if>
+			<if test="spiderId != null and spiderId != ''"> and spider_id = #{spiderId}</if>
+			<if test="spiderBackId != null and spiderBackId != ''"> and spider_back_id = #{spiderBackId}</if>
+			<if test="spiderName != null and spiderName != ''"> and spider_name = #{spiderName}</if>
+			<if test="spiderType != null and spiderType != ''"> and spider_type = #{spiderType}</if>
+			<if test="createType != null and createType != ''"> and create_Type = #{createType}</if>
+			<if test="status != null and status != ''"> and status = #{status}</if>
+			<if test="taskStatus != null and taskStatus != ''"> and task_status = #{taskStatus}</if>
+			<if test="taskExecfrequency != null and taskExecfrequency != ''"> and task_execfrequency = #{taskExecfrequency}</if>
+			<if test="spiderDefaultParamsAll != null and spiderDefaultParamsAll != ''"> and spider_default_params_all =
+				#{spiderDefaultParamsAll}
+			</if>
+			<if test="taskParams != null and taskParams != ''"> and task_params = #{taskParams}</if>
+			<if test="userId != null and userId != ''"> and user_id = #{userId}</if>
+			<if test="createBy != null and createBy != ''"> and create_by = #{createBy}</if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+			<if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy}</if>
+			<if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+			<if test="remark != null and remark != ''"> and remark = #{remark}</if>
+			<if test="searchValue != null and searchValue != ''">
+				AND (task_name like concat(concat('%', #{searchValue}),
+				'%') OR spider_name like concat(concat('%', #{searchValue}), '%'))
+			</if>
+		</where>
+	</select>
+
+	<select id="checkTaskNameUnique" parameterType="spidertask"
+		resultMap="SpidertaskResult">
+		select task_id, task_name
+		from spider_spidertask where
+		task_name=#{taskName} and create_by = #{createBy}
+	</select>
+
+	<insert id="insertSpidertask" parameterType="Spidertask"
+		useGeneratedKeys="true" keyProperty="taskId">
+		insert into spider_spidertask (
+		<if test="taskId != null and taskId != '' ">task_id, </if>
+		<if test="taskName != null and taskName != '' ">task_name, </if>
+		<if test="spiderId != null and spiderId != '' ">spider_id, </if>
+		<if test="spiderBackId != null and spiderBackId != '' ">spider_back_id, </if>
+		<if test="spiderName != null and spiderName != '' ">spider_name, </if>
+		<if test="spiderType != null and spiderType != '' ">spider_type, </if>
+		<if test="spiderDefaultParamsAll != null and spiderDefaultParamsAll != ''">spider_default_params_all,</if>
+		<if test="taskParams != null and taskParams != '' ">task_params, </if>
+		<if test="cronExpression != null and cronExpression != '' ">cron_expression, </if>
+		<if test="times != null and times != '' ">times, </if>
+		<if test="taskExecfrequency2 != null and taskExecfrequency2 != '' ">task_execfrequency2, </if>
+		<if test="firstStartTime != null and firstStartTime != '' ">first_start_time, </if>
+		<if test="userId != null and userId != '' ">user_id, </if>
+		<if test="createBy != null and createBy != '' ">create_by, </if>
+		<if test="remark != null and remark != '' ">remark,</if>
+		create_Type,
+		status,
+		task_status,
+		job_status,
+		task_execfrequency,
+		create_time
+		)values(
+		<if test="taskId != null and taskId != ''">#{taskId}, </if>
+		<if test="taskName != null and taskName != ''">#{taskName}, </if>
+		<if test="spiderId != null and spiderId != ''">#{spiderId}, </if>
+		<if test="spiderBackId != null and spiderBackId != ''">#{spiderBackId}, </if>
+		<if test="spiderName != null and spiderName != ''">#{spiderName}, </if>
+		<if test="spiderType != null and spiderType != ''">#{spiderType}, </if>
+		<if test="spiderDefaultParamsAll != null and spiderDefaultParamsAll != ''"> #{spiderDefaultParamsAll},</if>
+		<if test="taskParams != null and taskParams != ''">#{taskParams}, </if>
+		<if test="cronExpression != null and cronExpression != '' ">#{cronExpression}, </if>
+		<if test="times != null and times != '' ">#{times}, </if>
+		<if test="taskExecfrequency2 != null and taskExecfrequency2 != '' ">#{taskExecfrequency2}, </if>
+		<if test="firstStartTime != null and firstStartTime != '' ">#{firstStartTime}, </if>
+		<if test="userId != null and userId != ''">#{userId}, </if>
+		<if test="createBy != null and createBy != ''">#{createBy}, </if>
+		<if test="remark != null and remark != ''">#{remark},</if>
+		#{createType},
+		#{status},
+		#{taskStatus},
+		#{jobStatus},
+		#{taskExecfrequency},
+		sysdate()
+		)
+	</insert>
+
+	<update id="updateSpidertask" parameterType="Spidertask">
+		update spider_spidertask
+		<set>
+			<if test="taskName != null and taskName != ''">task_name = #{taskName}, </if>
+			<if test="spiderId != null and spiderId != ''">spider_id = #{spiderId}, </if>
+			<if test="spiderBackId != null and spiderBackId != ''">spider_back_id = #{spiderBackId}, </if>
+			<if test="spiderName != null and spiderName != ''">spider_name = #{spiderName}, </if>
+			<if test="spiderType != null and spiderType != ''">spider_type = #{spiderType}, </if>
+			<if test="cronExpression != null and cronExpression != ''">cron_expression = #{cronExpression}, </if>
+			<if test="times != null and times != '' ">times=#{times}, </if>
+			<if test="taskExecfrequency2 != null and taskExecfrequency2 != '' ">task_execfrequency2=#{taskExecfrequency2}, </if>
+			<if test="firstStartTime != null and firstStartTime != '' ">first_start_time=#{firstStartTime}, </if>
+			<if test="userId != null and userId != ''">user_id = #{userId}, </if>
+			update_by = #{updateBy},
+			remark = #{remark},
+			create_Type
+			=
+			#{createType},
+			status = #{status},
+			task_status =
+			#{taskStatus},
+			job_status =
+			#{jobStatus},
+			task_execfrequency =
+			#{taskExecfrequency},
+			update_time =
+			sysdate()
+		</set>
+		where task_id = #{taskId}
+	</update>
+
+	<update id="updateSpidertaskParams" parameterType="Spidertask">
+		update spider_spidertask
+		<set>
+			spider_default_params_all =
+			#{spiderDefaultParamsAll},
+			task_params
+			= #{taskParams}
+		</set>
+		where task_id = #{taskId}
+	</update>
+
+	<update id="updateSpidertaskCronExpression" parameterType="Spidertask">
+		update spider_spidertask
+		<set>
+			cron_expression = #{cronExpression}
+		</set>
+		where task_id = #{taskId}
+	</update>
+	<update id="updateSpiderJobStatus" parameterType="Spidertask">
+		update spider_spidertask
+		<set>
+			job_status = #{jobStatus}
+		</set>
+		where task_id = #{taskId}
+	</update>
+
+	<delete id="deleteSpidertaskById" parameterType="Integer">
+		delete from
+		spider_spidertask where task_id = #{value}
+	</delete>
+
+	<delete id="batchDeleteSpidertask" parameterType="Integer">
+		delete from spider_spidertask where task_id in
+		<foreach item="taskId" collection="array" open="(" separator=","
+			close=")">
+			#{taskId}
+		</foreach>
+	</delete>
+
+</mapper>

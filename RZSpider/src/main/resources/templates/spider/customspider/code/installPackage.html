@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-pyjs-installPackage">
+			<input id="flag" name="flag" th:value="${flag}" type="hidden">
+			<input id="childId" name="childId" th:value="${childId}"
+				type="hidden"> <input id="customSpiderId"
+				name="customSpiderId" th:value="${customSpiderId}" type="hidden">
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><em class="gg-star"
+					style="color: red; font-style: normal;">*&nbsp;</em>包（库）名：</label>
+				<div class="col-sm-8">
+					<input id="installPackageName" name="installPackageName"
+						class="form-control" type="text"> <select
+						class="form-control" id="installPackageNameChoice"
+						name="installPackageNameChoice">
+						<!-- <option value="0" selected="selected">请选择</option>
+						<option value="Scrapy">Scrapy（爬虫框架）</option>
+						<option value="beautifulsoup4">beautifulsoup4（html标签解析框架）</option>
+						<option value="lxml">lxml（html标签解析）</option>
+						<option value="PyMySQL">PyMySQL（mysql数据库）</option>
+						<option value="urllib">urllib（爬取网页）</option> -->
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label"></label> <label
+					class="col-sm-8 "> </label>
+			</div>
+			<div class="form-group">
+				<div class="form-control-static col-sm-offset-8">
+					<button type="submit" class="btn btn-primary"
+						id="installPackageSave">提交</button>
+					<button th:onclick="'javascript:layer_close()'"
+						class="btn btn-danger" type="button">关闭</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div th:include="include::footer"></div>
+	<script src="/rzspider/spider/customspider/code/installPackage.js"
+		th:src="@{/rzspider/spider/customspider/code/installPackage.js}">
+		
+	</script>
+</body>
+</html>

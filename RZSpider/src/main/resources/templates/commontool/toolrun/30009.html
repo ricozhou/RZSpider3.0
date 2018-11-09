@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="form-toolrun-run">
+							<input id="toolBackId" name="toolBackId" th:value="${toolBackId}"
+								type="hidden" />
+							<div class="form-group">
+								<label class="col-sm-2 control-label"><em
+									class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>正则表达：</label>
+								<div class="col-sm-6">
+									<input id="regularExpression" name="regularExpression"
+										class="form-control" type="text" placeholder="输入正则表达式">
+								</div>
+								<label class="col-sm-2 control-label">常用正则：</label>
+								<div class="col-sm-2">
+									<select class="form-control" name="commonRE" id="commonRE">
+										<option value="">请选择</option>
+										<option value="[\u4e00-\u9fa5]">匹配中文字符（[\u4e00-\u9fa5]）</option>
+										<option value="\n\s*\r">匹配空白行（\n\s*\r）</option>
+										<option
+											value="[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?">匹配Email地址（[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?）</option>
+										<option value="[a-zA-z]+://[^\s]*">匹配网址URL（[a-zA-z]+://[^\s]*）</option>
+										<option value="\d{3}-\d{8}|\d{4}-\{7,8}">匹配国内电话号码（\d{3}-\d{8}|\d{4}-\{7,8}）</option>
+										<option value="[1-9][0-9]{4,}">匹配腾讯QQ号（[1-9][0-9]{4,}）</option>
+										<option value="[1-9]\d{5}(?!\d)">匹配中国邮政编码（[1-9]\d{5}(?!\d)）</option>
+										<option value="^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$">匹配18位身份证号（^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$）</option>
+										<option value="^[1-9]\d*$">匹配正整数（^[1-9]\d*$）</option>
+										<option value="^-[1-9]\d*$">匹配负整数（^-[1-9]\d*$）</option>
+										<option value="^-?[1-9]\d*$">匹配整数（^-?[1-9]\d*$）</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"><em
+									class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>输入文本：</label>
+								<div class="col-sm-10">
+									<textarea id="content" name="content" rows="5"
+										class="form-control"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">匹配结果：</label>
+								<div class="col-sm-10">
+									<textarea id="exportContent" name="exportContent" rows="8"
+										class="form-control" readonly></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="form-control-static col-sm-offset-9">
+									<button class="btn btn-primary" type="submit"
+										id="runMatchRegularExpression">匹配</button>
+									<button class="btn btn-warning" type="button" id="clearText2"
+										onclick="clearText()">清空</button>
+									<button class="btn btn-primary" type="button" disabled
+										id="copyText2" onclick="copyText()">复制</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script src="/rzspider/commontool/toolrun/30009.js"
+		th:src="@{/rzspider/commontool/toolrun/30009.js}">
+		
+	</script>
+</body>
+</html>

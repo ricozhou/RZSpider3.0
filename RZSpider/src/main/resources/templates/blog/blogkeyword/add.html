@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-blogkeyword-add">
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><em class="gg-star"
+					style="color: red; font-style: normal;">*&nbsp;</em>关键词：</label>
+				<div class="col-sm-10">
+					<input id="keywordName" name="keywordName" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">评论禁止：</label>
+				<div class="switch onoffswitch col-sm-2">
+					<div class="onoffswitch">
+						<input type="checkbox" th:checked="true"
+							class="onoffswitch-checkbox" id="allow_introduction"
+							name="allow_introduction"> <label
+							class="onoffswitch-label" for="allow_introduction"> <span
+							class="onoffswitch-inner"></span> <span
+							class="onoffswitch-switch"></span>
+						</label>
+					</div>
+				</div>
+				<label class="col-sm-2 control-label">留言禁止：</label>
+				<div class="switch onoffswitch col-sm-2">
+					<div class="onoffswitch">
+						<input type="checkbox" th:checked="true"
+							class="onoffswitch-checkbox" id="private_article"
+							name="allow_introduction"> <label
+							class="onoffswitch-label" for="private_article"> <span
+							class="onoffswitch-inner"></span> <span
+							class="onoffswitch-switch"></span>
+						</label>
+					</div>
+				</div>
+				<label class="col-sm-2 control-label">建议禁止：</label>
+				<div class="switch onoffswitch col-sm-2">
+					<div class="onoffswitch">
+						<input type="checkbox" th:checked="true"
+							class="onoffswitch-checkbox" id="allow_download"
+							name="allow_introduction"> <label
+							class="onoffswitch-label" for="allow_download"> <span
+							class="onoffswitch-inner"></span> <span
+							class="onoffswitch-switch"></span>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">是否替换：</label>
+				<div class="switch onoffswitch col-sm-2">
+					<div class="onoffswitch">
+						<input type="checkbox" th:checked="false"
+							class="onoffswitch-checkbox" id="allow_comment"
+							name="allow_introduction"> <label
+							class="onoffswitch-label" for="allow_comment"> <span
+							class="onoffswitch-inner"></span> <span
+							class="onoffswitch-switch"></span>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">替换词：</label>
+				<div class="col-sm-10">
+					<input id="keywordReplaceWordName" name="keywordReplaceWordName"
+						class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">状态：</label>
+				<div class="col-sm-10">
+					<div class="onoffswitch">
+						<input type="checkbox" th:checked="true"
+							class="onoffswitch-checkbox" id="status" name="status"> <label
+							class="onoffswitch-label" for="status"> <span
+							class="onoffswitch-inner"></span> <span
+							class="onoffswitch-switch"></span>
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">备注：</label>
+				<div class="col-sm-10">
+					<input id="remark" name="remark" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="form-control-static col-sm-offset-9">
+					<button type="submit" class="btn btn-primary">提交</button>
+					<button th:onclick="'javascript:layer_close()'"
+						class="btn btn-danger" type="button">关闭</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div th:include="include::footer"></div>
+	<script src="/rzspider/blog/blogkeyword/add.js"
+		th:src="@{/rzspider/blog/blogkeyword/add.js}">
+		
+	</script>
+</body>
+</html>

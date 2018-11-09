@@ -1,0 +1,589 @@
+<head th:fragment="header">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- <link href="/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" rel="stylesheet" /> -->
+<link href="/css/font-awesome.css" th:href="@{/css/font-awesome.css}"
+	rel="stylesheet" />
+<link href="/css/blog/base.css" rel="stylesheet"
+	th:href="@{/css/blog/base.css}">
+<link href="/css/blog/index.css" rel="stylesheet"
+	th:href="@{/css/blog/index.css}">
+<link href="/css/blog/m.css" rel="stylesheet"
+	th:href="@{/css/blog/m.css}">
+<link rel="shortcut icon" th:href="${blogset.basicsetWebsiteIco}" />
+<script src="/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="/js/plugins/layer/layer.js"
+	th:src="@{/js/plugins/layer/layer.js}"></script>
+<script src="/js/blog/jquery.easyfader.min.js"
+	th:src="@{/js/blog/jquery.easyfader.min.js}"></script>
+<!-- 引入搜狐js获取ip地理位置等信息 -->
+<script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
+<!-- 日历 -->
+<!-- <link href="/ajax/libs/calendar/css/calendar.css" rel="stylesheet"
+	th:href="@{/ajax/libs/calendar/css/calendar.css}"> -->
+
+<!-- <script src="/ajax/libs/calendar/js/calendar.js"
+	th:src="@{/ajax/libs/calendar/js/calendar.js}"></script> -->
+
+<!-- 二维码生成 -->
+<script type="text/javascript" src="/js/qrcode.js"
+	th:src="@{/js/qrcode.js}"></script>
+<script src="/js/blog/scrollReveal.js"
+	th:src="@{/js/blog/scrollReveal.js}"></script>
+<script src="/rzspider/blog/index/common.js"
+	th:src="@{/rzspider/blog/index/common.js}"></script>
+</head>
+
+<nav th:fragment="navv">
+	<!-- 	<header> -->
+	<div class="menu">
+		<nav class="nav" id="topnav">
+			<h1 class="logo">
+				<a href="/rzblog">[[${blogset.basicsetTitle}]]</a>
+			</h1>
+			<li id="show2"><a href="/rzblog">首页</a></li>
+			<li><a href="/rzblog/timeline"><i class="fa fa-calendar"></i>
+					时间轴</a></li>
+			<!-- <li><a href="gbook.html">留言</a></li> -->
+			<li><a href="javascript:void(0)"><i class="fa fa-automobile"></i>
+					直通车</a>
+				<ul class="sub-nav">
+					<li><a href="/login" target="_blank"><i
+							class="fa fa-hand-o-right"></i>
+							[[${blogset.website.websiteTitleName}]]</a></li>
+					<li><a href="/toolbox" target="_blank"><i
+							class="fa fa-wrench "></i> 工具箱</a></li>
+				</ul></li>
+			<!--search begin-->
+			<div id="search_bar" class="search_bar">
+				<input class="input" placeholder="请输入关键字" type="text"
+					name="keyboard" id="keyboard"> <span class="search_ico"></span>
+			</div>
+			<!--search end-->
+		</nav>
+	</div>
+	<!--menu end-->
+	<!-- </header> -->
+
+</nav>
+<!-- 小屏显示 -->
+<nav th:fragment="mnav">
+	<!-- 	<header> -->
+	<div id="mnav">
+		<h2>
+			<a href="/rzblog" class="mlogo">[[${blogset.basicsetTitle}]]</a><span
+				class="navicon"></span>
+		</h2>
+		<dl class="list_dl">
+			<dt class="list_dt" id="show3">
+				<a href="/rzblog">首页</a>
+			</dt>
+			<dt class="list_dt">
+				<a href="/rzblog/timeline"><i class="fa fa-calendar"></i> 时间轴</a>
+			</dt>
+
+			<dt class="list_dt">
+				<a href="javascript:void(0)"><i class="fa fa-automobile"></i>
+					直通车</a>
+			<dd class="list_dd">
+				<ul class="sub-nav">
+					<li><a href="/login" target="_blank"><i
+							class="fa fa-hand-o-right"></i>
+							[[${blogset.website.websiteTitleName}]]</a></li>
+					<li><a href="/toolbox" target="_blank"><i
+							class="fa fa-wrench "></i> 工具箱</a></li>
+				</ul>
+			</dd>
+			</dt>
+			<!--   <dt class="list_dt"> <a href="gbook.html">留言</a> </dt> -->
+		</dl>
+	</div>
+	<!--menu end-->
+	<!-- </header> -->
+</nav>
+
+<!-- 右侧侧边栏动态显示 -->
+<nav th:fragment="sidebar">
+	<div class="sidebar" id="sidebar">
+		<!-- 以下内容动态生成 -->
+		<div class="aboutme" id="aboutme" style="display: none">
+			<h2 class="hometitle">
+				<i class="fa fa-user"></i>&nbsp;博主简介
+			</h2>
+			<ul>
+				<i class="showProfile" id="showProfile" style="display: none;"><img
+					id="showProfileImg" src=""></i>
+				<p>
+					<b>[[${blogset.bloggersetBloggerName}]]</b>&nbsp;&nbsp;&nbsp;&nbsp;[[${blogset.bloggersetBloggerDes}]]
+				</p>
+			</ul>
+		</div>
+
+		<!-- 日历 -->
+		<div class="calendar" style="display: none">
+			<div class="headercalendar">
+				<a data-action="prev-month" href="javascript:void(0)"
+					title="Previous Month"><i></i></a>
+				<div class="textcalendar" data-render="month-year"></div>
+				<a data-action="next-month" href="javascript:void(0)"
+					title="Next Month"><i></i></a>
+			</div>
+			<div class="months" data-flow="left">
+				<div class="month month-a">
+					<div class="render render-a"></div>
+				</div>
+
+				<div class="month month-b">
+					<div class="render render-b"></div>
+				</div>
+			</div>
+			<!-- <div id="foots"><a id="footNow">19:14:34</a></div> -->
+		</div>
+
+		<!-- 特别推荐 -->
+		<div class="zhuanti" id="specialRecommended" style="display: none;">
+			<h2 class="hometitle">
+				<i class="fa fa-thumbs-up"></i>&nbsp;特别推荐
+			</h2>
+			<ul id="showSpecialRecommended">
+
+			</ul>
+		</div>
+
+		<div class="tuijian" id="tuijian" style="display: none;">
+			<h2 id="tab" class="hometitle2">
+				<a href="#" class="current"><i class="fa fa-list"></i>&nbsp;推荐文章</a><a
+					href="#">点赞排行</a><a href="#">点击排行</a>
+			</h2>
+
+			<!-- <div id="content"> -->
+			<ul class="sidenews" name="sidenews" style="display: block;"
+				id="recommended">
+
+			</ul>
+			<ul class="sidenews" name="sidenews" style="display: none;"
+				id="likeBlogcontent">
+			</ul>
+			<ul class="sidenews" name="sidenews" style="display: none;"
+				id="browseBlogcontent">
+			</ul>
+			<!-- </div> -->
+		</div>
+
+		<div class="cloud" id="cloud" style="display: none">
+			<!-- 以下内容动态生成 -->
+			<h2 class="hometitle">
+				<i class="fa fa-tags icon"></i>&nbsp;文章标签
+			</h2>
+			<ul id="showTags">
+			</ul>
+		</div>
+		<div class="links" id="links" style="display: none">
+			<!-- 以下内容动态生成 -->
+			<h2 class="hometitle">
+				<i class="fa fa-link"></i>&nbsp;友情链接
+			</h2>
+			<ul id="linksLi">
+			</ul>
+		</div>
+
+		<div class="guanzhu follow-us" id="follow-us" style="display: none">
+			<!-- 以下内容动态生成 -->
+			<h2 class="hometitle">
+				<i class="fa fa-qq"></i>&nbsp;关注博主
+			</h2>
+			<ul>
+				<li class="qq" id="qq" style="display: none"><a
+					href="javascript:void(0)" onclick="orcodeToggle(0)"><span>QQ号</span>[[${blogset.bloggersetBloggerQqNumber}]]</a></li>
+
+				<li class="qq" id="qqgroup" style="display: none"><a
+					href="javascript:void(0)" onclick="orcodeToggle(1)"><span>QQ群</span>[[${blogset.bloggersetBloggerQqGroupNumber}]]</a></li>
+				<li class="wxgzh" id="wxgzh" style="display: none"><a
+					href="javascript:void(0)" onclick="orcodeToggle(2)"><span>微信号</span>[[${blogset.bloggersetBloggerWechatNumber}]]</a></li>
+				<li class="wxgzh" id="wxgzhg" style="display: none"><a
+					href="javascript:void(0)" onclick="orcodeToggle(3)"><span>微信群</span>[[${blogset.bloggersetBloggerWechatGroupName}]]</a></li>
+				<li class="csdn" id="csdn" style="display: none"><a
+					th:href="${blogset.bloggersetBloggerCsdn}" target="_blank"><span>CSDN</span>[[${blogset.bloggersetBloggerCsdn}]]</a></li>
+				<li class="email" id="email" style="display: none"><a><span>邮箱帐号</span>[[${blogset.bloggersetBloggerEmail}]]</a></li>
+				<li class="gitee" id="gitee" style="display: none"><a
+					th:href="${blogset.bloggersetBloggerGitee}" target="_blank"><span>码云</span>[[${blogset.bloggersetBloggerGitee}]]</a></li>
+				<li class="github" id="github" style="display: none"><a
+					th:href="${blogset.bloggersetBloggerGithub}" target="_blank"><span>GitHub</span>[[${blogset.bloggersetBloggerGithub}]]</a></li>
+				<li class="sina" id="sina" style="display: none"><a href="/"
+					target="_blank"><span>新浪微博</span>[[${blogset.bloggersetBloggerSinaWeibo}]]</a></li>
+				<!-- 				<li class="wx" id="wechatorcode" style="display: none"><img
+					id="wechatorcode2" src="" title="扫码添加博主微信"></li>
+-->
+				<!-- 悬浮显示 -->
+				<div class="hide_box2" id="hide_box2"></div>
+				<div class="shang_box2" id="shang_box2">
+					<a class="shang_close2" href="javascript:void(0)"
+						onclick="orcodeToggle()" title="关闭">关闭</a>
+					<div class="shang_payimg2">
+						<img id="show1" src="" title="扫一扫">
+					</div>
+				</div>
+
+			</ul>
+		</div>
+	</div>
+
+	<script th:inline="javascript">
+	    //设置
+	    var blogset=[[${blogset}]];
+	
+		var blogsetFriendLinks=blogset.blogsetFriendLinks;
+		var blogsetSidebarOtherMessage=blogset.blogsetSidebarOtherMessage;
+		//联系方式
+		var bloggersetBloggerQqNumber=blogset.bloggersetBloggerQqNumber;
+		var bloggersetBloggerQqGroupNumber=blogset.bloggersetBloggerQqGroupNumber;
+		var bloggersetBloggerWechatNumber=blogset.bloggersetBloggerWechatNumber;
+		var bloggersetBloggerWechatGroupName=blogset.bloggersetBloggerWechatGroupName;
+		var bloggersetBloggerCsdn=blogset.bloggersetBloggerCsdn;
+		var bloggersetBloggerEmail=blogset.bloggersetBloggerEmail;
+		var bloggersetBloggerGitee=blogset.bloggersetBloggerGitee;
+		var bloggersetBloggerGithub=blogset.bloggersetBloggerGithub;
+		var bloggersetBloggerSinaWeibo=blogset.bloggersetBloggerSinaWeibo;
+		
+		var bloggersetBloggerWechatOrcode=blogset.bloggersetBloggerWechatOrcode;
+		var bloggersetBloggerWechatGroupOrcode=blogset.bloggersetBloggerWechatGroupOrcode;
+		//都没有则不显示
+		if(!((bloggersetBloggerQqNumber==null||bloggersetBloggerQqNumber=='')&&(bloggersetBloggerQqGroupNumber==null||bloggersetBloggerQqGroupNumber=='')&&(bloggersetBloggerWechatNumber==null||bloggersetBloggerWechatNumber=='')&&(bloggersetBloggerCsdn==null||bloggersetBloggerCsdn=='')&&(bloggersetBloggerEmail==null||bloggersetBloggerEmail=='')&&(bloggersetBloggerGitee==null||bloggersetBloggerGitee=='')&&(bloggersetBloggerGithub==null||bloggersetBloggerGithub=='')&&(bloggersetBloggerSinaWeibo==null||bloggersetBloggerSinaWeibo=='')&&(bloggersetBloggerWechatGroupName==null||bloggersetBloggerWechatGroupName==''))){
+			/* $("#follow-us").css('display', 'block'); */
+			if(!(bloggersetBloggerQqNumber==null||bloggersetBloggerQqNumber=='')){
+				$("#qq").css('display', 'block');
+			}
+			if(!(bloggersetBloggerQqGroupNumber==null||bloggersetBloggerQqGroupNumber=='')){
+				$("#qqgroup").css('display', 'block');
+			}
+			if(!(bloggersetBloggerWechatNumber==null||bloggersetBloggerWechatNumber=='')){
+				$("#wxgzh").css('display', 'block');
+			}
+			if(!(bloggersetBloggerWechatGroupName==null||bloggersetBloggerWechatGroupName==''||bloggersetBloggerWechatGroupOrcode==null||bloggersetBloggerWechatGroupOrcode=='')){
+				$("#wxgzhg").css('display', 'block');
+			}
+			if(!(bloggersetBloggerCsdn==null||bloggersetBloggerCsdn=='')){
+				$("#csdn").css('display', 'block');
+			}
+			if(!(bloggersetBloggerEmail==null||bloggersetBloggerEmail=='')){
+				$("#email").css('display', 'block');
+			}
+			if(!(bloggersetBloggerGitee==null||bloggersetBloggerGitee=='')){
+				$("#gitee").css('display', 'block');
+			}
+			if(!(bloggersetBloggerGithub==null||bloggersetBloggerGithub=='')){
+				$("#github").css('display', 'block');
+			}
+			if(!(bloggersetBloggerSinaWeibo==null||bloggersetBloggerSinaWeibo=='')){
+				$("#sina").css('display', 'block');
+			}
+			//最后显示博主微信二维码
+			//取消
+			/* var bloggersetBloggerWechatOrcode=[[${blogset.bloggersetBloggerWechatOrcode}]];
+			if(!(bloggersetBloggerWechatOrcode==null||bloggersetBloggerWechatOrcode=='')){
+				$("#wechatorcode").css('display', 'block');
+				document.getElementById("wechatorcode2").src = bloggersetBloggerWechatOrcode;
+			} */
+		}
+		
+		var bloggersetBloggerQqOrcode=blogset.bloggersetBloggerQqOrcode;
+		var bloggersetBloggerQqGroupOrcode=blogset.bloggersetBloggerQqGroupOrcode;
+			//部分函数
+			function orcodeToggle(flag) {
+								$("#hide_box2").fadeToggle();
+								$("#shang_box2").fadeToggle();
+								if(flag==0&&bloggersetBloggerQqOrcode!=null&&bloggersetBloggerQqOrcode!=''){
+									document.getElementById("show1").src = bloggersetBloggerQqOrcode;
+								}else if(flag==1&&bloggersetBloggerQqGroupOrcode!=null&&bloggersetBloggerQqGroupOrcode!=''){
+									document.getElementById("show1").src = bloggersetBloggerQqGroupOrcode;
+								}else if(flag==2&&bloggersetBloggerWechatOrcode!=null&&bloggersetBloggerWechatOrcode!=''){
+									document.getElementById("show1").src = bloggersetBloggerWechatOrcode;
+								}else if(flag==3&&bloggersetBloggerWechatGroupOrcode!=null&&bloggersetBloggerWechatGroupOrcode!=''){
+									document.getElementById("show1").src = bloggersetBloggerWechatGroupOrcode;
+								}
+							}
+		</script>
+	<script src="/rzspider/blog/index/include_blog_sidebar.js"
+		th:src="@{/rzspider/blog/index/include_blog_sidebar.js}"></script>
+</nav>
+
+<!-- 左侧侧边栏动态显示 -->
+<nav th:fragment="sidebarL">
+	<div class="sidebarL" id="sidebarL">
+		<!-- 以下内容动态生成 -->
+		<div class="aboutme" id="aboutmeL" style="display: none">
+			<h2 class="hometitle">
+				<i class="fa fa-user"></i>&nbsp;博主简介
+			</h2>
+			<ul>
+				<i class="showProfile" id="showProfileL" style="display: none;"><img
+					id="showProfileImgL" src=""></i>
+				<p>
+					<b>[[${blogset.bloggersetBloggerName}]]</b>&nbsp;&nbsp;&nbsp;&nbsp;[[${blogset.bloggersetBloggerDes}]]
+				</p>
+			</ul>
+		</div>
+
+		<div class="zhuanti" id="specialRecommendedL" style="display: none;">
+			<h2 class="hometitle">
+				<i class="fa fa-thumbs-up"></i>&nbsp;特别推荐
+			</h2>
+			<ul id="showSpecialRecommendedL">
+
+			</ul>
+		</div>
+
+		<div class="tuijian" id="tuijianL" style="display: none;">
+			<h2 id="tabL" class="hometitle2">
+				<a href="#" class="current"><i class="fa fa-list"></i>&nbsp;推荐文章</a><a
+					href="#">点赞排行</a><a href="#">点击排行</a>
+			</h2>
+
+			<!-- <div id="content"> -->
+			<ul class="sidenews" name="sidenewsL" style="display: block;"
+				id="recommendedL">
+
+			</ul>
+			<ul class="sidenews" name="sidenewsL" style="display: none;"
+				id="likeBlogcontentL">
+			</ul>
+			<ul class="sidenews" name="sidenewsL" style="display: none;"
+				id="browseBlogcontentL">
+			</ul>
+			<!-- </div> -->
+		</div>
+
+		<div class="cloud" id="cloudL" style="display: none">
+			<!-- 以下内容动态生成 -->
+			<h2 class="hometitle">
+				<i class="fa fa-tags icon"></i>&nbsp;文章标签
+			</h2>
+			<ul id="showTagsL">
+			</ul>
+		</div>
+		<div class="links" id="linksL" style="display: none">
+			<!-- 以下内容动态生成 -->
+			<h2 class="hometitle">
+				<i class="fa fa-link"></i>&nbsp;友情链接
+			</h2>
+			<ul id="linksLiL">
+			</ul>
+		</div>
+
+		<div class="guanzhu follow-us" id="follow-usL" style="display: none">
+			<!-- 以下内容动态生成 -->
+			<h2 class="hometitle">
+				<i class="fa fa-qq"></i>&nbsp;关注博主
+			</h2>
+			<ul>
+				<li class="qq" id="qqL" style="display: none"><a
+					href="javascript:void(0)" onclick="orcodeToggle2(0)"><span>QQ号</span>[[${blogset.bloggersetBloggerQqNumber}]]</a></li>
+
+				<li class="qq" id="qqgroupL" style="display: none"><a
+					href="javascript:void(0)" onclick="orcodeToggle2(1)"><span>QQ群</span>[[${blogset.bloggersetBloggerQqGroupNumber}]]</a></li>
+				<li class="wxgzh" id="wxgzhL" style="display: none"><a
+					href="javascript:void(0)" onclick="orcodeToggle2(2)"><span>微信号</span>[[${blogset.bloggersetBloggerWechatNumber}]]</a></li>
+				<li class="wxgzh" id="wxgzhgL" style="display: none"><a
+					href="javascript:void(0)" onclick="orcodeToggle2(3)"><span>微信群</span>[[${blogset.bloggersetBloggerWechatGroupName}]]</a></li>
+				<li class="csdn" id="csdnL" style="display: none"><a
+					th:href="${blogset.bloggersetBloggerCsdn}" target="_blank"><span>CSDN</span>[[${blogset.bloggersetBloggerCsdn}]]</a></li>
+				<li class="email" id="emailL" style="display: none"><a><span>邮箱帐号</span>[[${blogset.bloggersetBloggerEmail}]]</a></li>
+				<li class="gitee" id="giteeL" style="display: none"><a
+					th:href="${blogset.bloggersetBloggerGitee}" target="_blank"><span>码云</span>[[${blogset.bloggersetBloggerGitee}]]</a></li>
+				<li class="github" id="githubL" style="display: none"><a
+					th:href="${blogset.bloggersetBloggerGithub}" target="_blank"><span>GitHub</span>[[${blogset.bloggersetBloggerGithub}]]</a></li>
+				<li class="sina" id="sinaL" style="display: none"><a href="/"
+					target="_blank"><span>新浪微博</span>[[${blogset.bloggersetBloggerSinaWeibo}]]</a></li>
+				<!-- 				<li class="wx" id="wechatorcode" style="display: none"><img
+					id="wechatorcode2" src="" title="扫码添加博主微信"></li>
+-->
+				<!-- 悬浮显示 -->
+				<div class="hide_box2" id="hide_box2L"></div>
+				<div class="shang_box2" id="shang_box2L">
+					<a class="shang_close2" href="javascript:void(0)"
+						onclick="orcodeToggle2()" title="关闭">关闭</a>
+					<div class="shang_payimg2">
+						<img id="show1L" src="" title="扫一扫">
+					</div>
+				</div>
+
+			</ul>
+		</div>
+	</div>
+
+	<script th:inline="javascript">
+	    //设置
+	    var blogset=[[${blogset}]];
+		var blogsetFriendLinks=blogset.blogsetFriendLinks;
+		var blogsetSidebarOtherMessage=blogset.blogsetSidebarOtherMessage;
+		
+		//联系方式
+		var bloggersetBloggerQqNumber=blogset.bloggersetBloggerQqNumber;
+		var bloggersetBloggerQqGroupNumber=blogset.bloggersetBloggerQqGroupNumber;
+		var bloggersetBloggerWechatNumber=blogset.bloggersetBloggerWechatNumber;
+		var bloggersetBloggerWechatGroupName=blogset.bloggersetBloggerWechatGroupName;
+		var bloggersetBloggerCsdn=blogset.bloggersetBloggerCsdn;
+		var bloggersetBloggerEmail=blogset.bloggersetBloggerEmail;
+		var bloggersetBloggerGitee=blogset.bloggersetBloggerGitee;
+		var bloggersetBloggerGithub=blogset.bloggersetBloggerGithub;
+		var bloggersetBloggerSinaWeibo=blogset.bloggersetBloggerSinaWeibo;
+		
+		var bloggersetBloggerWechatOrcode=blogset.bloggersetBloggerWechatOrcode;
+		var bloggersetBloggerWechatGroupOrcode=blogset.bloggersetBloggerWechatGroupOrcode;
+		//都没有则不显示
+		if(!((bloggersetBloggerQqNumber==null||bloggersetBloggerQqNumber=='')&&(bloggersetBloggerQqGroupNumber==null||bloggersetBloggerQqGroupNumber=='')&&(bloggersetBloggerWechatNumber==null||bloggersetBloggerWechatNumber=='')&&(bloggersetBloggerCsdn==null||bloggersetBloggerCsdn=='')&&(bloggersetBloggerEmail==null||bloggersetBloggerEmail=='')&&(bloggersetBloggerGitee==null||bloggersetBloggerGitee=='')&&(bloggersetBloggerGithub==null||bloggersetBloggerGithub=='')&&(bloggersetBloggerSinaWeibo==null||bloggersetBloggerSinaWeibo=='')&&(bloggersetBloggerWechatGroupName==null||bloggersetBloggerWechatGroupName==''))){
+			/* $("#follow-usL").css('display', 'block'); */
+			if(!(bloggersetBloggerQqNumber==null||bloggersetBloggerQqNumber=='')){
+				$("#qqL").css('display', 'block');
+			}
+			if(!(bloggersetBloggerQqGroupNumber==null||bloggersetBloggerQqGroupNumber=='')){
+				$("#qqgroupL").css('display', 'block');
+			}
+			if(!(bloggersetBloggerWechatNumber==null||bloggersetBloggerWechatNumber=='')){
+				$("#wxgzhL").css('display', 'block');
+			}
+			if(!(bloggersetBloggerWechatGroupName==null||bloggersetBloggerWechatGroupName==''||bloggersetBloggerWechatGroupOrcode==null||bloggersetBloggerWechatGroupOrcode=='')){
+				$("#wxgzhgL").css('display', 'block');
+			}
+			if(!(bloggersetBloggerCsdn==null||bloggersetBloggerCsdn=='')){
+				$("#csdnL").css('display', 'block');
+			}
+			if(!(bloggersetBloggerEmail==null||bloggersetBloggerEmail=='')){
+				$("#emailL").css('display', 'block');
+			}
+			if(!(bloggersetBloggerGitee==null||bloggersetBloggerGitee=='')){
+				$("#giteeL").css('display', 'block');
+			}
+			if(!(bloggersetBloggerGithub==null||bloggersetBloggerGithub=='')){
+				$("#githubL").css('display', 'block');
+			}
+			if(!(bloggersetBloggerSinaWeibo==null||bloggersetBloggerSinaWeibo=='')){
+				$("#sinaL").css('display', 'block');
+			}
+			//最后显示博主微信二维码
+			//取消
+			/* var bloggersetBloggerWechatOrcode=[[${blogset.bloggersetBloggerWechatOrcode}]];
+			if(!(bloggersetBloggerWechatOrcode==null||bloggersetBloggerWechatOrcode=='')){
+				$("#wechatorcode").css('display', 'block');
+				document.getElementById("wechatorcode2").src = bloggersetBloggerWechatOrcode;
+			} */
+		}
+		
+		var bloggersetBloggerQqOrcode=blogset.bloggersetBloggerQqOrcode;
+		var bloggersetBloggerQqGroupOrcode=blogset.bloggersetBloggerQqGroupOrcode;
+		
+			//部分函数
+			function orcodeToggle2(flag) {
+								$("#hide_box2L").fadeToggle();
+								$("#shang_box2L").fadeToggle();
+								if(flag==0&&bloggersetBloggerQqOrcode!=null&&bloggersetBloggerQqOrcode!=''){
+									document.getElementById("show1L").src = bloggersetBloggerQqOrcode;
+								}else if(flag==1&&bloggersetBloggerQqGroupOrcode!=null&&bloggersetBloggerQqGroupOrcode!=''){
+									document.getElementById("show1L").src = bloggersetBloggerQqGroupOrcode;
+								}else if(flag==2&&bloggersetBloggerWechatOrcode!=null&&bloggersetBloggerWechatOrcode!=''){
+									document.getElementById("show1L").src = bloggersetBloggerWechatOrcode;
+								}else if(flag==3&&bloggersetBloggerWechatGroupOrcode!=null&&bloggersetBloggerWechatGroupOrcode!=''){
+									document.getElementById("show1L").src = bloggersetBloggerWechatGroupOrcode;
+								}
+							}
+		</script>
+	<script src="/rzspider/blog/index/include_blog_sidebarL.js"
+		th:src="@{/rzspider/blog/index/include_blog_sidebarL.js}"></script>
+</nav>
+<!-- 底部必有 -->
+<div th:fragment="footer">
+	<footer>
+		<!-- <div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					<ul class="list-inline text-center">
+						<li><a href="https://jq.qq.com/?_wv=1027&k=5ICuFaQ"
+							target="_Blank" title=""> <span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i> <i
+									class="fa fa-qq fa-stack-1x fa-inverse"></i>
+							</span>
+						</a></li>
+						<li><a href="https://www.oschina.net/p/bootdo"
+							target="_Blank" title="源码参考码云bootdo，详情请见bootdo"> <span
+								class="fa-stack fa-lg"> <i
+									class="fa fa-circle fa-stack-2x"></i> <i
+									class="fa fa-home fa-stack-1x fa-inverse"></i>
+							</span>
+						</a></li>
+						<li><a href="https://github.com/lcg0124/bootdo.git"
+							target="_Blank" title="源码参考githubbootdo，详情请见bootdo"> <span
+								class="fa-stack fa-lg"> <i
+									class="fa fa-circle fa-stack-2x"></i> <i
+									class="fa fa-github fa-stack-1x fa-inverse"></i>
+							</span>
+						</a></li>
+					</ul>
+				</div>
+			</div>
+		</div> -->
+		<p>
+			Copyright©2018 <a href="http://www.rzspider.top/rzblog"
+				target="_blank">[[${blogset.basicsetTitle}]]</a> Powered by <a
+				href="https://github.com/ricozhou/RZSpider2.0" target="_blank">RZBlog</a>
+			<a href="http://www.miitbeian.gov.cn/" target="_blank">
+				苏ICP备18054899号-1 
+		</p>
+	</footer>
+	<!-- 悬浮显示 -->
+	<div class="hide_box3"></div>
+	<div class="shang_box3" id="shang_box3">
+		<a class="shang_close3" href="javascript:void(0)"
+			onclick="orcodeToggle3()" title="关闭">关闭</a>
+		<div class="shang_payimg3">
+			<img id="showqr3" src="" title="扫一扫">
+		</div>
+	</div>
+	<a href="javascript:void(0)" class="cd-share cd-is-visible"
+		id="cd-share" title="分享链接" onclick="orcodeToggle3()">分享链接</a> <a
+		href="#" class="cd-top" id="cd-top" title="回到顶部">回到顶部</a>
+	<div id="qrcode" style="display: none"></div>
+
+	<script src="/rzspider/blog/index/include_blog_headerfooter.js"
+		th:src="@{/rzspider/blog/index/include_blog_headerfooter.js}"></script>
+	<script th:inline="javascript">
+	    //设置
+	    var blogset=[[${blogset}]];
+		</script>
+	<script>
+		var data;
+		// 先生成二维码隐藏
+		// 实例化二维码插件
+		var qrcode = new QRCode(document.getElementById("qrcode"), {
+			width : 200,
+			height : 200
+		});
+
+		// 生成二维码
+		function makeCode(url) {
+			qrcode.makeCode(url);
+			getUrlImg();
+		}
+		makeCode(window.location.href);
+
+		// 获取base64
+		function getUrlImg() {
+			var canvas = document.getElementById('qrcode')
+					.getElementsByTagName('canvas')[0];
+			// 如果有循环,此句必不可少 qrcode.find('canvas').remove();
+			data = canvas.toDataURL('image/jpg');
+		}
+		// 显示
+		function orcodeToggle3() {
+			$(".hide_box3").fadeToggle();
+			$("#shang_box3").fadeToggle();
+			document.getElementById("showqr3").src = data;
+		}
+		
+		</script>
+</div>
+

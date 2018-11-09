@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzspider.project.blog.blogset.mapper.BlogsetMapper">
+
+	<resultMap type="Blogset" id="BlogsetResult">
+		<result property="blogSetId" column="blog_set_id" />
+		<result property="basicsetTitle" column="basicset_title" />
+		<result property="basicsetWebsiteIco" column="basicset_website_ico" />
+		<result property="basicsetDes" column="basicset_des" />
+		<result property="basicsetSkin" column="basicset_skin" />
+		<result property="basicsetArticleEditor" column="basicset_article_editor" />
+		<result property="basicsetWebsiteOnlinetime" column="basicset_website_onlinetime" />
+		<result property="basicsetGlobalAllowComment" column="basicset_global_allow_comment" />
+		<result property="basicsetGlobalShowComment" column="basicset_global_show_comment" />
+		<result property="basicsetGlobalAllowReprint" column="basicset_global_allow_reprint" />
+		<result property="basicsetCommentNotice" column="basicset_comment_notice" />
+		<result property="basicsetOpenAppreciate" column="basicset_open_appreciate" />
+		<result property="basicsetOpenBlogDownload" column="basicset_open_blog_download" />
+		<result property="basicsetOpenNotice" column="basicset_open_notice" />
+		<result property="basicsetAutoLoading" column="basicset_auto_loading" />
+		<result property="basicsetShowArticleSource" column="basicset_show_article_source" />
+		<result property="basicsetCommentAutoReview" column="basicset_comment_auto_review" />
+		<result property="basicsetAddWaterMark" column="basicset_add_water_mark" />
+		<result property="basicsetWaterMarkMsg" column="basicset_water_mark_msg" />
+		<result property="basicsetWaterMarkSetMsg" column="basicset_water_mark_set_msg" />
+		<result property="basicsetAddCopyrightNotice" column="basicset_add_copyright_notice" />
+		<result property="basicsetCopyrightNoticeInfo" column="basicset_copyright_notice_info" />
+		<result property="basicsetRemark" column="basicset_remark" />
+		<result property="bloggersetBloggerName" column="bloggerset_blogger_name" />
+		<result property="bloggersetBloggerDes" column="bloggerset_blogger_des" />
+		<result property="bloggersetBloggerProfile" column="bloggerset_blogger_profile" />
+		<result property="bloggersetBloggerSinaWeibo" column="bloggerset_blogger_sina_weibo" />
+		<result property="bloggersetBloggerQqNumber" column="bloggerset_blogger_qq_number" />
+		<result property="bloggersetBloggerQqOrcode" column="bloggerset_blogger_qq_orcode" />
+		<result property="bloggersetBloggerQqGroupNumber" column="bloggerset_blogger_qq_group_number" />
+		<result property="bloggersetBloggerQqGroupOrcode" column="bloggerset_blogger_qq_group_orcode" />
+		<result property="bloggersetBloggerWechatNumber" column="bloggerset_blogger_wechat_number" />
+		<result property="bloggersetBloggerWechatOrcode" column="bloggerset_blogger_wechat_orcode" />
+		<result property="bloggersetBloggerWechatGroupName" column="bloggerset_blogger_wechat_group_name" />
+		<result property="bloggersetBloggerWechatGroupOrcode" column="bloggerset_blogger_wechat_group_orcode" />
+		<result property="bloggersetBloggerEmail" column="bloggerset_blogger_email" />
+		<result property="bloggersetBloggerCsdn" column="bloggerset_blogger_csdn" />
+		<result property="bloggersetBloggerGitee" column="bloggerset_blogger_gitee" />
+		<result property="bloggersetBloggerGithub" column="bloggerset_blogger_github" />
+		<result property="bloggersetBloggerRewardAlipayCollectionCode"
+			column="bloggerset_blogger_reward_alipay_collection_code" />
+		<result property="bloggersetBloggerRewardWechatCollectionCode"
+			column="bloggerset_blogger_reward_wechat_collection_code" />
+		<result property="bloggersetRemark" column="bloggerset_remark" />
+		<result property="blogsetPerpageShowNum" column="blogset_perpage_show_num" />
+		<result property="blogsetLatestShowNum" column="blogset_latest_show_num" />
+		<result property="blogsetScrollRecommendedShowNum" column="blogset_scroll_recommended_show_num" />
+		<result property="blogsetRecommendedShowNum" column="blogset_recommended_show_num" />
+		<result property="blogsetRankingShowNum" column="blogset_ranking_show_num" />
+		<result property="blogsetSpecialRecdShowNum" column="blogset_special_recd_show_num" />
+		<result property="blogsetNavBarShowNum" column="blogset_nav_bar_show_num" />
+		<result property="blogsetNoPicUseDefault" column="blogset_no_pic_use_default" />
+		<result property="blogsetNoCoverpicUseContentpic" column="blogset_no_coverpic_use_contentpic" />
+		<result property="blogsetDefaultPic" column="blogset_default_pic" />
+		<result property="blogsetFriendLinks" column="blogset_friend_links" />
+		<result property="blogsetSidebarOtherMessage" column="blogset_sidebar_other_message" />
+		<result property="blogsetRemark" column="blogset_remark" />
+		<result property="stylesetColor" column="styleset_color" />
+		<result property="stylesetBackColor" column="styleset_back_color" />
+		<result property="stylesetSmoothStyle" column="styleset_smooth_style" />
+		<result property="stylesetShowRightSiderbar" column="styleset_show_right_siderbar" />
+		<result property="stylesetRightSiderbarContent" column="styleset_right_siderbar_content" />
+		<result property="stylesetShowLeftSiderbar" column="styleset_show_left_siderbar" />
+		<result property="stylesetLeftSiderbarContent" column="styleset_left_siderbar_content" />
+		<result property="stylesetRemark" column="styleset_remark" />
+		<result property="createBy" column="create_by" />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy" column="update_by" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<select id="selectBlogsetById" parameterType="Integer"
+		resultMap="BlogsetResult">
+		select * from blog_blogset
+		where blog_set_id =
+		#{blogSetId}
+	</select>
+	<select id="selectBlogsetWaterMarkMsgById" parameterType="Integer"
+		resultMap="BlogsetResult">
+		select
+		basicset_add_water_mark,basicset_water_mark_msg,basicset_water_mark_set_msg
+		from blog_blogset
+		where
+		blog_set_id =
+		#{blogSetId}
+	</select>
+
+	<select id="selectBlogsetCommentReviewMsgById" parameterType="Integer"
+		resultMap="BlogsetResult">
+		select
+		basicset_comment_auto_review
+		from blog_blogset
+		where
+		blog_set_id =
+		#{blogSetId}
+	</select>
+
+	<select id="selectBlogsetBlogMoveMsgById" parameterType="Integer"
+		resultMap="BlogsetResult">
+		select
+		basicset_add_water_mark,basicset_water_mark_msg,basicset_water_mark_set_msg,bloggerset_blogger_name
+		from blog_blogset
+		where
+		blog_set_id =
+		#{blogSetId}
+	</select>
+
+	<select id="selectSomeOverViewBlogsetById" parameterType="Integer"
+		resultMap="BlogsetResult">
+		select basicset_website_onlinetime
+		from blog_blogset
+		where
+		blog_set_id =
+		#{blogSetId}
+	</select>
+	<select id="selectSomeBloggersetById" parameterType="Integer"
+		resultMap="BlogsetResult">
+		select
+		bloggerset_blogger_name,basicset_global_allow_comment,basicset_global_allow_reprint,basicset_open_blog_download
+		from blog_blogset
+		where
+		blog_set_id =
+		#{blogSetId}
+	</select>
+	<select id="selectSomeBlogsetById" parameterType="Integer"
+		resultMap="BlogsetResult">
+		select
+		blogset_perpage_show_num,
+		blogset_latest_show_num,
+		blogset_scroll_recommended_show_num,
+		blogset_recommended_show_num,
+		blogset_ranking_show_num,
+		blogset_special_recd_show_num,
+		blogset_nav_bar_show_num,
+		blogset_no_pic_use_default,
+		blogset_no_coverpic_use_contentpic,
+		blogset_friend_links,
+		blogset_sidebar_other_message,
+		blogset_remark
+		from blog_blogset
+		where
+		blog_set_id =
+		#{blogSetId}
+	</select>
+	<select id="selectSomeBlogsetsById" parameterType="Integer"
+		resultMap="BlogsetResult">
+		select
+		bloggerset_blogger_name,basicset_global_allow_comment,basicset_global_allow_reprint,basicset_article_editor,basicset_open_blog_download
+		from blog_blogset
+		where
+		blog_set_id =
+		#{blogSetId}
+	</select>
+	<select id="selectBlogsetList" parameterType="Blogset"
+		resultMap="BlogsetResult">
+		select * from blog_blogset
+		<where>
+			<if test="blogSetId != null and blogSetId != ''"> and blog_set_id = #{blogSetId}</if>
+			<if test="basicsetTitle != null and basicsetTitle != ''"> and basicset_title = #{basicsetTitle}</if>
+			<if test="basicsetDes != null and basicsetDes != ''"> and basicset_des = #{basicsetDes}</if>
+			<if test="basicsetSkin != null and basicsetSkin != ''"> and basicset_skin = #{basicsetSkin}</if>
+			<if
+				test="basicsetGlobalAllowComment != null and basicsetGlobalAllowComment != ''"> and basicset_global_allow_comment =
+				#{basicsetGlobalAllowComment}
+			</if>
+			<if
+				test="basicsetGlobalShowComment != null and basicsetGlobalShowComment != ''"> and basicset_global_show_comment =
+				#{basicsetGlobalShowComment}
+			</if>
+			<if
+				test="basicsetGlobalAllowReprint != null and basicsetGlobalAllowReprint != ''"> and basicset_global_allow_reprint =
+				#{basicsetGlobalAllowReprint}
+			</if>
+			<if test="basicsetCommentNotice != null and basicsetCommentNotice != ''"> and basicset_comment_notice = #{basicsetCommentNotice}
+			</if>
+			<if
+				test="basicsetAddCopyrightNotice != null and basicsetAddCopyrightNotice != ''"> and basicset_add_copyright_notice =
+				#{basicsetAddCopyrightNotice}
+			</if>
+			<if
+				test="basicsetCopyrightNoticeInfo != null and basicsetCopyrightNoticeInfo != ''"> and basicset_copyright_notice_info =
+				#{basicsetCopyrightNoticeInfo}
+			</if>
+			<if test="basicsetRemark != null and basicsetRemark != ''"> and basicset_remark = #{basicsetRemark}</if>
+			<if test="bloggersetBloggerName != null and bloggersetBloggerName != ''"> and bloggerset_blogger_name = #{bloggersetBloggerName}
+			</if>
+			<if test="bloggersetBloggerDes != null and bloggersetBloggerDes != ''"> and bloggerset_blogger_des = #{bloggersetBloggerDes}
+			</if>
+			<if
+				test="bloggersetBloggerSinaWeibo != null and bloggersetBloggerSinaWeibo != ''"> and bloggerset_blogger_sina_weibo =
+				#{bloggersetBloggerSinaWeibo}
+			</if>
+			<if
+				test="bloggersetBloggerQqNumber != null and bloggersetBloggerQqNumber != ''"> and bloggerset_blogger_qq_number =
+				#{bloggersetBloggerQqNumber}
+			</if>
+			<if
+				test="bloggersetBloggerQqOrcode != null and bloggersetBloggerQqOrcode != ''"> and bloggerset_blogger_qq_orcode =
+				#{bloggersetBloggerQqOrcode}
+			</if>
+			<if
+				test="bloggersetBloggerQqGroupNumber != null and bloggersetBloggerQqGroupNumber != ''"> and bloggerset_blogger_qq_group_number =
+				#{bloggersetBloggerQqGroupNumber}
+			</if>
+			<if
+				test="bloggersetBloggerQqGroupOrcode != null and bloggersetBloggerQqGroupOrcode != ''"> and bloggerset_blogger_qq_group_orcode =
+				#{bloggersetBloggerQqGroupOrcode}
+			</if>
+			<if
+				test="bloggersetBloggerWechatNumber != null and bloggersetBloggerWechatNumber != ''"> and bloggerset_blogger_wechat_number =
+				#{bloggersetBloggerWechatNumber}
+			</if>
+			<if
+				test="bloggersetBloggerWechatOrcode != null and bloggersetBloggerWechatOrcode != ''"> and bloggerset_blogger_wechat_orcode =
+				#{bloggersetBloggerWechatOrcode}
+			</if>
+			<if
+				test="bloggersetBloggerWechatGroupOrcode != null and bloggersetBloggerWechatGroupOrcode != ''"> and bloggerset_blogger_wechat_group_orcode =
+				#{bloggersetBloggerWechatGroupOrcode}
+			</if>
+			<if test="bloggersetBloggerEmail != null and bloggersetBloggerEmail != ''"> and bloggerset_blogger_email = #{bloggersetBloggerEmail}
+			</if>
+			<if test="bloggersetBloggerCsdn != null and bloggersetBloggerCsdn != ''"> and bloggerset_blogger_csdn = #{bloggersetBloggerCsdn}
+			</if>
+			<if test="bloggersetBloggerGitee != null and bloggersetBloggerGitee != ''"> and bloggerset_blogger_gitee = #{bloggersetBloggerGitee}
+			</if>
+			<if
+				test="bloggersetBloggerGithub != null and bloggersetBloggerGithub != ''"> and bloggerset_blogger_github = #{bloggersetBloggerGithub}
+			</if>
+			<if
+				test="bloggersetBloggerRewardAlipayCollectionCode != null and bloggersetBloggerRewardAlipayCollectionCode != ''"> and bloggerset_blogger_reward_alipay_collection_code =
+				#{bloggersetBloggerRewardAlipayCollectionCode}
+			</if>
+			<if
+				test="bloggersetBloggerRewardWechatCollectionCode != null and bloggersetBloggerRewardWechatCollectionCode != ''"> and bloggerset_blogger_reward_wechat_collection_code =
+				#{bloggersetBloggerRewardWechatCollectionCode}
+			</if>
+			<if test="bloggersetRemark != null and bloggersetRemark != ''"> and bloggerset_remark = #{bloggersetRemark}</if>
+			<if test="blogsetPerpageShowNum != null and blogsetPerpageShowNum != ''"> and blogset_perpage_show_num = #{blogsetPerpageShowNum}
+			</if>
+			<if test="blogsetLatestShowNum != null and blogsetLatestShowNum != ''"> and blogset_latest_show_num = #{blogsetLatestShowNum}
+			</if>
+			<if
+				test="blogsetRecommendedShowNum != null and blogsetRecommendedShowNum != ''"> and blogset_recommended_show_num =
+				#{blogsetRecommendedShowNum}
+			</if>
+			<if test="blogsetRankingShowNum != null and blogsetRankingShowNum != ''"> and blogset_ranking_show_num = #{blogsetRankingShowNum}
+			</if>
+			<if
+				test="blogsetSpecialRecdShowNum != null and blogsetSpecialRecdShowNum != ''"> and blogset_special_recd_show_num =
+				#{blogsetSpecialRecdShowNum}
+			</if>
+			<if test="blogsetNavBarShowNum != null and blogsetNavBarShowNum != ''"> and blogset_nav_bar_show_num = #{blogsetNavBarShowNum}
+			</if>
+			<if test="blogsetNoPicUseDefault != null and blogsetNoPicUseDefault != ''"> and blogset_no_pic_use_default =
+				#{blogsetNoPicUseDefault}
+			</if>
+			<if
+				test="blogsetNoCoverpicUseContentpic != null and blogsetNoCoverpicUseContentpic != ''"> and blogset_no_coverpic_use_contentpic =
+				#{blogsetNoCoverpicUseContentpic}
+			</if>
+			<if test="blogsetFriendLinks != null and blogsetFriendLinks != ''"> and blogset_friend_links = #{blogsetFriendLinks}</if>
+			<if test="blogsetRemark != null and blogsetRemark != ''"> and blogset_remark = #{blogsetRemark}</if>
+			<if test="createBy != null and createBy != ''"> and create_by = #{createBy}</if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+			<if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy}</if>
+			<if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+		</where>
+	</select>
+
+	<update id="updateBasicset" parameterType="Blogset">
+		update blog_blogset
+		<set>
+			basicset_title = #{basicsetTitle},
+			basicset_website_ico =
+			#{basicsetWebsiteIco},
+			basicset_des = #{basicsetDes},
+			basicset_skin =
+			#{basicsetSkin},
+			basicset_article_editor =
+			#{basicsetArticleEditor},
+			basicset_website_onlinetime=
+			#{basicsetWebsiteOnlinetime},
+			basicset_global_allow_comment =
+			#{basicsetGlobalAllowComment},
+			basicset_global_show_comment =
+			#{basicsetGlobalShowComment},
+			basicset_global_allow_reprint =
+			#{basicsetGlobalAllowReprint},
+			basicset_comment_notice =
+			#{basicsetCommentNotice},
+			basicset_open_appreciate =
+			#{basicsetOpenAppreciate},
+			basicset_open_blog_download =
+			#{basicsetOpenBlogDownload},
+			basicset_open_notice =
+			#{basicsetOpenNotice},
+			basicset_auto_loading =
+			#{basicsetAutoLoading},
+			basicset_show_article_source=
+			#{basicsetShowArticleSource},
+			basicset_comment_auto_review =
+			#{basicsetCommentAutoReview},
+			basicset_add_water_mark =
+			#{basicsetAddWaterMark},
+			basicset_water_mark_msg =
+			#{basicsetWaterMarkMsg},
+			basicset_water_mark_set_msg =
+			#{basicsetWaterMarkSetMsg},
+			basicset_add_copyright_notice =
+			#{basicsetAddCopyrightNotice},
+			basicset_copyright_notice_info =
+			#{basicsetCopyrightNoticeInfo},
+			basicset_remark = #{basicsetRemark},
+			update_by = #{updateBy},
+			update_time = sysdate()
+		</set>
+		where blog_set_id = #{blogSetId}
+	</update>
+
+
+	<update id="updateBloggerset" parameterType="Blogset">
+		update blog_blogset
+		<set>
+			bloggerset_blogger_name = #{bloggersetBloggerName},
+			bloggerset_blogger_des = #{bloggersetBloggerDes},
+			bloggerset_blogger_profile = #{bloggersetBloggerProfile},
+			bloggerset_blogger_sina_weibo = #{bloggersetBloggerSinaWeibo},
+			bloggerset_blogger_qq_number =
+			#{bloggersetBloggerQqNumber},
+			bloggerset_blogger_qq_orcode =
+			#{bloggersetBloggerQqOrcode},
+			bloggerset_blogger_qq_group_number =
+			#{bloggersetBloggerQqGroupNumber},
+			bloggerset_blogger_qq_group_orcode
+			=
+			#{bloggersetBloggerQqGroupOrcode},
+			bloggerset_blogger_wechat_number =
+			#{bloggersetBloggerWechatNumber},
+			bloggerset_blogger_wechat_orcode =
+			#{bloggersetBloggerWechatOrcode},
+			bloggerset_blogger_wechat_group_name =
+			#{bloggersetBloggerWechatGroupName},
+			bloggerset_blogger_wechat_group_orcode =
+			#{bloggersetBloggerWechatGroupOrcode},
+			bloggerset_blogger_email =
+			#{bloggersetBloggerEmail},
+			bloggerset_blogger_csdn =
+			#{bloggersetBloggerCsdn},
+			bloggerset_blogger_gitee =
+			#{bloggersetBloggerGitee},
+			bloggerset_blogger_github =
+			#{bloggersetBloggerGithub},
+			bloggerset_blogger_reward_alipay_collection_code =
+			#{bloggersetBloggerRewardAlipayCollectionCode},
+			bloggerset_blogger_reward_wechat_collection_code =
+			#{bloggersetBloggerRewardWechatCollectionCode},
+			bloggerset_remark =
+			#{bloggersetRemark},
+			update_by = #{updateBy},
+			update_time = sysdate()
+		</set>
+		where blog_set_id = #{blogSetId}
+	</update>
+
+	<update id="updateBlogset" parameterType="Blogset">
+		update blog_blogset
+		<set>
+			blogset_perpage_show_num = #{blogsetPerpageShowNum},
+			blogset_latest_show_num = #{blogsetLatestShowNum},
+			blogset_scroll_recommended_show_num =
+			#{blogsetScrollRecommendedShowNum},
+			blogset_recommended_show_num =
+			#{blogsetRecommendedShowNum},
+			blogset_ranking_show_num =
+			#{blogsetRankingShowNum},
+			blogset_special_recd_show_num =
+			#{blogsetSpecialRecdShowNum},
+			blogset_nav_bar_show_num =
+			#{blogsetNavBarShowNum},
+			blogset_no_pic_use_default =
+			#{blogsetNoPicUseDefault},
+			blogset_no_coverpic_use_contentpic =
+			#{blogsetNoCoverpicUseContentpic},
+			blogset_default_pic =
+			#{blogsetDefaultPic},
+			blogset_friend_links =
+			#{blogsetFriendLinks},
+			blogset_sidebar_other_message =
+			#{blogsetSidebarOtherMessage},
+			blogset_remark = #{blogsetRemark},
+			update_by =
+			#{updateBy},
+			update_time
+			= sysdate()
+		</set>
+		where blog_set_id = #{blogSetId}
+	</update>
+
+	<update id="updateStyleset" parameterType="Blogset">
+		update blog_blogset
+		<set>
+			styleset_color = #{stylesetColor},
+			styleset_back_color =
+			#{stylesetBackColor},
+			styleset_smooth_style = #{stylesetSmoothStyle},
+			styleset_show_right_siderbar = #{stylesetShowRightSiderbar},
+			styleset_right_siderbar_content = #{stylesetRightSiderbarContent},
+			styleset_show_left_siderbar = #{stylesetShowLeftSiderbar},
+			styleset_left_siderbar_content = #{stylesetLeftSiderbarContent},
+			styleset_remark = #{stylesetRemark},
+			update_by =
+			#{updateBy},
+			update_time
+			= sysdate()
+		</set>
+		where blog_set_id = #{blogSetId}
+	</update>
+</mapper>

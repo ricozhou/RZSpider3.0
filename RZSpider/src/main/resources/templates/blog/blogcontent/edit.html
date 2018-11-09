@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link href="/ajax/libs/iCheck/custom.css"
+	th:href="@{/ajax/libs/iCheck/custom.css}" rel="stylesheet" />
+<!-- 上传插件 -->
+<link rel="stylesheet"
+	href="/ajax/plugins/bootstrap-fileinput/css/fileinput.css"
+	th:href="@{/ajax/plugins/bootstrap-fileinput/css/fileinput.css}" />
+<link href="/css/font-awesome.css" th:href="@{/css/font-awesome.css}"
+	rel="stylesheet" />
+
+<link rel="stylesheet" href="/js/plugins/markdown/simplemde.min.css"
+	th:href="@{/js/plugins/markdown/simplemde.min.css}" />
+<link rel="stylesheet"
+	href="/js/plugins/markdown/github-markdown.min.css"
+	th:href="@{/js/plugins/markdown/github-markdown.min.css}" />
+<link rel="stylesheet" href="/js/plugins/markdown/highlight.min.css"
+	th:href="@{/js/plugins/markdown/highlight.min.css}" />
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="form-blogcontent-edit">
+							<input id="blogColumnNameh" name="blogColumnNameh" type="hidden"
+								th:value="${blogcontent.blogColumnName}"> <input
+								id="cid" name="cid" type="hidden" th:value="${blogcontent.cid}">
+							<input id="showId" name="showId" type="hidden"
+								th:value="${blogcontent.showId}"> <input id="images"
+								name="images" type="hidden" th:value="${blogcontent.images}">
+							<input id="articleEditor" name="articleEditor" type="hidden"
+								th:value="${blogcontent.articleEditor}">
+							<div class="form-group">
+								<label class="col-sm-1 control-label"><em
+									class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>标题：</label>
+								<div class="col-sm-6">
+									<input id="title" name="title" class="form-control" type="text"
+										th:value="${blogcontent.title}">
+								</div>
+								<label class="col-sm-1 control-label"><em
+									class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>作者：</label>
+								<div class="col-sm-4">
+									<input id="author" name="author" class="form-control"
+										type="text" th:value="${blogcontent.author}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-1 control-label">简介：</label>
+								<div class="col-sm-11">
+									<textarea id="introduction" name="introduction" rows="2"
+										class="form-control" th:text="${blogcontent.introduction}"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<input id="content" name="content" type="hidden"
+									th:value="${blogcontent.content}"><input id="contentMd"
+									name="contentMd" type="hidden"
+									th:value="${blogcontent.contentMd}"> <label
+									class="col-sm-1 control-label"><em class="gg-star"
+									style="color: red; font-style: normal;">*&nbsp;</em>内容：</label>
+								<div class="col-sm-11">
+									<div class="ibox-content no-padding">
+										<div id="content_sn" class="summernote" style="display: none"></div>
+										<textarea id="articleField" style="display: none"
+											th:text="${blogcontent.contentMd}"></textarea>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-1 control-label">封面：</label>
+								<div class="col-sm-5">
+									<input id="file-1" class="file" type="file" name="file">
+								</div>
+								<div class="col-sm-5" id="show1" align="center"
+									style="display: none">
+									<img id="showImg1" width="285" height="285" src=""></img>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-1 control-label"><em
+									class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>类型：</label>
+								<div class="col-sm-5">
+									<select class="form-control" name="type" id="type"
+										th:field="*{blogcontent.type}">
+										<option value="原创">原创</option>
+										<option value="转载">转载</option>
+										<option value="翻译">翻译</option>
+									</select>
+								</div>
+								<label class="col-sm-1 control-label"><em
+									class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>专栏：</label>
+								<div class="col-sm-5">
+									<select class="form-control" name="blogColumnName"
+										id="blogColumnName">
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-1 control-label">标签：</label>
+								<div class="col-sm-11">
+									<label th:each="tag:${tags}" class="checkbox-inline i-checks">
+										<input name="tag" type="checkbox" th:value="${tag.blogTagsId}"
+										th:text="${tag.blogTagsName}" th:checked="${tag.flag}">
+									</label>
+								</div>
+
+							</div>
+							<div class="form-group">
+								<label class="col-sm-1 control-label"></label>
+								<div class="col-sm-11">
+									<div class="col-sm-1" id="addTags2" style="padding-left: 0px">
+										<button class="btn btn-info" type="button"
+											data-toggle="tooltip" title="添加标签" onclick="addTags(this)">
+											<span class="glyphicon glyphicon-plus"></span>
+										</button>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-1 control-label">置顶：</label>
+								<div class="switch onoffswitch col-sm-1">
+									<div class="onoffswitch">
+										<input type="checkbox"
+											th:checked="${blogcontent.articleTop == 0 ? true : false}"
+											class="onoffswitch-checkbox" id="article_top"
+											name="article_top"> <label class="onoffswitch-label"
+											for="article_top"> <span class="onoffswitch-inner"></span>
+											<span class="onoffswitch-switch"></span>
+										</label>
+									</div>
+								</div>
+								<label class="col-sm-2 control-label">允许评论：</label>
+								<div class="switch onoffswitch col-sm-1">
+									<div class="onoffswitch">
+										<input type="checkbox"
+											th:checked="${blogcontent.allowComment == 0 ? true : false}"
+											class="onoffswitch-checkbox" id="allow_comment"
+											name="allow_comment"> <label
+											class="onoffswitch-label" for="allow_comment"> <span
+											class="onoffswitch-inner"></span> <span
+											class="onoffswitch-switch"></span>
+										</label>
+									</div>
+								</div>
+
+								<label class="col-sm-2 control-label">允许转载：</label>
+								<div class="switch onoffswitch col-sm-2">
+									<div class="onoffswitch">
+										<input type="checkbox"
+											th:checked="${blogcontent.allowPing == 0 ? true : false}"
+											class="onoffswitch-checkbox" id="ping" name="ping"> <label
+											class="onoffswitch-label" for="ping"> <span
+											class="onoffswitch-inner"></span> <span
+											class="onoffswitch-switch"></span>
+										</label>
+									</div>
+								</div>
+								<label class="col-sm-2 control-label">开启简介：</label>
+								<div class="switch onoffswitch col-sm-2">
+									<div class="onoffswitch">
+										<input type="checkbox"
+											th:checked="${blogcontent.showIntroduction == 0 ? true : false}"
+											class="onoffswitch-checkbox" id="allow_introduction"
+											name="allow_introduction"> <label
+											class="onoffswitch-label" for="allow_introduction"> <span
+											class="onoffswitch-inner"></span> <span
+											class="onoffswitch-switch"></span>
+										</label>
+									</div>
+								</div>
+								<label class="col-sm-2 control-label">私密文章：</label>
+								<div class="switch onoffswitch col-sm-2">
+									<div class="onoffswitch">
+										<input type="checkbox"
+											th:checked="${blogcontent.privateArticle == 0 ? true : false}"
+											class="onoffswitch-checkbox" id="private_article"
+											name="private_article"> <label
+											class="onoffswitch-label" for="private_article"> <span
+											class="onoffswitch-inner"></span> <span
+											class="onoffswitch-switch"></span>
+										</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-1 control-label"><em
+									class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>下载：</label>
+								<div class="switch onoffswitch col-sm-2">
+									<div class="onoffswitch">
+										<input type="checkbox"
+											th:checked="${blogcontent.allowDownload == 0 ? true : false}"
+											class="onoffswitch-checkbox" id="allow_download"
+											name="allow_download"> <label
+											class="onoffswitch-label" for="allow_download"> <span
+											class="onoffswitch-inner"></span> <span
+											class="onoffswitch-switch"></span>
+										</label>
+									</div>
+								</div>
+								<label class="col-sm-2 control-label">文章来源：</label>
+								<div class="col-sm-2">
+									<input id="articleSource" name="articleSource"
+										class="form-control" type="text"
+										th:value="${blogcontent.articleSource}" disabled>
+								</div>
+							</div>
+
+							<div class="text-right form-group">
+								<button class="btn btn-primary" type="submit">发布文章</button>
+								<button type="button" class="btn btn-warning"
+									onclick="update(0)">存为草稿</button>
+								<button th:onclick="'javascript:layer_close()'"
+									class="btn btn-danger" type="button">关闭</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script src="/ajax/plugins/bootstrap-fileinput/js/fileinput.min.js"
+		th:src="@{/ajax/plugins/bootstrap-fileinput/js/fileinput.min.js}"></script>
+	<script src="/ajax/plugins/bootstrap-fileinput/js/locales/zh.js"
+		th:src="@{/ajax/plugins/bootstrap-fileinput/js/locales/zh.js  }"></script>
+	<script src="/ajax/plugins/bootstrap-fileinput/js/locales/fr.js"
+		th:src="@{/ajax/plugins/bootstrap-fileinput/js/locales/fr.js  }"></script>
+	<script src="/js/plugins/markdown/highlight.min.js"
+		th:src="@{/js/plugins/markdown/highlight.min.js}"></script>
+	<script src="/js/plugins/markdown/simplemde.min.js"
+		th:src="@{/js/plugins/markdown/simplemde.min.js}"></script>
+	<script th:inline="javascript">
+	var basicsetGlobalAllowComment=[[${basicsetGlobalAllowComment}]];
+	var basicsetGlobalAllowReprint=[[${basicsetGlobalAllowReprint}]];
+	var basicsetOpenBlogDownload=[[${basicsetOpenBlogDownload}]];
+	var blogFileName=[[${blogcontent.blogFileName}]];
+	</script>
+	<script src="/rzspider/blog/blogcontent/edit.js"
+		th:src="@{/rzspider/blog/blogcontent/edit.js}">
+		
+	</script>
+	<script src="/ajax/libs/iCheck/icheck.min.js"
+		th:src="@{/ajax/libs/iCheck/icheck.min.js}"></script>
+	<script>
+		$(document).ready(function() {
+			$(".i-checks").iCheck({
+				checkboxClass : "icheckbox_square-green",
+				radioClass : "iradio_square-green",
+			})
+		});
+	</script>
+	<script th:inline="javascript">
+		var cover=[[${blogcontent.cover}]];
+		var addWaterMark="true";
+		//显示
+		if(cover!=null&&cover!=''){
+			$("#show1").css('display', 'block');
+			document.getElementById("showImg1").src = cover;
+		}
+		//上传绑定
+		// 上传文件
+		$("#file-1").fileinput({
+			language : 'zh', // 设置语言
+			uploadUrl : ctx + "blog/blogcontent/uploadBlogImg?blogFileName="+blogFileName+"&addWaterMark="+addWaterMark,
+			allowedFileExtensions : [ 'jpg', 'png', 'jpeg',
+										'gif' ],// 接收的文件后缀
+			showUpload : true, // 是否显示上传按钮
+			showRemove : false, // 是否显示移除按钮
+			showCaption : false,// 是否显示标题
+			browseClass : "btn btn-primary", // 按钮样式
+			dropZoneEnabled : true,//是否显示拖拽区域
+			uploadAsync : true,
+			showBrowse : true,
+			browseOnZoneClick : false,
+			maxFileCount : 1, // 表示允许同时上传的最大文件个数
+			enctype : 'multipart/form-data',
+			maxFileSize : 3096
+		// 单位为kb，如果为0表示不限制文件大小
+		}).on("filebatchselected", function(event, files) {
+			//返回文件名
+		}).on('filesuccessremove', function(event, id){
+			$("#show1").css('display', 'none');
+			cover=null;
+		}).on("fileuploaded", function(event, data) {
+			//返回文件名
+			cover = (data.response.code == 0) ? (data.response.fileName) : null;
+			blogFileName = (data.response.code == 0) ? (data.response.folderName) : null;
+			$("#show1").css('display', 'block');
+			document.getElementById("showImg1").src = cover;
+		});
+	</script>
+</body>
+</html>

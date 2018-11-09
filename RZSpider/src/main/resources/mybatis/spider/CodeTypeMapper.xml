@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzspider.project.spider.codeType.mapper.CodeTypeMapper">
+
+	<resultMap type="CodeType" id="CodeTypeResult">
+		<result property="spiderCodeTypeId" column="spider_code_type_id" />
+		<result property="customSpiderType" column="custom_spider_type" />
+		<result property="spiderCodeTypeName" column="spider_code_type_name" />
+		<result property="spiderCodeTypeFolder" column="spider_code_type_folder" />
+		<result property="status" column="status" />
+	</resultMap>
+
+	<select id="selectCodeTypeById" parameterType="Integer"
+		resultMap="CodeTypeResult">
+		select spider_code_type_id, custom_spider_type,
+		spider_code_type_name,
+		spider_code_type_folder, status from
+		spider_code_type
+		where spider_code_type_id = #{spiderCodeTypeId}
+	</select>
+	<select id="selectSpiderCodeTypeByStatus" parameterType="Integer"
+		resultMap="CodeTypeResult">
+		select spider_code_type_id, custom_spider_type,
+		spider_code_type_name,
+		spider_code_type_folder, status from
+		spider_code_type
+		where status = #{status}
+	</select>
+	<select id="selectSpiderCodeTypeByCustomSpiderType"
+		parameterType="Integer" resultMap="CodeTypeResult">
+		select spider_code_type_id,
+		custom_spider_type, spider_code_type_name,
+		spider_code_type_folder,
+		status from spider_code_type
+		where custom_spider_type =
+		#{customSpiderType}
+	</select>
+
+	<select id="checkCustomSpiderTypeUnique" parameterType="Integer"
+		resultMap="CodeTypeResult">
+		select spider_code_type_id, custom_spider_type,
+		spider_code_type_name,
+		spider_code_type_folder, status from
+		spider_code_type
+		where custom_spider_type = #{customSpiderType}
+	</select>
+
+	<select id="checkSpiderCodeTypeFolderUnique" parameterType="String"
+		resultMap="CodeTypeResult">
+		select spider_code_type_id, custom_spider_type,
+		spider_code_type_name,
+		spider_code_type_folder, status from
+		spider_code_type
+		where spider_code_type_folder =
+		#{spiderCodeTypeFolder}
+	</select>
+
+	<select id="selectCodeTypeList" parameterType="CodeType"
+		resultMap="CodeTypeResult">
+		select spider_code_type_id, custom_spider_type, spider_code_type_name,
+		spider_code_type_folder, status from spider_code_type
+		<where>
+			<if test="spiderCodeTypeId != null and spiderCodeTypeId != ''"> and spider_code_type_id = #{spiderCodeTypeId}</if>
+			<if test="customSpiderType != null and customSpiderType != ''"> and custom_spider_type = #{customSpiderType}</if>
+			<if test="spiderCodeTypeName != null and spiderCodeTypeName != ''"> and spider_code_type_name = #{spiderCodeTypeName}</if>
+			<if test="spiderCodeTypeFolder != null and spiderCodeTypeFolder != ''"> and spider_code_type_folder = #{spiderCodeTypeFolder}
+			</if>
+			<if test="status != null and status != ''"> and status = #{status}</if>
+			<if test="searchValue != null and searchValue != ''">
+				AND spider_code_type_name like concat(concat('%',
+				#{searchValue}), '%')
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertCodeType" parameterType="CodeType">
+		insert into spider_code_type (
+		<if test="spiderCodeTypeId != null and spiderCodeTypeId != '' ">spider_code_type_id, </if>
+		<if test="customSpiderType != null and customSpiderType != '' ">custom_spider_type, </if>
+		<if test="spiderCodeTypeName != null and spiderCodeTypeName != '' ">spider_code_type_name, </if>
+		<if test="spiderCodeTypeFolder != null and spiderCodeTypeFolder != '' ">spider_code_type_folder, </if>
+		status
+		)values(
+		<if test="spiderCodeTypeId != null and spiderCodeTypeId != ''">#{spiderCodeTypeId}, </if>
+		<if test="customSpiderType != null and customSpiderType != ''">#{customSpiderType}, </if>
+		<if test="spiderCodeTypeName != null and spiderCodeTypeName != ''">#{spiderCodeTypeName}, </if>
+		<if test="spiderCodeTypeFolder != null and spiderCodeTypeFolder != ''">#{spiderCodeTypeFolder}, </if>
+		#{status}
+		)
+	</insert>
+
+	<update id="updateCodeType" parameterType="CodeType">
+		update spider_code_type
+		<set>
+			status = #{status}
+		</set>
+		where spider_code_type_id = #{spiderCodeTypeId}
+	</update>
+
+	<delete id="deleteCodeTypeById" parameterType="Integer">
+		delete from
+		spider_code_type where spider_code_type_id = #{value}
+	</delete>
+
+	<delete id="batchDeleteCodeType" parameterType="Integer">
+		delete from spider_code_type where spider_code_type_id in
+		<foreach item="spiderCodeTypeId" collection="array" open="("
+			separator="," close=")">
+			#{spiderCodeTypeId}
+		</foreach>
+	</delete>
+
+</mapper>

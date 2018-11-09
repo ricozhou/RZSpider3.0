@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-spidertaskinfo-params">
+			<input id="taskId" name="taskId" th:value="${spidertaskinfo.taskId}"
+				type="hidden"> <input id="taskParams" name="taskParams"
+				th:value="${spidertaskinfo.taskParams}" type="hidden">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">任务名称：</label>
+				<div class="col-sm-8">
+					<input id="taskName" name="taskName" class="form-control"
+						th:value="${spidertaskinfo.taskName}" readonly="readonly"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label ">爬虫名称：</label>
+				<div class="col-sm-8">
+					<input class="form-control" type="text" name="spiderName"
+						id="spiderName" th:value="${spidertaskinfo.spiderName}"
+						readonly="readonly" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">爬虫参数：</label>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">标的物类型：</label>
+				<div class="col-sm-6">
+					<select class="form-control" name="targetType" id="targetType"
+						disabled>
+						<option value="不限">不限</option>
+						<option value="房产">房产</option>
+						<option value="机动车">机动车</option>
+						<option value="其他">其他</option>
+						<option value="资产">资产</option>
+						<option value="土地">土地</option>
+						<option value="股权">股权</option>
+						<option value="林权">林权</option>
+						<option value="无形资产">无形资产</option>
+						<option value="船舶">船舶</option>
+						<option value="矿权">矿权</option>
+						<option value="工程">工程</option>
+					</select>
+				</div>
+				<div class="col-sm-2">
+					<button type="button" class="btn btn-primary" id="openWeb"
+						onclick="openWebsite()">打开此网站</button>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">拍卖状态：</label>
+				<div class="col-sm-8">
+					<select class="form-control" name="auctionStatus" disabled
+						id="auctionStatus">
+						<option value="不限">不限</option>
+						<option value="正在进行">正在进行</option>
+						<option value="即将开始">即将开始</option>
+						<option value="已结束">已结束</option>
+						<option value="中止">中止</option>
+						<option value="撤回">撤回</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">标的物所在地：</label>
+				<div class="col-sm-4">
+					<select class="form-control" name="province" id="province" disabled></select>
+				</div>
+				<div class="col-sm-4">
+					<select class="form-control" name="city" id="city" disabled>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">爬取页数：</label>
+				<div class="col-sm-4">
+					<div class="input-group spinner" data-trigger="spinner">
+						<input type="text" class="form-control text-center" value="1"
+							data-rule="quantity" id="startPage" name="startPage" disabled>
+						<div class="input-group-addon">
+							<a href="javascript:;" class="spin-up" data-spin="up"><i
+								class="fa fa-caret-up"></i></a> <a href="javascript:;"
+								class="spin-down" data-spin="down"><i
+								class="fa fa-caret-down"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="input-group spinner" data-trigger="spinner">
+						<input type="text" class="form-control text-center" value="1"
+							data-rule="quantity" id="endPage" name="endPage" disabled>
+						<div class="input-group-addon">
+							<a href="javascript:;" class="spin-up" data-spin="up"><i
+								class="fa fa-caret-up"></i></a> <a href="javascript:;"
+								class="spin-down" data-spin="down"><i
+								class="fa fa-caret-down"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">是否爬取详细信息：</label>
+				<div class="col-sm-8"
+					th:with="datas=${@dictService.selectDictData('sys_yes_no')}">
+					<div th:each="dict : ${datas}" th:class="${dict['cssClass']}">
+						<input type="radio" th:id="${dict['dictCode']}" name="getDetails"
+							th:value="${dict['dictValue']}"
+							th:checked="${dict['isDefault'] == 'Y' ? true : false}" disabled>
+						<label th:for="${dict['dictCode']}" th:text="${dict['dictLabel']}"></label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="form-control-static col-sm-offset-9">
+					<button th:onclick="'javascript:layer_close()'"
+						class="btn btn-danger" type="button">关闭</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div th:include="include::footer"></div>
+	<script src="/js/json3.js" th:src="@{/js/json3.js}"></script>
+	<script
+		src="/rzspider/spider/spidertask/spidertaskinfo/params/10001.js"
+		th:src="@{/rzspider/spider/spidertask/spidertaskinfo/params/10001.js}"></script>
+	<script
+		src="/rzspider/spider/spidertask/spidertaskinfo/params/distpicker.data.js"
+		th:src="@{/rzspider/spider/spidertask/spidertaskinfo/params/distpicker.data.js}"></script>
+</body>
+</html>

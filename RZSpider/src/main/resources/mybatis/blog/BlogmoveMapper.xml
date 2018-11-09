@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzspider.project.blog.blogcontent.mapper.BlogmoveMapper">
+
+	<resultMap type="Blogmove" id="BlogmoveResult">
+		<result property="blogMoveId" column="blog_move_id" />
+		<result property="moveWebsiteId" column="move_website_id" />
+		<result property="moveNum" column="move_num" />
+		<result property="moveArticleEditor" column="move_article_editor" />
+		<result property="moveArticleType" column="move_article_type" />
+		<result property="moveColumn" column="move_column" />
+		<result property="moveBlogStatus" column="move_blog_status" />
+		<result property="moveUseOriginalTime" column="move_use_original_time" />
+		<result property="moveSaveImg" column="move_save_img" />
+		<result property="moveRemoveRepeat" column="move_remove_repeat" />
+		<result property="moveMessage" column="move_message" />
+		<result property="moveStopMode" column="move_stop_mode" />
+		<result property="moveSuccess" column="move_success" />
+		<result property="moveSuccessNum" column="move_success_num" />
+		<result property="moveMode" column="move_mode" />
+		<result property="moveWebsiteUrl" column="move_website_url" />
+		<result property="moveFileNames" column="move_file_names" />
+		<result property="moveAddWaterMark" column="move_add_water_mark" />
+		<result property="createBy" column="create_by" />
+		<result property="createTime" column="create_time" />
+		<result property="finishTime" column="finish_time" />
+		<result property="takeTime" column="take_time" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<select id="selectBlogmoveById" parameterType="Integer"
+		resultMap="BlogmoveResult">
+		select * from blog_blogmove
+		where blog_move_id =
+		#{blogMoveId}
+	</select>
+
+	<select id="selectBlogmoveList" parameterType="Blogmove"
+		resultMap="BlogmoveResult">
+		select * from blog_blogmove
+		<where>
+			<if test="blogMoveId != null and blogMoveId != ''"> and blog_move_id = #{blogMoveId}</if>
+			<if test="moveWebsiteId != null and moveWebsiteId != ''"> and move_website_id = #{moveWebsiteId}</if>
+			<if test="moveNum != null and moveNum != ''"> and move_num = #{moveNum}</if>
+			<if test="moveArticleEditor != null and moveArticleEditor != ''"> and move_article_editor = #{moveArticleEditor}</if>
+			<if test="moveColumn != null and moveColumn != ''"> and move_column = #{moveColumn}</if>
+			<if test="moveBlogStatus != null and moveBlogStatus != ''"> and move_blog_status = #{moveBlogStatus}</if>
+			<if test="moveUseOriginalTime != null and moveUseOriginalTime != ''"> and move_use_original_time = #{moveUseOriginalTime}</if>
+			<if test="moveSaveImg != null and moveSaveImg != ''"> and move_save_img = #{moveSaveImg}</if>
+			<if test="moveRemoveRepeat != null and moveRemoveRepeat != ''"> and move_remove_repeat = #{moveRemoveRepeat}</if>
+			<if test="moveMessage != null and moveMessage != ''"> and move_message = #{moveMessage}</if>
+			<if test="moveStopMode != null and moveStopMode != ''"> and move_stop_mode = #{moveStopMode}</if>
+			<if test="moveSuccess != null and moveSuccess != ''"> and move_success = #{moveSuccess}</if>
+			<if test="moveSuccessNum != null and moveSuccessNum != ''"> and move_success_num = #{moveSuccessNum}</if>
+			<if test="createBy != null and createBy != ''"> and create_by = #{createBy}</if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+			<if test="finishTime != null and finishTime != ''"> and finish_time = #{finishTime}</if>
+			<if test="takeTime != null and takeTime != ''"> and take_time = #{takeTime}</if>
+			<if test="remark != null and remark != ''"> and remark = #{remark}</if>
+		</where>
+	</select>
+
+	<insert id="insertBlogmove" parameterType="Blogmove"
+		useGeneratedKeys="true" keyProperty="blogMoveId">
+		insert into
+		blog_blogmove (
+		move_website_id,
+		move_num,
+		move_article_editor,
+		move_article_type,
+		move_column,
+		move_blog_status,
+		move_use_original_time,
+		move_save_img,
+		move_remove_repeat,
+		move_message,
+		move_mode,
+		move_website_url,
+		move_file_names,
+		move_add_water_mark,
+		create_by,
+		create_time,
+		remark
+		)values(
+		#{moveWebsiteId},
+		#{moveNum},
+		#{moveArticleEditor},
+		#{moveArticleType},
+		#{moveColumn},
+		#{moveBlogStatus},
+		#{moveUseOriginalTime},
+		#{moveSaveImg},
+		#{moveRemoveRepeat},
+		#{moveMessage},
+		#{moveMode},
+		#{moveWebsiteUrl},
+		#{moveFileNames},
+		#{moveAddWaterMark},
+		#{createBy},
+		#{createTime},
+		#{remark}
+		)
+	</insert>
+
+	<update id="updateBlogmove" parameterType="Blogmove">
+		update blog_blogmove
+		<set>
+			move_message = #{moveMessage},
+			move_stop_mode = #{moveStopMode},
+			move_success = #{moveSuccess},
+			move_success_num = #{moveSuccessNum},
+			finish_time = #{finishTime},
+			take_time = #{takeTime}
+		</set>
+		where blog_move_id = #{blogMoveId}
+	</update>
+
+	<update id="updateMoveStopMoveMsg" parameterType="Blogmove">
+		update blog_blogmove
+		<set>
+			move_stop_mode = #{moveStopMode},
+			finish_time = #{finishTime},
+			take_time = #{takeTime}
+		</set>
+		where blog_move_id = #{blogMoveId}
+	</update>
+
+	<delete id="deleteBlogmoveById" parameterType="Integer">
+		delete from
+		blog_blogmove where blog_move_id = #{value}
+	</delete>
+
+	<delete id="batchDeleteBlogmove" parameterType="Integer">
+		delete from blog_blogmove where blog_move_id in
+		<foreach item="blogMoveId" collection="array" open="("
+			separator="," close=")">
+			#{blogMoveId}
+		</foreach>
+	</delete>
+
+</mapper>

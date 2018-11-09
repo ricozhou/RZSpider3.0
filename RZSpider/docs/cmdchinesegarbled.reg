@@ -1,0 +1,5 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Console\%SystemRoot%_system32_cmd.exe]
+
+"CodePage"=dword:000003a8

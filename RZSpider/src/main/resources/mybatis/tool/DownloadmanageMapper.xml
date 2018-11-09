@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.rzspider.project.tool.downloadmanage.mapper.DownloadmanageMapper">
+
+	<resultMap type="Downloadmanage" id="DownloadmanageResult">
+		<result property="downloadmanageId" column="downloadmanage_id" />
+		<result property="downloadFileName" column="download_file_name" />
+		<result property="downloadFileUuidName" column="download_file_uuid_name" />
+		<result property="downloadFileType" column="download_file_type" />
+		<result property="downloadFileExtensionName" column="download_file_extension_name" />
+		<result property="downloadFileSize" column="download_file_size" />
+		<result property="downloadFileUrlKey" column="download_file_url_key" />
+		<result property="downloadFileUrl" column="download_file_url" />
+		<result property="downloadFileLimitDownNum" column="download_file_limit_down_num" />
+		<result property="downloadFileLimitDownTime" column="download_file_limit_down_time" />
+		<result property="downloadFileDownNum" column="download_file_down_num" />
+		<result property="status" column="status" />
+		<result property="useStatus" column="use_status" />
+		<result property="createBy" column="create_by" />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy" column="update_by" />
+		<result property="updateTime" column="update_time" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<select id="selectDownloadmanageById" parameterType="Integer"
+		resultMap="DownloadmanageResult">
+		select downloadmanage_id, download_file_name,
+		download_file_uuid_name,
+		download_file_type,
+		download_file_extension_name,
+		download_file_size,download_file_url_key,
+		download_file_url,
+		download_file_limit_down_num,
+		download_file_limit_down_time,
+		download_file_down_num, status,
+		use_status, create_by, create_time,
+		update_by, update_time, remark
+		from tool_downloadmanage
+		where
+		downloadmanage_id = #{downloadmanageId}
+	</select>
+	<select id="selectDownloadmanageByDownloadFileUrlKey"
+		parameterType="String" resultMap="DownloadmanageResult">
+		select downloadmanage_id,
+		download_file_name,
+		download_file_uuid_name,
+		download_file_type,
+		download_file_extension_name,
+		download_file_size,download_file_url_key,
+		download_file_url,
+		download_file_limit_down_num,
+		download_file_limit_down_time,
+		download_file_down_num, status,
+		use_status, create_by, create_time,
+		update_by, update_time, remark
+		from tool_downloadmanage
+		where
+		download_file_url_key = #{downloadFileUrlKey}
+	</select>
+
+	<select id="selectDownloadmanageList" parameterType="Downloadmanage"
+		resultMap="DownloadmanageResult">
+		select downloadmanage_id, download_file_name, download_file_uuid_name,
+		download_file_type, download_file_extension_name,
+		download_file_size,download_file_url_key,
+		download_file_url,
+		download_file_limit_down_num,
+		download_file_limit_down_time,
+		download_file_down_num, status,
+		use_status, create_by, create_time,
+		update_by, update_time, remark
+		from tool_downloadmanage
+		<where>
+			<if test="downloadmanageId != null and downloadmanageId != ''"> and downloadmanage_id = #{downloadmanageId}</if>
+			<if test="downloadFileName != null and downloadFileName != ''"> and download_file_name = #{downloadFileName}</if>
+			<if test="downloadFileUuidName != null and downloadFileUuidName != ''"> and download_file_uuid_name = #{downloadFileUuidName}
+			</if>
+			<if test="downloadFileType != null and downloadFileType != ''"> and download_file_type = #{downloadFileType}</if>
+			<if
+				test="downloadFileExtensionName != null and downloadFileExtensionName != ''"> and download_file_extension_name =
+				#{downloadFileExtensionName}
+			</if>
+			<if test="downloadFileSize != null and downloadFileSize != ''"> and download_file_size = #{downloadFileSize}</if>
+			<if test="downloadFileUrlKey != null and downloadFileUrlKey != ''"> and download_file_url_key = #{downloadFileUrlKey}</if>
+			<if test="downloadFileUrl != null and downloadFileUrl != ''"> and download_file_url = #{downloadFileUrl}</if>
+			<if
+				test="downloadFileLimitDownNum != null and downloadFileLimitDownNum != ''"> and download_file_limit_down_num = #{downloadFileLimitDownNum}
+			</if>
+			<if
+				test="downloadFileLimitDownTime != null and downloadFileLimitDownTime != ''"> and download_file_limit_down_time =
+				#{downloadFileLimitDownTime}
+			</if>
+			<if test="downloadFileDownNum != null and downloadFileDownNum != ''"> and download_file_down_num = #{downloadFileDownNum}</if>
+			<if test="status != null and status != ''"> and status = #{status}</if>
+			<if test="useStatus != null and useStatus != ''"> and use_status = #{useStatus}</if>
+			<if test="createBy != null and createBy != ''"> and create_by = #{createBy}</if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+			<if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy}</if>
+			<if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+			<if test="remark != null and remark != ''"> and remark = #{remark}</if>
+			<if test="searchValue != null and searchValue != ''">
+				AND download_file_name like concat(concat('%',
+				#{searchValue}), '%')
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertDownloadmanage" parameterType="Downloadmanage">
+		insert into
+		tool_downloadmanage (
+		download_file_name,
+		download_file_uuid_name,
+		download_file_type,
+		download_file_extension_name,
+		download_file_size,
+		download_file_url_key,
+		download_file_url,
+		download_file_limit_down_num,
+		download_file_limit_down_time,
+		status,
+		create_by,
+		create_time,
+		update_by,
+		update_time,
+		remark
+		)values(
+		#{downloadFileName},
+		#{downloadFileUuidName},
+		#{downloadFileType},
+		#{downloadFileExtensionName},
+		#{downloadFileSize},
+		#{downloadFileUrlKey},
+		#{downloadFileUrl},
+		#{downloadFileLimitDownNum},
+		#{downloadFileLimitDownTime},
+		#{status},
+		#{createBy},
+		sysdate(),
+		#{updateBy},
+		sysdate(),
+		#{remark}
+		)
+	</insert>
+
+	<update id="updateDownloadmanage" parameterType="Downloadmanage">
+		update tool_downloadmanage
+		<set>
+			download_file_name = #{downloadFileName},
+			download_file_uuid_name
+			= #{downloadFileUuidName},
+			download_file_type = #{downloadFileType},
+			download_file_extension_name = #{downloadFileExtensionName},
+			download_file_size =
+			#{downloadFileSize},
+			download_file_limit_down_num
+			= #{downloadFileLimitDownNum},
+			download_file_limit_down_time =
+			#{downloadFileLimitDownTime},
+			status = #{status},
+			update_by =
+			#{updateBy},
+			update_time = sysdate(),
+			remark = #{remark}
+		</set>
+		where downloadmanage_id = #{downloadmanageId}
+	</update>
+	<update id="updateDownloadmanageDownloadFileDownNum">
+		update tool_downloadmanage
+		<set>
+			download_file_down_num = #{1}
+		</set>
+		where downloadmanage_id = #{0}
+	</update>
+
+	<delete id="deleteDownloadmanageById" parameterType="Integer">
+		delete from
+		tool_downloadmanage where downloadmanage_id = #{value}
+	</delete>
+
+	<delete id="batchDeleteDownloadmanage" parameterType="Integer">
+		delete from tool_downloadmanage where downloadmanage_id in
+		<foreach item="downloadmanageId" collection="array" open="("
+			separator="," close=")">
+			#{downloadmanageId}
+		</foreach>
+	</delete>
+
+</mapper>

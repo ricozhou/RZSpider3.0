@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+		<div class="btn-group hidden-xs" id="tableToolbar" role="group">
+			<button class="btn btn-outline btn-default"
+				onclick="javascript:add()"
+				shiro:hasPermission="spider:spidermanage:add">
+				<i class="fa fa-plus"></i> 新增spider
+			</button>
+			<button class="btn btn-outline btn-default"
+				onclick="javascript:batchRemove()"
+				shiro:hasPermission="spider:spidermanage:batchRemove">
+				<i class="fa fa-trash-o"></i> 删除
+			</button>
+			<div class="btn-group">
+				<button type="button" class="btn btn-outline btn-default dropdown-toggle"
+					data-toggle="dropdown">
+					<span>爬虫手册</span> <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="/tool/baseset/detailedit/previewManual/1"
+						target="_Blank">查看</a></li>
+					<li><a href="/tool/baseset/detailedit/downloadManual/1">下载</a></li>
+				</ul>
+			</div>
+		</div>
+		<table class="bootstrap-table" data-mobile-responsive="true"
+			data-sort-name="spider_id" data-sort-order="asc">
+		</table>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script
+		src="/ajax/libs/bootstrap-table/extensions/export/bootstrap-table-export.js"
+		th:src="@{/ajax/libs/bootstrap-table/extensions/export/bootstrap-table-export.js}"></script>
+	<script
+		src="/ajax/libs/bootstrap-table/extensions/export/tableExport.js"
+		th:src="@{/ajax/libs/bootstrap-table/extensions/export/tableExport.js}"></script>
+	<script src="/rzspider/spider/spidermanage/spidermanage.js"
+		th:src="@{/rzspider/spider/spidermanage/spidermanage.js}"></script>
+	<script th:inline="javascript">
+		var editFlag = [[${@permissionService.hasPermi('spider:spidermanage:edit')}]];
+		var removeFlag = [[${@permissionService.hasPermi('spider:spidermanage:remove')}]];
+	</script>
+</body>
+</html>

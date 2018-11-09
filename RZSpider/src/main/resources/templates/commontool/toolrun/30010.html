@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<!--使用code mirror创建一个web代码编辑器 -->
+<!--Code Mirror必须引入这两个-->
+<link rel="stylesheet" href="/ajax/libs/codemirror-5.31.0/lib/codemirror.css"
+	th:href="@{/ajax/libs/codemirror-5.31.0/lib/codemirror.css}" />
+<script src="/ajax/libs/codemirror-5.31.0/lib/codemirror.js"
+	th:src="@{/ajax/libs/codemirror-5.31.0/lib/codemirror.js}"></script>
+<!--Java代码高亮必须引入-->
+<script src="/ajax/libs/codemirror-5.31.0/clike.js"
+	th:src="@{/ajax/libs/codemirror-5.31.0/clike.js}"></script>
+<!--groovy代码高亮-->
+<script src="/ajax/libs/codemirror-5.31.0/mode/groovy/groovy.js"
+	th:src="@{/ajax/libs/codemirror-5.31.0/mode/groovy/groovy.js}"></script>
+<!--python代码高亮-->
+<script src="/ajax/libs/codemirror-5.31.0/mode/python/python.js"
+	th:src="@{/ajax/libs/codemirror-5.31.0/mode/python/python.js}"></script>
+<!--js代码高亮-->
+<script src="/ajax/libs/codemirror-5.31.0/mode/javascript/javascript.js"
+	th:src="@{/ajax/libs/codemirror-5.31.0/mode/javascript/javascript.js}"></script>
+<!--引入css文件，用以支持主题-->
+<link rel="stylesheet" href="/ajax/libs/codemirror-5.31.0/theme/dracula.css"
+	th:href="@{/ajax/libs/codemirror-5.31.0/theme/dracula.css}" />
+<!-- <link rel="stylesheet" href="/ajax/libs/codemirror-5.31.0/theme/idea.css"
+	th:href="@{/ajax/libs/codemirror-5.31.0/theme/idea.css}" /> -->
+
+<!--支持代码折叠-->
+<link rel="stylesheet"
+	href="/ajax/libs/codemirror-5.31.0/addon/fold/foldgutter.css"
+	th:href="@{/ajax/libs/codemirror-5.31.0/addon/fold/foldgutter.css}" />
+<script src="/ajax/libs/codemirror-5.31.0/addon/fold/foldcode.js"
+	th:src="@{/ajax/libs/codemirror-5.31.0/addon/fold/foldcode.js}"></script>
+<script src="/ajax/libs/codemirror-5.31.0/addon/fold/foldgutter.js"
+	th:src="@{/ajax/libs/codemirror-5.31.0/addon/fold/foldgutter.js}"></script>
+<script src="/ajax/libs/codemirror-5.31.0/addon/fold/brace-fold.js"
+	th:src="@{/ajax/libs/codemirror-5.31.0/addon/fold/brace-fold.js}"></script>
+<script src="/ajax/libs/codemirror-5.31.0/addon/fold/comment-fold.js"
+	th:src="@{/ajax/libs/codemirror-5.31.0/addon/fold/comment-fold.js}"></script>
+<!--括号匹配-->
+<script src="/ajax/libs/codemirror-5.31.0/addon/edit/matchbrackets.js"
+	th:src="@{/ajax/libs/codemirror-5.31.0/addon/edit/matchbrackets.js}"></script>
+<!--end Code Mirror -->
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="form-toolrun-run">
+							<input id="toolBackId" name="toolBackId" th:value="${toolBackId}"
+								type="hidden" />
+							<div class="form-group">
+								<label class="col-sm-2 control-label">代码类型：</label>
+								<div class="col-sm-4">
+									<select class="form-control" name="codeType" id="codeType">
+										<option value="0">JAVA</option>
+										<option value="1">PYTHON</option>
+										<option value="2">JAVASCRIPT</option>
+										<option value="3">HTML</option>
+										<option value="4">SQL</option>
+									</select>
+								</div>
+								<label class="col-sm-2 control-label" id="show1"
+									style="display: none">DB类型：</label>
+								<div class="col-sm-4" id="show2" style="display: none">
+									<select class="form-control" name="sqlType" id="sqlType">
+										<option value="0">MySql</option>
+										<option value="1">SQL Server</option>
+										<option value="2">Oracle</option>
+										<option value="3">PostgreSQL</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"><em
+									class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>输入代码：</label>
+								<div class="col-sm-10">
+									<textarea class="form-control" id="content" name="content"></textarea>
+									<label style="color: red" id="showCodeStatus"></label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">输出代码：</label>
+								<div class="col-sm-10">
+									<textarea class="form-control" id="exportContent"
+										name="exportContent"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="form-control-static col-sm-offset-9">
+									<button class="btn btn-primary" type="submit"
+										id="runFormatCode">格式化</button>
+									<button class="btn btn-warning" type="button" id="clearText2"
+										onclick="clearText()">清空</button>
+									<button class="btn btn-primary" type="button" disabled
+										id="copyText2" onclick="copyText()">复制</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script src="/rzspider/commontool/toolrun/30010.js"
+		th:src="@{/rzspider/commontool/toolrun/30010.js}">
+		
+	</script>
+</body>
+</html>

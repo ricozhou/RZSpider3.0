@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzspider.project.spider.codeType.mapper.CodeTypeDataMapper">
+
+	<resultMap type="CodeTypeData" id="CodeTypeDataResult">
+		<result property="id" column="id" />
+		<result property="customSpiderType" column="custom_spider_type" />
+		<result property="customSpiderTypeName" column="custom_spider_type_name" />
+		<result property="status" column="status" />
+	</resultMap>
+
+	<select id="selectCodeTypeDataListByStatus" parameterType="CodeTypeData"
+		resultMap="CodeTypeDataResult">
+		select id, custom_spider_type, custom_spider_type_name, status from
+		spider_code_type_data
+		<where>
+			status = #{status}
+		</where>
+	</select>
+
+
+</mapper>

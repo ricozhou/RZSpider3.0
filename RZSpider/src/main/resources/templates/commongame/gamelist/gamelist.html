@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+		<div class="btn-group hidden-xs" id="tableToolbar" role="group">
+			<button type="button" class="btn btn-outline btn-default"
+				th:onclick="'javascript:add()'"
+				shiro:hasPermission="commongame:gamelist:add">
+				<i class="glyphicon glyphicon-plus"></i>添加游戏
+			</button>
+			<button type="button" class="btn btn-outline btn-default"
+				th:onclick="'javascript:batchRemove()'"
+				shiro:hasPermission="commongame:gamelist:batchRemove">
+				<i class="glyphicon glyphicon-trash"></i>删除游戏
+			</button>
+		</div>
+		<table class="bootstrap-table" data-mobile-responsive="true">
+		</table>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script src="/rzspider/commongame/gamelist/gamelist.js"
+		th:src="@{/rzspider/commongame/gamelist/gamelist.js}"></script>
+	<script th:inline="javascript">
+        var editFlag = [[${@permissionService.hasPermi('commongame:gamelist:edit')}]];
+        var removeFlag = [[${@permissionService.hasPermi('commongame:gamelist:remove')}]];
+        var runFlag = [[${@permissionService.hasPermi('commongame:gamelist:run')}]];
+    </script>
+</body>
+</html>

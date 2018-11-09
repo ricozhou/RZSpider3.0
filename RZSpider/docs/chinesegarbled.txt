@@ -1,0 +1,3 @@
+Control Panel > Clock, Language, and Region > Administrator > Change system locale > Chinese(Simple)
+
+or double click file cmd中文.reg

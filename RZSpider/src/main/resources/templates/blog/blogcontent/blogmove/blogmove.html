@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link href="/ajax/libs/iCheck/custom.css"
+	th:href="@{/ajax/libs/iCheck/custom.css}" rel="stylesheet" />
+<!-- 上传插件 -->
+<link rel="stylesheet"
+	href="/ajax/plugins/bootstrap-fileinput/css/fileinput.css"
+	th:href="@{/ajax/plugins/bootstrap-fileinput/css/fileinput.css}" />
+<link href="/css/font-awesome.css" th:href="@{/css/font-awesome.css}"
+	rel="stylesheet" />
+
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<div class="row">
+			<div class="clients-list">
+				<ul class="nav nav-tabs">
+					<li class="active"><a data-toggle="tab" href="#tab-1"><i
+							class="fa fa-arrow-down"></i>博客搬入</a></li>
+					<li class=""><a data-toggle="tab" href="#tab-2"><i
+							class="fa fa-arrow-up"></i>博客搬出</a></li>
+				</ul>
+				<div class="tab-content">
+					<div id="tab-1" class="tab-pane active">
+						<div class="full-height-scroll">
+							<div class="table-responsive">
+								<div class="col-sm-12">
+									<form class="form-horizontal m-t" id="form-blogmove-add"
+										target="spiderFrame">
+										<div class="form-group">
+											<label class="col-sm-1 control-label"><i
+												class="fa fa-question-circle"
+												title="前三种模式分别为同一用户下多篇文章，&#10;单一文章，本地WORD文档上传，其他为拓展暂不支持！"></i>
+												模式：</label>
+											<div class="col-sm-4">
+												<select class="form-control" name="moveMode" id="moveMode">
+													<option value="0">列表文章（用户文章列表）</option>
+													<option value="1">单篇文章（用户单一文章URL）</option>
+													<option value="2">本地WORD文档（支持多文档上传）</option>
+													<option value="9">其他</option>
+												</select>
+											</div>
+
+											<label class="col-sm-2 control-label" id="moveNuml">爬取条数：</label>
+											<div class="col-sm-5" id="moveNumd">
+												<div class="input-group spinner" data-trigger="spinner">
+													<input type="text" class="form-control text-center"
+														data-rule="quantity" id="moveNum" name="moveNum"
+														data-max="999" data-min="1" placeholder="最大999">
+													<div class="input-group-addon">
+														<a href="javascript:;" class="spin-up" data-spin="up"><i
+															class="fa fa-caret-up"></i></a> <a href="javascript:;"
+															class="spin-down" data-spin="down"><i
+															class="fa fa-caret-down"></i></a>
+													</div>
+												</div>
+											</div>
+
+											<label class="col-sm-2 control-label" id="moveAuthorl"
+												style="display: none"><em class="gg-star"
+												style="color: red; font-style: normal;">*&nbsp;</em>作者：</label>
+											<div class="col-sm-5" id="moveAuthord" style="display: none">
+												<input id="moveAuthor" name="moveAuthor"
+													class="form-control" type="text"
+													th:value="${blogset.bloggersetBloggerName}">
+											</div>
+
+
+										</div>
+										<div class="form-group">
+											<label class="col-sm-1 control-label" id="moveWebsitel">网站：</label>
+											<div class="col-sm-4" id="moveWebsited">
+												<select class="form-control" name="moveWebsite"
+													id="moveWebsite">
+													<option value="CSDN">CSDN</option>
+													<option value="博客园">博客园</option>
+													<option value="今日头条">今日头条</option>
+													<option value="简书">简书</option>
+													<option value="开源中国">开源中国</option>
+												</select>
+											</div>
+
+											<label class="col-sm-2 control-label" id="idurll"><em
+												class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>用户ID：</label>
+											<label class="col-sm-3 control-label "
+												style="text-align: left; color: blue" id="moveWebsiteUrl">https://blog.csdn.net/</label>
+											<div class="col-sm-2" id="moveWebsiteInput">
+												<input id="moveUserId" name="moveUserId"
+													class="form-control" type="text">
+											</div>
+
+											<div class="col-sm-11" id="fileuploadd" style="display: none">
+												<input id="file-1" class="file" multiple type="file"
+													name="file">
+											</div>
+
+										</div>
+										<div class="form-group">
+											<label class="col-sm-1 control-label">编辑器：</label>
+											<div class="col-sm-4">
+												<select class="form-control" name="moveArticleEditor"
+													id="moveArticleEditor" disabled>
+													<option value="0">HTML编辑器（summernote）</option>
+													<option value="1">MarkDown编辑器（simplemde）</option>
+												</select>
+											</div>
+											<label class="col-sm-2 control-label">默认专栏：</label>
+											<div class="col-sm-5">
+												<select class="form-control" name="moveColumn"
+													id="moveColumn">
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-1 control-label"><i
+												class="fa fa-question-circle"
+												title="默认则跟随目标网站文章类型，若不存在则默认原创！"></i> 类型：</label>
+											<div class="col-sm-4">
+												<select class="form-control" name="moveArticleType"
+													id="moveArticleType">
+													<option value="默认">默认</option>
+													<option value="原创">原创</option>
+													<option value="转载">转载</option>
+													<option value="翻译">翻译</option>
+												</select>
+											</div>
+										</div>
+
+
+										<div class="form-group">
+											<label class="col-sm-1 control-label">发布：</label>
+											<div class="switch onoffswitch col-sm-4">
+												<div class="onoffswitch">
+													<input type="checkbox" th:checked="false"
+														class="onoffswitch-checkbox" id="ping" name="ping">
+													<label class="onoffswitch-label" for="ping"> <span
+														class="onoffswitch-inner"></span> <span
+														class="onoffswitch-switch"></span>
+													</label>
+												</div>
+											</div>
+											<label class="col-sm-2 control-label">使用原时间：</label>
+											<div class="switch onoffswitch col-sm-4">
+												<div class="onoffswitch">
+													<input type="checkbox" th:checked="true"
+														class="onoffswitch-checkbox" id="allow_comment"
+														name="allow_comment"> <label
+														class="onoffswitch-label" for="allow_comment"> <span
+														class="onoffswitch-inner"></span> <span
+														class="onoffswitch-switch"></span>
+													</label>
+												</div>
+											</div>
+
+											<label class="col-sm-2 control-label">保存图片：</label>
+											<div class="switch onoffswitch col-sm-4">
+												<div class="onoffswitch">
+													<input type="checkbox" th:checked="true"
+														class="onoffswitch-checkbox" id="allow_introduction"
+														name="allow_introduction"> <label
+														class="onoffswitch-label" for="allow_introduction">
+														<span class="onoffswitch-inner"></span> <span
+														class="onoffswitch-switch"></span>
+													</label>
+												</div>
+											</div>
+											<label class="col-sm-2 control-label">图片打水印：</label>
+											<div class="switch onoffswitch col-sm-4">
+												<div class="onoffswitch">
+													<input type="checkbox"
+														th:checked="${blogset.basicsetAddWaterMark == 0 ? true : false}"
+														class="onoffswitch-checkbox" id="allow_download"
+														name="private_article"> <label
+														class="onoffswitch-label" for="allow_download"> <span
+														class="onoffswitch-inner"></span> <span
+														class="onoffswitch-switch"></span>
+													</label>
+												</div>
+											</div>
+											<label class="col-sm-2 control-label">去除重复：</label>
+											<div class="switch onoffswitch col-sm-4">
+												<div class="onoffswitch">
+													<input type="checkbox" th:checked="true"
+														class="onoffswitch-checkbox" id="private_article"
+														name="private_article"> <label
+														class="onoffswitch-label" for="private_article"> <span
+														class="onoffswitch-inner"></span> <span
+														class="onoffswitch-switch"></span>
+													</label>
+												</div>
+											</div>
+										</div>
+
+										<div class="text-right form-group">
+											<button class="btn btn-primary" type="submit"
+												id="blogMoveRun">开始</button>
+											<button th:onclick="'javascript:blogMoveStop()'"
+												id="blogMoveStop1" class="btn btn-danger" type="button"
+												disabled>中止</button>
+											<button th:onclick="'javascript:blogMoveLog()'"
+												id="blogMoveLog1" class="btn btn-success" type="button">日志</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="tab-2" class="tab-pane">
+						<div class="full-height-scroll">
+							<div class="table-responsive">
+								<div class="col-sm-12">
+									<form class="form-horizontal m-t" id="form-blogmoveout-add"
+										target="spiderFrame">
+										<div class="form-group">
+											<label class="col-sm-2 control-label"><em
+												class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>博客网站：</label>
+											<div class="col-sm-4">
+												<select class="form-control" name="moveWebsiteOut"
+													id="moveWebsiteOut">
+													<option value="0">CSDN</option>
+													<option value="1">博客园</option>
+													<option value="2">今日头条</option>
+													<option value="3">简书</option>
+													<option value="9">其他</option>
+												</select>
+											</div>
+											<label class="col-sm-1 control-label"><em
+												class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>账号：</label>
+											<div class="col-sm-2">
+												<input id="moveOutUserId" name="moveOutUserId"
+													class="form-control" type="text">
+											</div>
+											<label class="col-sm-1 control-label"><em
+												class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>密码：</label>
+											<div class="col-sm-2">
+												<input id="moveUserPassword" name="moveUserPassword"
+													class="form-control" type="password">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label"><em
+												class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>选择文章：</label>
+											<div class="col-sm-10">
+												<div class="input-group spinner" data-trigger="spinner">
+												</div>
+											</div>
+
+										</div>
+
+										<!-- <div class="form-group">
+											<label class="col-sm-2 control-label"><em
+												class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>默认专栏：</label>
+											<div class="col-sm-4">
+												<select class="form-control" name="moveColumn"
+													id="moveColumn">
+												</select>
+											</div>
+
+											 <label class="col-sm-2 control-label"><em
+												class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>默认编辑器：</label>
+											<div class="col-sm-4">
+												<select class="form-control" name="moveWebsite"
+													id="moveWebsite">
+													<option value="0">CSDN</option>
+													<option value="1">博客园</option>
+													<option value="9">其他</option>
+												</select>
+											</div>
+										</div> -->
+
+										<div class="form-group">
+											<label class="col-sm-2 control-label">是否发布：</label>
+											<div class="switch onoffswitch col-sm-4">
+												<div class="onoffswitch">
+													<input type="checkbox" th:checked="false"
+														class="onoffswitch-checkbox" id="ping2" name="ping2">
+													<label class="onoffswitch-label" for="ping"> <span
+														class="onoffswitch-inner"></span> <span
+														class="onoffswitch-switch"></span>
+													</label>
+												</div>
+											</div>
+
+											<label class="col-sm-2 control-label">是否保存图片：</label>
+											<div class="switch onoffswitch col-sm-4">
+												<div class="onoffswitch">
+													<input type="checkbox" th:checked="true"
+														class="onoffswitch-checkbox" id="allow_introduction2"
+														name="allow_introduction"> <label
+														class="onoffswitch-label" for="allow_introduction2">
+														<span class="onoffswitch-inner"></span> <span
+														class="onoffswitch-switch"></span>
+													</label>
+												</div>
+											</div>
+
+										</div>
+
+										<div class="text-right form-group">
+											<button class="btn btn-primary" type="submit"
+												id="blogMoveOutRun">开始</button>
+											<button th:onclick="'javascript:blogMoveOutStop()'"
+												id="blogMoveOutStop1" class="btn btn-danger" type="button"
+												disabled>中止</button>
+											<button th:onclick="'javascript:blogMoveOutLog()'"
+												id="blogMoveOutLog1" class="btn btn-success" type="button">日志</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<!-- 弹出 -->
+	<div class="modal fade" id="resultModal" tabindex="-1" role="dialog"
+		aria-labelledby="resultModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="resultModalLabel">博客搬家爬虫正在运行...</h4>
+				</div>
+				<div class="modal-body">
+					<div class="pageFormContent" id="pageFormContent"
+						style="max-height: 300px; height: 300px; overflow-y: auto;">
+						<div id="blogmovemessage" style="display: block;"
+							class="profile_title"></div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						<i class="fa fa-close"> 关闭</i>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<iframe src="" id="spiderFrame" name="spiderFrame"
+		style="display: none"></iframe>
+	<div th:include="include::footer"></div>
+	<script src="/ajax/plugins/bootstrap-fileinput/js/fileinput.min.js"
+		th:src="@{/ajax/plugins/bootstrap-fileinput/js/fileinput.min.js}"></script>
+	<script src="/ajax/plugins/bootstrap-fileinput/js/locales/zh.js"
+		th:src="@{/ajax/plugins/bootstrap-fileinput/js/locales/zh.js  }"></script>
+	<script src="/ajax/plugins/bootstrap-fileinput/js/locales/fr.js"
+		th:src="@{/ajax/plugins/bootstrap-fileinput/js/locales/fr.js  }"></script>
+
+	<script src="/rzspider/blog/blogcontent/blogmove/blogmove.js"
+		th:src="@{/rzspider/blog/blogcontent/blogmove/blogmove.js}">
+		
+	</script>
+	<script src="/rzspider/blog/blogcontent/blogmove/websocketblogmove.js"
+		th:src="@{/rzspider/blog/blogcontent/blogmove/websocketblogmove.js}">
+		
+	</script>
+	<script src="/ajax/libs/iCheck/icheck.min.js"
+		th:src="@{/ajax/libs/iCheck/icheck.min.js}"></script>
+	<script>
+		$(document).ready(function() {
+			$(".i-checks").iCheck({
+				checkboxClass : "icheckbox_square-green",
+				radioClass : "iradio_square-green",
+			})
+		});
+	</script>
+	<script th:inline="javascript">
+	var blogset=[[${blogset}]]
+	</script>
+	<script th:inline="javascript">
+		//上传绑定
+		// 上传文件
+		var fileNames = '';
+		var fileONames = '';
+		$("#file-1").fileinput(
+				{
+					language : 'zh', // 设置语言
+					uploadUrl : ctx
+							+ "blog/blogcontent/blogmove/uploadBlogMoveFile",
+					allowedFileExtensions : [ 'doc', 'docx' ],// 接收的文件后缀
+					showUpload : true, // 是否显示上传按钮
+					showRemove : false, // 是否显示移除按钮
+					showCaption : false,// 是否显示标题
+					browseClass : "btn btn-primary", // 按钮样式
+					dropZoneEnabled : true,//是否显示拖拽区域
+					uploadAsync : false,
+					showBrowse : true,
+					browseOnZoneClick : false,
+					allowedPreviewTypes : [ 'image', 'html', 'text', 'video',
+							'audio', 'flash' ],
+					maxFileCount : 10, // 表示允许同时上传的最大文件个数
+					enctype : 'multipart/form-data',
+					maxFileSize : 1024 * 10,
+					layoutTemplates : {
+						actionDelete : '',//去除缩略图删除图标
+						actionUpload : '',//去除缩略图上传图标
+						actionZoom : ''//去除缩略图查看详情图标
+					}
+				// 单位为kb，如果为0表示不限制文件大小
+				}).on("filebatchselected", function(event, files) {
+			//返回文件名
+		}).on('filesuccessremove', function(event, id) {
+		}).on("filebatchuploadsuccess", function(event, data) {
+			console.log(data.response.msg);
+			//返回文件名
+			fileNames = (data.response.code == 0) ? (data.response.fileName) : null;
+			fileONames = (data.response.code == 0) ? (data.response.fileOName) : null;
+		});
+	</script>
+</body>
+</html>

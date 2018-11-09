@@ -1,0 +1,6 @@
+1. 打开shell 
+2. 运行netstat -ano,可以查看到端口与对应的进程号 
+3. 运行tasklist, 可以查看该进程号的执行进程名称 
+4. 运行net stop http 
+5. 运行sc config http=disabled 
+6. 再次运行netstat -ano,检查80端口是否释放?如果没有,请重启系统

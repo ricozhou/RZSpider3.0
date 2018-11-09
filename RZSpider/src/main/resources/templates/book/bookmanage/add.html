@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link href="/ajax/libs/iCheck/custom.css"
+	th:href="@{/ajax/libs/iCheck/custom.css}" rel="stylesheet" />
+<link href="/ajax/libs/datapicker/datepicker3.css"
+	th:href="@{/ajax/libs/datapicker/datepicker3.css}" rel="stylesheet" />
+<link href="/ajax/libs/star/star-rating.css" media="all"
+	rel="stylesheet" type="text/css"
+	th:href="@{/ajax/libs/star/star-rating.css}" />
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-bookmanage-add">
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><em class="gg-star"
+					style="color: red; font-style: normal;">*&nbsp;</em>图书名称：</label>
+				<div class="col-sm-8">
+					<input id="bookName" name="bookName" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">图书作者：</label>
+				<div class="col-sm-8">
+					<input id="bookAuthor" name="bookAuthor" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">图书出版社：</label>
+				<div class="col-sm-8">
+					<input id="bookPublisher" name="bookPublisher" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">图书ISBN：</label>
+				<div class="col-sm-8">
+					<input id="bookIsbn" name="bookIsbn" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">图书简介：</label>
+				<div class="col-sm-8">
+					<input id="bookDes" name="bookDes" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">图书语言：</label>
+				<div class="col-sm-8">
+					<input id="bookLanguage" name="bookLanguage" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">图书定价：</label>
+				<div class="col-sm-8">
+					<input id="bookOriginalPrice" name="bookOriginalPrice"
+						class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">图书购买价：</label>
+				<div class="col-sm-8">
+					<input id="bookPurchasePrice" name="bookPurchasePrice"
+						class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">图书出版日期：</label>
+				<div class="col-sm-8">
+					<div class="input-group date">
+						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+						<input type="text" class="form-control" value=""
+							name="bookPublishTime">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">图书分类：</label>
+				<div class="col-sm-8">
+					<select class="form-control" id="bookClassification"
+						name="bookClassification">
+						<option value="马列毛邓">马列毛邓</option>
+						<option value="B">哲学宗教</option>
+						<option value="哲学宗教">社会科学</option>
+						<option value="政治法律">政治法律</option>
+						<option value="军事">军事</option>
+						<option value="经济">经济</option>
+						<option value="科教文体">科教文体</option>
+						<option value="语言文字">语言文字</option>
+						<option value="文学">文学</option>
+						<option value="艺术">艺术</option>
+						<option value="历史地理">历史地理</option>
+						<option value="自然科学">自然科学</option>
+						<option value="数理化">数理化</option>
+						<option value="天文地球">天文地球</option>
+						<option value="生物科学">生物科学</option>
+						<option value="医药卫生">医药卫生</option>
+						<option value="农业科学">农业科学</option>
+						<option value="工业技术" selected="selected">工业技术</option>
+						<option value="交通运输">交通运输</option>
+						<option value="航空航天">航空航天</option>
+						<option value="环境安全">环境安全</option>
+						<option value="综合性图书">综合性图书</option>
+						<option value="none">其它分类</option>
+					</select> <input id="bookClassification2" name="bookClassification2"
+						class="form-control" type="text" style="display: none"
+						placeholder="请输入分类名">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">图书装帧：</label>
+				<div class="col-sm-8">
+					<select class="form-control" name="bookBinding" id="bookBinding">
+						<option value="平装">平装</option>
+						<option value="精装">精装</option>
+						<option value="软精装">软精装</option>
+						<option value="none">其他</option>
+					</select> <input id="bookBinding2" name="bookBinding2" class="form-control"
+						type="text" style="display: none" placeholder="请输入装帧类型">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">图书页数：</label>
+				<div class="col-sm-8">
+					<input id="bookPages" name="bookPages" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">图书所在地：</label>
+				<div class="col-sm-8">
+					<input id="bookStayAddress" name="bookStayAddress"
+						class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">阅读状态：</label>
+				<div class="col-sm-8">
+					<label class="checkbox-inline i-checks"> <input
+						type="radio" name="bookReadStatus" value="0" id="radio1" /> 已读
+					</label> <label class="checkbox-inline i-checks"> <input
+						type="radio" name="bookReadStatus" value="1" id="radio2"
+						checked="checked" /> 未读
+					</label> <label class="checkbox-inline i-checks"> <input
+						type="radio" name="bookReadStatus" value="2" id="radio3" /> 阅读中
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">阅读星级：</label>
+				<div class="col-sm-8">
+					<input id="bookReadStar" name="bookReadStar" class="rating"
+						data-min="0" data-max="5" data-step="1" data-size="sm" value="0">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">阅读评价：</label>
+				<div class="col-sm-8">
+					<textarea id="bookReadEvaluation" name="bookReadEvaluation"
+						class="form-control"></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">在馆状态：</label>
+				<div class="col-sm-8">
+					<div class="onoffswitch">
+						<input type="checkbox" th:checked="true"
+							class="onoffswitch-checkbox" id="status" name="status"> <label
+							class="onoffswitch-label" for="status"> <span
+							class="onoffswitch-inner"></span> <span
+							class="onoffswitch-switch"></span>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="remark" name="remark" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="form-control-static col-sm-offset-9">
+					<button type="submit" class="btn btn-primary">提交</button>
+					<button th:onclick="'javascript:layer_close()'"
+						class="btn btn-danger" type="button">关闭</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div th:include="include::footer"></div>
+	<script src="/js/star-rating.js" th:src="@{/js/star-rating.js}"></script>
+	<script src="/js/jquery-ui-1.10.4.min.js"
+		th:src="@{/js/jquery-ui-1.10.4.min.js}"></script>
+	<script src="/ajax/libs/iCheck/icheck.min.js"
+		th:src="@{/ajax/libs/iCheck/icheck.min.js}"></script>
+	<script src="/ajax/libs/datapicker/bootstrap-datepicker.js"
+		th:src="@{/ajax/libs/datapicker/bootstrap-datepicker.js}"></script>
+	<script src="/ajax/libs/beautifyhtml/beautifyhtml.js"
+		th:src="@{/ajax/libs/beautifyhtml/beautifyhtml.js}"></script>
+	<script src="/rzspider/book/bookmanage/add.js"
+		th:src="@{/rzspider/book/bookmanage/add.js}">
+		
+	</script>
+	<script>
+		$(document).ready(
+				function() {
+					setup_draggable();
+					$("#n-columns").on(
+							"change",
+							function() {
+								var v = $(this).val();
+								if (v === "1") {
+									var $col = $(".form-body .col-md-12")
+											.toggle(true);
+									$(".form-body .col-md-6 .draggable").each(
+											function(i, el) {
+												$(this).remove().appendTo($col)
+											});
+									$(".form-body .col-md-6").toggle(false)
+								} else {
+									var $col = $(".form-body .col-md-6")
+											.toggle(true);
+									$(".form-body .col-md-12 .draggable").each(
+											function(i, el) {
+												$(this).remove().appendTo(
+														i % 2 ? $col[1]
+																: $col[0])
+											});
+									$(".form-body .col-md-12").toggle(false)
+								}
+							});
+					$("#copy-to-clipboard").on(
+							"click",
+							function() {
+								var $copy = $(".form-body").clone().appendTo(
+										document.body);
+								$copy.find(".tools, :hidden").remove();
+								$.each([ "draggable", "droppable", "sortable",
+										"dropped", "ui-sortable",
+										"ui-draggable", "ui-droppable",
+										"form-body" ], function(i, c) {
+									$copy.find("." + c).removeClass(c)
+											.removeAttr("style")
+								});
+								var html = html_beautify($copy.html());
+								$copy.remove();
+								$modal = get_modal(html).modal("show");
+								$modal.find(".btn").remove();
+								$modal.find(".modal-title").html("复制HTML代码");
+								$modal.find(":input:first").select().focus();
+								return false
+							})
+				});
+		var setup_draggable = function() {
+			$(".draggable").draggable({
+				appendTo : "body",
+				helper : "clone"
+			});
+			$(".droppable")
+					.droppable(
+							{
+								accept : ".draggable",
+								helper : "clone",
+								hoverClass : "droppable-active",
+								drop : function(event, ui) {
+									$(".empty-form").remove();
+									var $orig = $(ui.draggable);
+									if (!$(ui.draggable).hasClass("dropped")) {
+										var $el = $orig.clone().addClass(
+												"dropped").css({
+											"position" : "static",
+											"left" : null,
+											"right" : null
+										}).appendTo(this);
+										var id = $orig.find(":input")
+												.attr("id");
+										if (id) {
+											id = id.split("-").slice(0, -1)
+													.join("-")
+													+ "-"
+													+ (parseInt(id.split("-")
+															.slice(-1)[0]) + 1);
+											$orig.find(":input").attr("id", id);
+											$orig.find("label").attr("for", id)
+										}
+										$(
+												'<p class="tools col-sm-12 col-sm-offset-3">						<a class="edit-link">编辑HTML<a> | 						<a class="remove-link">移除</a></p>')
+												.appendTo($el)
+									} else {
+										if ($(this)[0] != $orig.parent()[0]) {
+											var $el = $orig.clone().css({
+												"position" : "static",
+												"left" : null,
+												"right" : null
+											}).appendTo(this);
+											$orig.remove()
+										}
+									}
+								}
+							}).sortable()
+		};
+		var get_modal = function(content) {
+			var modal = $(
+					'<div class="modal" style="overflow: auto;" tabindex="-1">	<div class="modal-dialog"><div class="modal-content"><div class="modal-header"><a type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</a><h4 class="modal-title">编辑HTML</h4></div><div class="modal-body ui-front">	<textarea class="form-control" 	style="min-height: 200px; margin-bottom: 10px;font-family: Monaco, Fixed">'
+							+ content
+							+ '</textarea><button class="btn btn-success">更新HTML</button></div>				</div></div></div>')
+					.appendTo(document.body);
+			return modal
+		};
+		$(document).on(
+				"click",
+				".edit-link",
+				function(ev) {
+					var $el = $(this).parent().parent();
+					var $el_copy = $el.clone();
+					var $edit_btn = $el_copy.find(".edit-link").parent()
+							.remove();
+					var $modal = get_modal(html_beautify($el_copy.html()))
+							.modal("show");
+					$modal.find(":input:first").focus();
+					$modal.find(".btn-success").click(function(ev2) {
+						var html = $modal.find("textarea").val();
+						if (!html) {
+							$el.remove()
+						} else {
+							$el.html(html);
+							$edit_btn.appendTo($el)
+						}
+						$modal.modal("hide");
+						return false
+					})
+				});
+		$(document).on("click", ".remove-link", function(ev) {
+			$(this).parent().parent().remove()
+		});
+		$(document).ready(function() {
+			$(".i-checks").iCheck({
+				checkboxClass : "icheckbox_square-green",
+				radioClass : "iradio_square-green",
+			})
+		});
+		$(".input-group.date").datepicker({
+			todayBtn : "linked",
+			keyboardNavigation : !1,
+			forceParse : !1,
+			calendarWeeks : !0,
+			autoclose : !0
+		});
+	</script>
+
+</body>
+</html>

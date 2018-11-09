@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+		<div class="btn-group hidden-xs" id="tableToolbar" role="group">
+			<button type="button" class="btn btn-outline btn-default"
+				th:onclick="'javascript:add()'"
+				shiro:hasPermission="tool:baseset:add">
+				<i class="glyphicon glyphicon-plus"></i>新增主题
+			</button>
+			<button type="button" class="btn btn-outline btn-default"
+				th:onclick="'javascript:batchRemove()'"
+				shiro:hasPermission="tool:baseset:batchRemove">
+				<i class="glyphicon glyphicon-trash"></i>批量删除
+			</button>
+			<button type="button" class="btn btn-outline btn-default"
+				th:onclick="'javascript:clearCache()'"
+				shiro:hasPermission="tool:baseset:clear">
+				<i class="glyphicon glyphicon-trash"></i>清除缓存
+			</button>
+		</div>
+		<table class="bootstrap-table" data-mobile-responsive="true">
+		</table>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script src="/rzspider/tool/baseset/baseset.js"
+		th:src="@{/rzspider/tool/baseset/baseset.js}"></script>
+	<script th:inline="javascript">
+        var editFlag = [[${@permissionService.hasPermi('tool:baseset:edit')}]];
+        var removeFlag = [[${@permissionService.hasPermi('tool:baseset:remove')}]];
+        var spiderJavaCodeExampleEditFlag = [[${@permissionService.hasPermi('tool:baseset:detailedit:spiderJavaCodeExampleEdit')}]];
+        var spiderPythonCodeExampleEditFlag = [[${@permissionService.hasPermi('tool:baseset:detailedit:spiderPythonCodeExampleEdit')}]];
+        var spiderJavascriptCodeExampleEditFlag = [[${@permissionService.hasPermi('tool:baseset:detailedit:spiderJavascriptCodeExampleEdit')}]];
+        var startUseFlag = [[${@permissionService.hasPermi('tool:baseset:startUse')}]];
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+		<div class="btn-group hidden-xs" id="tableToolbar" role="group">
+			<form class="form-inline" id="form-musiclist-searchAdd">
+				<div class="form-group">
+					<div class="col-sm-4">
+						<input id="musicName" name="musicName" class="form-control"
+							type="text" placeholder="请输入歌曲名">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="form-control-static">
+						<button type="submit" class="btn btn-primary">搜索</button>
+						<button type="button" class="btn btn-outline btn-default"
+							id="batchAdd2" th:onclick="'javascript:batchAdd()'"
+							style="display: none">
+							<i class="glyphicon glyphicon-plus"></i>批量添加
+						</button>
+					</div>
+				</div>
+			</form>
+
+		</div>
+		<table class="bootstrap-table" data-mobile-responsive="true">
+		</table>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script src="/rzspider/tool/baseset/detailedit/musiclist/searchAdd.js"
+		th:src="@{/rzspider/tool/baseset/detailedit/musiclist/searchAdd.js}">
+	</script>
+	<script th:inline="javascript">
+        var basesetId = [[${basesetId}]];
+    </script>
+</body>
+</html>

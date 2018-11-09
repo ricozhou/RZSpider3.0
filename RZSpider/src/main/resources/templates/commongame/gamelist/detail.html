@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-gamelist-edit">
+			<input id="gameListId" name="gameListId" th:value="${gamelist.gameListId}"
+				type="hidden"> <input id="gameBackId" name="gameBackId"
+				th:value="${gamelist.gameBackId}" type="hidden">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">工具昵称：</label>
+				<div class="col-sm-8">
+					<input id="gameNickName" name="gameNickName"
+						th:value="${gamelist.gameNickName}" class="form-control"
+						type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">游戏名称：</label>
+				<div class="col-sm-8">
+					<input id="gameName" name="gameName"
+						th:value="${gamelist.gameName}" class="form-control" type="text"
+						readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">游戏后台ID：</label>
+				<div class="col-sm-8">
+					<input id="gameBackId" name="gameBackId"
+						th:value="${gamelist.gameBackId}" class="form-control" type="text"
+						readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">游戏描述（使用说明）：</label>
+				<div class="col-sm-8">
+					<textarea id="gameInstruction" name="gameInstruction" th:text="${gamelist.gameInstruction}"
+						class="form-control" type="text" readonly="readonly"></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">游戏类型：</label>
+				<div class="col-sm-8"
+					th:with="datas=${@dictService.selectDictData('commontool_toolmanage_toolType')}">
+					<div th:each="dict : ${datas}" th:class="${dict['cssClass']}">
+						<input type="radio" th:id="${dict['dictCode']}" name="gameType"
+							th:value="${dict['dictValue']}" th:field="*{gamelist.gameType}" disabled>
+						<label th:for="${dict['dictCode']}" th:text="${dict['dictLabel']}"></label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">源码是否可下载：</label>
+				<div class="col-sm-2">
+					<div class="onoffswitch">
+						<input type="checkbox"
+							th:checked="${gamelist.srcDownloadStatus == 0 ? true : false}"
+							class="onoffswitch-checkbox" id="srcDownloadStatus"
+							name="srcDownloadStatus"  disabled="disabled"> <label
+							class="onoffswitch-label" for="srcDownloadStatus"> <span
+							class="onoffswitch-inner"></span> <span
+							class="onoffswitch-switch"></span>
+						</label>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="onoffswitch">
+						<button type="button" class="btn btn-primary btn-xs"
+							id="uploadSrcFile" disabled="true" th:onclick="'javascript:downSrcFile()'" shiro:hasPermission="commongame:gamelist:downSrcFile">
+							<i class="glyphicon fa fa-cloud"></i>下载游戏源代码
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">可执行exe是否可下载：</label>
+				<div class="col-sm-2">
+					<div class="onoffswitch">
+						<input type="checkbox"
+							th:checked="${gamelist.execexeDownloadStatus == 0 ? true : false}"
+							class="onoffswitch-checkbox" id="execexeDownloadStatus"
+							name="execexeDownloadStatus" disabled="disabled"> <label
+							class="onoffswitch-label" for="execexeDownloadStatus"> <span
+							class="onoffswitch-inner"></span> <span
+							class="onoffswitch-switch"></span>
+						</label>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="onoffswitch">
+						<button type="button" class="btn btn-primary btn-xs"
+							id="uploadExecexeFile" disabled="true" th:onclick="'javascript:downExecexeFile()'" shiro:hasPermission="commongame:gamelist:downExecexeFile">
+							<i class="glyphicon fa fa-cloud"></i>下载可执行exe
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">安装版exe是否可下载：</label>
+				<div class="col-sm-2">
+					<div class="onoffswitch">
+						<input type="checkbox"
+							th:checked="${gamelist.setupexeDownloadStatus== 0 ? true : false}"
+							class="onoffswitch-checkbox" id="setupexeDownloadStatus"
+							name="setupexeDownloadStatus" disabled="disabled"> <label
+							class="onoffswitch-label" for="setupexeDownloadStatus"> <span
+							class="onoffswitch-inner"></span> <span
+							class="onoffswitch-switch"></span>
+						</label>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="onoffswitch">
+						<button type="button" class="btn btn-primary btn-xs"
+							id="uploadSetupexeFile" disabled="true" th:onclick="'javascript:downSetupexeFile()'" shiro:hasPermission="commongame:gamelist:downSetupexeFile">
+							<i class="glyphicon fa fa-cloud"></i>下载安装版exe
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="remark" name="remark" th:value="${gamelist.remark}"
+						class="form-control" type="text" readonly="readonly">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="form-control-static col-sm-offset-9">
+					<button th:onclick="'javascript:layer_close()'"
+						class="btn btn-danger" type="button">关闭</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div th:include="include::footer"></div>
+	<script src="/rzspider/commongame/gamelist/detail.js"
+		th:src="@{/rzspider/commongame/gamelist/detail.js}">
+	</script>
+	 <script th:inline="javascript">
+        var downSrcFileFlag = [[${@permissionService.hasPermi('commongame:gamelist:downSrcFile')}]];
+        var downExecexeFileFlag = [[${@permissionService.hasPermi('commongame:gamelist:downExecexeFile')}]];
+        var downSetupexeFileFlag = [[${@permissionService.hasPermi('commongame:gamelist:downSetupexeFile')}]];
+    </script>
+</body>
+</html>

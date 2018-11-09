@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<!--使用code mirror创建一个web代码编辑器 -->
+<!--Code Mirror必须引入这两个-->
+<link rel="stylesheet" href="/ajax/libs/codemirror-5.31.0/lib/codemirror.css"
+	th:href="@{/ajax/libs/codemirror-5.31.0/lib/codemirror.css}" />
+<script src="/ajax/libs/codemirror-5.31.0/lib/codemirror.js"
+	th:src="@{/ajax/libs/codemirror-5.31.0/lib/codemirror.js}"></script>
+<!--Java代码高亮必须引入-->
+<script src="/ajax/libs/codemirror-5.31.0/clike.js"
+	th:src="@{/ajax/libs/codemirror-5.31.0/clike.js}"></script>
+<!--groovy代码高亮-->
+<script src="/ajax/libs/codemirror-5.31.0/mode/groovy/groovy.js"
+	th:src="@{/ajax/libs/codemirror-5.31.0/mode/groovy/groovy.js}"></script>
+<!--python代码高亮-->
+<script src="/ajax/libs/codemirror-5.31.0/mode/python/python.js"
+	th:src="@{/ajax/libs/codemirror-5.31.0/mode/python/python.js}"></script>
+<!--js代码高亮-->
+<script src="/ajax/libs/codemirror-5.31.0/mode/javascript/javascript.js"
+	th:src="@{/ajax/libs/codemirror-5.31.0/mode/javascript/javascript.js}"></script>
+<!--引入css文件，用以支持主题-->
+<link rel="stylesheet" href="/ajax/libs/codemirror-5.31.0/theme/dracula.css"
+	th:href="@{/ajax/libs/codemirror-5.31.0/theme/dracula.css}" />
+
+<!--支持代码折叠-->
+<link rel="stylesheet"
+	href="/ajax/libs/codemirror-5.31.0/addon/fold/foldgutter.css"
+	th:href="@{/ajax/libs/codemirror-5.31.0/addon/fold/foldgutter.css}" />
+<script src="/ajax/libs/codemirror-5.31.0/addon/fold/foldcode.js"
+	th:src="@{/ajax/libs/codemirror-5.31.0/addon/fold/foldcode.js}"></script>
+<script src="/ajax/libs/codemirror-5.31.0/addon/fold/foldgutter.js"
+	th:src="@{/ajax/libs/codemirror-5.31.0/addon/fold/foldgutter.js}"></script>
+<script src="/ajax/libs/codemirror-5.31.0/addon/fold/brace-fold.js"
+	th:src="@{/ajax/libs/codemirror-5.31.0/addon/fold/brace-fold.js}"></script>
+<script src="/ajax/libs/codemirror-5.31.0/addon/fold/comment-fold.js"
+	th:src="@{/ajax/libs/codemirror-5.31.0/addon/fold/comment-fold.js}"></script>
+<!--括号匹配-->
+<script src="/ajax/libs/codemirror-5.31.0/addon/edit/matchbrackets.js"
+	th:src="@{/ajax/libs/codemirror-5.31.0/addon/edit/matchbrackets.js}"></script>
+<!--end Code Mirror -->
+<meta charset="utf-8">
+<head th:include="include :: header">
+</head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<input id="spiderCustomspiderBackupcodeId"
+			name="spiderCustomspiderBackupcodeId" type="hidden"
+			th:value="${customspiderBackupcode.spiderCustomspiderBackupcodeId}"><input
+			id="spiderFileCodeContent" name="spiderFileCodeContent"
+			th:value="${customspiderBackupcode.spiderFileCodeContent}"
+			type="hidden"> <input id="customSpiderType"
+			name="customSpiderType"
+			th:value="${customspiderBackupcode.customSpiderType}" type="hidden">
+		<div class="form-group">
+			<div>
+				<textarea class="form-control" id="code" name="code"></textarea>
+			</div>
+		</div>
+		<div class="text-right form-group">
+			<button th:onclick="'javascript:exportCode()'"
+				class="btn btn-primary" type="button">导出</button>
+			<button th:onclick="'javascript:layer_close()'"
+				class="btn btn-danger" type="button">关闭</button>
+		</div>
+	</div>
+
+	<div th:include="include::footer"></div>
+
+	<script src="/rzspider/spider/customspider/backupcode/codeContent.js"
+		th:src="@{/rzspider/spider/customspider/backupcode/codeContent.js}"></script>
+</body>
+</html>

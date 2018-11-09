@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzspider.project.blog.blogcontent.mapper.BlogcontentMapper">
+
+	<resultMap type="Blogcontent" id="BlogcontentResult">
+		<result property="cid" column="cid" />
+		<result property="title" column="title" />
+		<result property="slug" column="slug" />
+		<result property="created" column="created" />
+		<result property="modified" column="modified" />
+		<result property="content" column="content" />
+		<result property="contentMd" column="content_md" />
+		<result property="cover" column="cover" />
+		<result property="images" column="images" />
+		<result property="type" column="type" />
+		<result property="tags" column="tags" />
+		<result property="categories" column="categories" />
+		<result property="hits" column="hits" />
+		<result property="commentsNum" column="comments_num" />
+		<result property="likeNum" column="like_num" />
+		<result property="browseNum" column="browse_num" />
+		<result property="allowComment" column="allow_comment" />
+		<result property="allowPing" column="allow_ping" />
+		<result property="allowDownload" column="allow_download" />
+		<result property="allowFeed" column="allow_feed" />
+		<result property="status" column="status" />
+		<result property="author" column="author" />
+		<result property="gtmCreate" column="gtm_create" />
+		<result property="gtmModified" column="gtm_modified" />
+		<result property="blogColumnName" column="blog_column_name" />
+		<result property="blogTagsName" column="blog_tags_name" />
+		<result property="showId" column="show_id" />
+		<result property="blogFileName" column="blog_file_name" />
+		<result property="showIntroduction" column="show_introduction" />
+		<result property="introduction" column="introduction" />
+		<result property="privateArticle" column="private_article" />
+
+		<result property="scrollRecommended" column="scroll_recommended" />
+		<result property="specialRecommended" column="special_recommended" />
+		<result property="recommended" column="recommended" />
+		<result property="articleEditor" column="article_editor" />
+		<result property="articleSource" column="article_source" />
+		<result property="articleTop" column="article_top" />
+	</resultMap>
+
+	<select id="selectBlogcontentById" parameterType="Long"
+		resultMap="BlogcontentResult">
+		select * from
+		blog_blogcontent
+		where cid = #{cid}
+	</select>
+
+	<select id="selectBlogArticleNumPreByDayNum" parameterType="Integer"
+		resultType="Integer">
+		select count(*)
+		from
+		blog_blogcontent where status = 1 and
+		DATEDIFF(NOW(),gtm_create)=#{dayNum}
+	</select>
+
+	<select id="selectAllBlogLikeNum" resultType="Integer">
+		select
+		sum(like_num) from
+		blog_blogcontent where status = 1
+	</select>
+
+	<select id="selectAllBlogCommentNum" resultType="Integer">
+		select
+		sum(comments_num) from
+		blog_blogcontent where status = 1
+	</select>
+
+	<select id="selectAllBlogArticleNum" resultType="Integer">
+		select
+		count(*)
+		from
+		blog_blogcontent where status = 1
+	</select>
+
+	<select id="selectDayBlogArticleNum" resultType="Integer">
+		select count(*)
+		from
+		blog_blogcontent where status = 1 and to_days(gtm_create) =
+		to_days(now())
+	</select>
+
+	<select id="selectMonthBlogArticleNum" resultType="Integer">
+		select
+		count(*)
+		from
+		blog_blogcontent where status = 1 and
+		DATE_FORMAT(gtm_create,"%Y%m")=DATE_FORMAT(CURDATE( ),"%Y%m")
+	</select>
+
+	<select id="selectYearBlogArticleNum" resultType="Integer">
+		select count(*)
+		from
+		blog_blogcontent where status = 1 and YEAR(gtm_create)=YEAR(NOW())
+	</select>
+
+	<select id="selectDayBlogArticleNumPre" resultType="Integer">
+		select
+		count(*)
+		from
+		blog_blogcontent where status = 1 and
+		DATEDIFF(gtm_create,NOW())=-1
+	</select>
+
+	<select id="selectMonthBlogArticleNumPre" resultType="Integer">
+		select
+		count(*)
+		from
+		blog_blogcontent where status = 1 and
+		PERIOD_DIFF(date_format(now(),"%Y%m")
+		, date_format(gtm_create,"%Y%m"))
+		=1
+	</select>
+
+	<select id="selectYearBlogArticleNumPre" resultType="Integer">
+		select
+		count(*)
+		from
+		blog_blogcontent where status = 1 and
+		year(gtm_create)=year(date_sub(now(),interval 1 year));
+	</select>
+
+	<select id="selectBlogFolderNameAndShowIdByCid" parameterType="Long"
+		resultMap="BlogcontentResult">
+		select show_id,blog_file_name from
+		blog_blogcontent
+		where cid
+		=
+		#{cid}
+	</select>
+
+	<select id="selectUpBlogcontentByCidWithoutContent"
+		parameterType="Long" resultMap="BlogcontentResult">
+		select cid, title,status, author,
+		gtm_create,
+		gtm_modified,show_id,article_editor from
+		blog_blogcontent
+		where status = 1
+		and cid &lt; #{cid} order by cid desc limit 1
+	</select>
+
+	<select id="selectDownBlogcontentByCidWithoutContent"
+		parameterType="Long" resultMap="BlogcontentResult">
+		select cid, title,status, author,
+		gtm_create,
+		gtm_modified,show_id,article_editor from
+		blog_blogcontent
+		where status = 1
+		and cid &gt; #{cid} order by cid asc limit 1
+	</select>
+
+	<select id="selectRelatedBlogcontentByCidWithoutContent"
+		parameterType="Blogcontent" resultMap="BlogcontentResult">
+		select bbc.cid,
+		bbc.title,bbc.status, bbc.author,
+		bbc.gtm_create,
+		bbc.gtm_modified,bbc.show_id ,bbc.article_editor from
+		blog_blogcontent
+		bbc
+		where status = 1
+		and bbc.cid in (select bbb.cid from
+		blog_blogtags_blogcontent bbb where
+		bbb.blog_tags_id in (select
+		bbb2.blog_tags_id from
+		blog_blogtags_blogcontent bbb2 where
+		bbb2.cid=#{cid}) and bbb.cid <![CDATA[!= ]]>#{cid}
+		) limit 10
+	</select>
+
+	<select id="selectBlogcontentByIdAndStatus" resultMap="BlogcontentResult">
+		select
+		cid,title,cover,images,comments_num,like_num,browse_num,
+		status,
+		author, gtm_create, gtm_modified,show_id,
+		show_introduction,
+		scroll_recommended,special_recommended,recommended,article_editor
+		from
+		blog_blogcontent
+		where cid = #{0} and status=#{1}
+	</select>
+
+	<select id="selectBlogcontentByShowId" parameterType="String"
+		resultMap="BlogcontentResult">
+		select * from
+		blog_blogcontent
+		where show_id = #{showId} and
+		status=1
+	</select>
+
+	<select id="selectBlogcontentList" parameterType="Blogcontent"
+		resultMap="BlogcontentResult">
+		select *
+		from
+		blog_blogcontent
+		<where>
+			<if test="cid != null and cid != ''"> and cid = #{cid}</if>
+			<if test="title != null and title != ''"> and title = #{title}</if>
+			<if test="slug != null and slug != ''"> and slug = #{slug}</if>
+			<if test="created != null and created != ''"> and created = #{created}</if>
+			<if test="modified != null and modified != ''"> and modified = #{modified}</if>
+			<if test="content != null and content != ''"> and content = #{content}</if>
+			<if test="type != null and type != ''"> and type = #{type}</if>
+			<if test="tags != null and tags != ''"> and tags = #{tags}</if>
+			<if test="categories != null and categories != ''"> and categories = #{categories}</if>
+			<if test="hits != null and hits != ''"> and hits = #{hits}</if>
+			<if test="commentsNum != null and commentsNum != ''"> and comments_num = #{commentsNum}</if>
+			<if test="allowComment != null and allowComment != ''"> and allow_comment = #{allowComment}</if>
+			<if test="allowPing != null and allowPing != ''">
+				and allow_ping = #{allowPing}
+			</if>
+			<if test="allowFeed != null and allowFeed != ''"> and allow_feed = #{allowFeed}</if>
+			<if test="status != null and status != ''"> and status = #{status}</if>
+			<if test="author != null and author != ''"> and author = #{author}</if>
+			<if test="gtmCreate != null and gtmCreate != ''"> and gtm_create = #{gtmCreate}</if>
+			<if test="gtmModified != null and gtmModified != ''"> and gtm_modified = #{gtmModified}</if>
+			<if test="searchValue != null and searchValue != ''">
+				AND title like concat(concat('%', #{searchValue}), '%')
+			</if>
+		</where>
+	</select>
+	<select id="selectBlogcontentRecommendWithoutContentByStatus"
+		parameterType="Integer" resultMap="BlogcontentResult">
+		select cid, title,status, author,
+		gtm_create,
+		gtm_modified,show_id,scroll_recommended,special_recommended,recommended,article_editor
+		from
+		blog_blogcontent where
+		status = #{status} order by gtm_create desc
+	</select>
+
+	<select id="selectBlogcontentScrollRecommendedList" resultMap="BlogcontentResult">
+		select cid,title,cover,images,comments_num,like_num,browse_num,
+		status, author, gtm_create, gtm_modified,show_id,
+		show_introduction,
+		scroll_recommended,special_recommended,recommended,article_editor
+		from
+		blog_blogcontent where
+		status = 1 and scroll_recommended=0 order by
+		gtm_create desc limit #{0}
+	</select>
+
+	<select id="selectBlogcontentSpecialRecommendedList" resultMap="BlogcontentResult">
+		select cid, title,cover,images, comments_num,like_num,browse_num,
+		status, author, gtm_create, gtm_modified,show_id,
+		show_introduction,
+		scroll_recommended,special_recommended,recommended,article_editor
+		from
+		blog_blogcontent where
+		status = 1 and special_recommended=0 order
+		by
+		gtm_create desc limit #{0}
+	</select>
+
+	<select id="selectBlogcontentRecommendedList" resultMap="BlogcontentResult">
+		select
+		cid, title,cover,images, comments_num,like_num,browse_num,
+		status,
+		author, gtm_create, gtm_modified,show_id,
+		show_introduction,
+		scroll_recommended,special_recommended,recommended,article_editor
+		from
+		blog_blogcontent where
+		status = 1 and recommended=0 order by
+		gtm_create
+		desc limit #{0}
+	</select>
+
+	<select id="selectBlogcontentLikeList" resultMap="BlogcontentResult">
+		select cid,
+		title,cover,images, comments_num,like_num,browse_num,
+		status, author,
+		gtm_create, gtm_modified,show_id,
+		show_introduction,
+		scroll_recommended,special_recommended,recommended,article_editor
+		from
+		blog_blogcontent where
+		status = 1 order by
+		like_num desc limit #{0}
+	</select>
+
+	<select id="selectBlogcontentBrowseList" resultMap="BlogcontentResult">
+		select cid,
+		title,cover,images, comments_num,like_num,browse_num,
+		status, author,
+		gtm_create, gtm_modified,show_id,
+		show_introduction,
+		scroll_recommended,special_recommended,recommended,article_editor
+		from
+		blog_blogcontent where
+		status = 1 order by
+		browse_num desc limit
+		#{0}
+	</select>
+
+	<select id="selectBlogcontentListWithoutContent" parameterType="Blogcontent"
+		resultMap="BlogcontentResult">
+		(select cid, title, slug, created, modified,cover,images, type, tags,
+		categories,
+		hits, comments_num,like_num,browse_num, allow_comment,
+		allow_ping,
+		allow_download,
+		allow_feed,
+		status, author, gtm_create,
+		gtm_modified
+		,blog_column_name,show_id,
+		show_introduction, introduction,
+		private_article
+		,scroll_recommended,special_recommended,recommended,article_editor,article_source,article_top
+		from
+		blog_blogcontent
+		<where>
+			<if test="cid != null and cid != ''"> and cid = #{cid}</if>
+			<if test="title != null and title != ''"> and title = #{title}</if>
+			<if test="slug != null and slug != ''"> and slug = #{slug}</if>
+			<if test="created != null and created != ''"> and created = #{created}</if>
+			<if test="modified != null and modified != ''"> and modified = #{modified}</if>
+			<if test="content != null and content != ''"> and content = #{content}</if>
+			<if test="type != null and type != ''"> and type = #{type}</if>
+			<if test="tags != null and tags != ''"> and tags = #{tags}</if>
+			<if test="categories != null and categories != ''"> and categories = #{categories}</if>
+			<if test="hits != null and hits != ''"> and hits = #{hits}</if>
+			<if test="commentsNum != null and commentsNum != ''"> and comments_num = #{commentsNum}</if>
+			<if test="allowComment != null and allowComment != ''"> and allow_comment = #{allowComment}</if>
+			<if test="allowPing != null and allowPing != ''"> and allow_ping = #{allowPing}</if>
+			<if test="allowFeed != null and allowFeed != ''"> and allow_feed = #{allowFeed}</if>
+			<if test="status != null and status != ''"> and status = #{status}</if>
+			<if test="author != null and author != ''"> and author = #{author}</if>
+			<if test="gtmCreate != null and gtmCreate != ''"> and gtm_create = #{gtmCreate}</if>
+			<if test="gtmModified != null and gtmModified != ''"> and gtm_modified = #{gtmModified}</if>
+			<if test="scrollRecommended != null and scrollRecommended != ''"> and scroll_recommended = #{scrollRecommended}</if>
+			<if test="specialRecommended != null and specialRecommended != ''"> and special_recommended = #{specialRecommended}</if>
+			<if test="recommended != null and recommended != ''"> and recommended = #{recommended}</if>
+			and cid > 2 and article_top=0 and status=1 order by
+			gtm_modified desc
+			limit 999999
+		</where>
+		)
+		UNION ALL
+		(select cid, title, slug, created, modified,cover,images,
+		type, tags,
+		categories,
+		hits, comments_num,like_num,browse_num,
+		allow_comment,
+		allow_ping,
+		allow_download,
+		allow_feed,
+		status, author,
+		gtm_create,
+		gtm_modified
+		,blog_column_name,show_id,
+		show_introduction,
+		introduction,
+		private_article
+		,scroll_recommended,special_recommended,recommended,article_editor,article_source,article_top
+		from
+		blog_blogcontent
+		<where>
+			<if test="cid != null and cid != ''"> and cid = #{cid}</if>
+			<if test="title != null and title != ''"> and title = #{title}</if>
+			<if test="slug != null and slug != ''"> and slug = #{slug}</if>
+			<if test="created != null and created != ''"> and created = #{created}</if>
+			<if test="modified != null and modified != ''"> and modified = #{modified}</if>
+			<if test="content != null and content != ''"> and content = #{content}</if>
+			<if test="type != null and type != ''"> and type = #{type}</if>
+			<if test="tags != null and tags != ''"> and tags = #{tags}</if>
+			<if test="categories != null and categories != ''"> and categories = #{categories}</if>
+			<if test="hits != null and hits != ''"> and hits = #{hits}</if>
+			<if test="commentsNum != null and commentsNum != ''"> and comments_num = #{commentsNum}</if>
+			<if test="allowComment != null and allowComment != ''"> and allow_comment = #{allowComment}</if>
+			<if test="allowPing != null and allowPing != ''"> and allow_ping = #{allowPing}</if>
+			<if test="allowFeed != null and allowFeed != ''"> and allow_feed = #{allowFeed}</if>
+			<if test="status != null and status != ''"> and status = #{status}</if>
+			<if test="author != null and author != ''"> and author = #{author}</if>
+			<if test="gtmCreate != null and gtmCreate != ''"> and gtm_create = #{gtmCreate}</if>
+			<if test="gtmModified != null and gtmModified != ''"> and gtm_modified = #{gtmModified}</if>
+			<if test="scrollRecommended != null and scrollRecommended != ''"> and scroll_recommended = #{scrollRecommended}</if>
+			<if test="specialRecommended != null and specialRecommended != ''"> and special_recommended = #{specialRecommended}</if>
+			<if test="recommended != null and recommended != ''"> and recommended = #{recommended}</if>
+			and cid > 2 and article_top=1 order by gtm_create desc limit 999999
+		</where>
+		)
+	</select>
+
+	<select id="selectBlogcontentListArticleTopWithoutContent"
+		parameterType="Blogcontent" resultMap="BlogcontentResult">
+		select cid, title, slug, created, modified,cover,images, type, tags,
+		categories,
+		hits, comments_num,like_num,browse_num, allow_comment,
+		allow_ping,
+		allow_download,
+		allow_feed,
+		status, author, gtm_create,
+		gtm_modified
+		,blog_column_name,show_id,
+		show_introduction, introduction,
+		private_article
+		,scroll_recommended,special_recommended,recommended,article_editor,article_source,article_top
+		from
+		blog_blogcontent
+		<where>
+			and cid > 2 and article_top=0 and status=1 order by
+			gtm_modified desc
+		</where>
+	</select>
+
+	<select id="selectBlogTagscontentListWithoutContent"
+		parameterType="Blogcontent" resultMap="BlogcontentResult">
+		SELECT bbc.cid, bbc.title,
+		bbc.cover,bbc.images, bbc.type, bbc.tags,
+		bbc.comments_num,bbc.like_num,bbc.browse_num, bbc.allow_comment,
+		bbc.allow_ping,
+		bbc.allow_download,
+		bbc.allow_feed,
+		bbc.status,
+		bbc.author, bbc.gtm_create,
+		bbc.gtm_modified
+		,bbc.blog_column_name,bbc.show_id,
+		bbc.show_introduction,
+		bbc.introduction,
+		bbc.private_article,bbc.scroll_recommended,bbc.special_recommended,bbc.recommended,bbc.article_editor,bbc.article_source
+		from
+		blog_blogcontent bbc
+		LEFT
+		JOIN blog_blogtags_blogcontent bbb ON
+		bbc.cid
+		= bbb.cid
+		LEFT JOIN
+		blog_blogtags bbt ON bbb.blog_tags_id =
+		bbt.blog_tags_id
+		WHERE bbc.status
+		=
+		#{status} and bbt.blog_tags_name
+		=#{blogTagsName}
+	</select>
+
+	<select id="selectBlogSearchcontentListWithoutContent"
+		parameterType="Blogcontent" resultMap="BlogcontentResult">
+		select cid, title, slug, created, modified,cover,images, type, tags,
+		categories,
+		hits, comments_num,like_num,browse_num, allow_comment,
+		allow_ping,
+		allow_download,
+		allow_feed,
+		status, author, gtm_create,
+		gtm_modified
+		,blog_column_name
+		,show_id,
+		show_introduction, introduction,
+		private_article
+		,scroll_recommended,special_recommended,recommended,article_editor,article_source
+		from
+		blog_blogcontent
+		<where>
+			status = #{status}
+			and (title like concat(concat('%',
+			#{content}),'%') or content like concat(concat('%', #{content}),'%'))
+		</where>
+	</select>
+
+	<select id="selectBlogCColumncontentListWithoutContent"
+		parameterType="Blogcontent" resultMap="BlogcontentResult">
+		select cid, title, slug, created, modified,cover,images, type, tags,
+		categories,
+		hits, comments_num,like_num,browse_num, allow_comment,
+		allow_ping,
+		allow_download,
+		allow_feed,
+		status, author, gtm_create,
+		gtm_modified
+		,blog_column_name
+		,show_id,
+		show_introduction, introduction,
+		private_article
+		,scroll_recommended,special_recommended,recommended,article_editor,article_source
+		from
+		blog_blogcontent
+		<where>
+			<if test="status != null and status != ''"> and status = #{status}</if>
+			<if test="blogColumnName != null and blogColumnName != ''"> and blog_column_name = #{blogColumnName}</if>
+		</where>
+	</select>
+
+	<select id="selectBlogMColumncontentListWithoutContent"
+		parameterType="Blogcontent" resultMap="BlogcontentResult">
+		select t1.cid, t1.title,
+		t1.slug, t1.created, t1.modified, t1.cover,t1.images,t1.type, t1.tags,
+		t1.categories,
+		t1.hits, t1.comments_num,t1.like_num,t1.browse_num,
+		t1.allow_comment,
+		t1.allow_ping,
+		t1.allow_download,
+		t1.allow_feed,
+		t1.status, t1.author,
+		t1.gtm_create,
+		t1.gtm_modified
+		,t1.blog_column_name,t1.show_id,
+		t1.show_introduction,
+		t1.introduction,
+		t1.private_article,t1.scroll_recommended,t1.special_recommended,t1.recommended,t1.article_editor,t1.article_source
+		from
+		blog_blogcontent t1 where
+		t1.status=#{status} and
+		t1.blog_column_name
+		in (select
+		t2.blog_column_name from blog_blogcolumn
+		t2 where
+		t2.parent_id=(select
+		t3.blog_column_id from blog_blogcolumn t3
+		where
+		t3.blog_column_name=#{blogColumnName}))
+	</select>
+
+	<insert id="insertBlogcontent" parameterType="Blogcontent"
+		useGeneratedKeys="true" keyProperty="cid">
+		insert into blog_blogcontent (
+		<if test="tags != null and tags != '' ">tags, </if>
+		<if test="categories != null and categories != '' ">categories, </if>
+		<if test="hits != null and hits != '' ">hits, </if>
+		<if test="slug != null and slug != '' ">slug, </if>
+		<if test="created != null and created != '' ">created, </if>
+		<if test="modified != null and modified != '' ">modified, </if>
+		title,
+		content,
+		content_md,
+		cover,
+		images,
+		type,
+		allow_comment,
+		allow_ping,
+		allow_download,
+		allow_feed,
+		author,
+		status,
+		gtm_create,
+		gtm_modified,
+		blog_column_name,
+		show_id,
+		blog_file_name,
+		show_introduction,
+		introduction,
+		private_article,
+		article_editor,
+		article_source,
+		article_top
+		)values(
+		<if test="tags != null and tags != ''">#{tags}, </if>
+		<if test="categories != null and categories != ''">#{categories}, </if>
+		<if test="hits != null and hits != ''">#{hits}, </if>
+		<if test="slug != null and slug != ''">#{slug}, </if>
+		<if test="created != null and created != ''">#{created}, </if>
+		<if test="modified != null and modified != ''">#{modified}, </if>
+		#{title},
+		#{content},
+		#{contentMd},
+		#{cover},
+		#{images},
+		#{type},
+		#{allowComment},
+		#{allowPing},
+		#{allowDownload},
+		#{allowFeed},
+		#{author},
+		#{status},
+		#{gtmCreate},
+		#{gtmModified},
+		#{blogColumnName},
+		#{showId},
+		#{blogFileName},
+		#{showIntroduction},
+		#{introduction},
+		#{privateArticle},
+		#{articleEditor},
+		#{articleSource},
+		#{articleTop}
+		)
+	</insert>
+
+	<update id="updateBlogcontent" parameterType="Blogcontent">
+		update blog_blogcontent
+		<set>
+			title = #{title},
+			content = #{content},
+			content_md = #{contentMd},
+			cover = #{cover},
+			images =
+			#{images},
+			type =
+			#{type},
+			tags =
+			#{tags},
+			allow_comment =
+			#{allowComment},
+			allow_ping =
+			#{allowPing},
+			allow_download =
+			#{allowDownload},
+			allow_feed
+			=
+			#{allowFeed},
+			author =
+			#{author},
+			status =
+			#{status},
+			gtm_modified =
+			#{gtmModified},
+			blog_column_name =
+			#{blogColumnName},
+			show_id =
+			#{showId},
+			blog_file_name =
+			#{blogFileName},
+			show_introduction =
+			#{showIntroduction},
+			introduction =
+			#{introduction},
+			private_article =
+			#{privateArticle},
+			article_editor =
+			#{articleEditor},
+			article_top=
+			#{articleTop}
+		</set>
+		where cid = #{cid}
+	</update>
+
+	<update id="updateBrowseNum" parameterType="Long">
+		update blog_blogcontent
+		<set>
+			browse_num = browse_num+1
+		</set>
+		where cid = #{cid}
+	</update>
+	<update id="updateLikeNum" parameterType="Long">
+		update blog_blogcontent
+		<set>
+			like_num = like_num+1
+		</set>
+		where cid = #{cid}
+	</update>
+
+	<update id="updateBlogcontentRecommendToNo">
+		update blog_blogcontent
+		<set>
+			scroll_recommended = 1,
+			special_recommended = 1,
+			recommended = 1
+		</set>
+	</update>
+
+	<update id="updateBlogcontentScrollRecommendedToYes"
+		parameterType="Long">
+		update blog_blogcontent
+		<set>
+			scroll_recommended = 0
+		</set>
+		where cid = #{cid}
+	</update>
+
+	<update id="updateBlogcontentSpecialRecommendedToYes"
+		parameterType="Long">
+		update blog_blogcontent
+		<set>
+			special_recommended = 0
+		</set>
+		where cid = #{cid}
+	</update>
+
+	<update id="updateBlogcontentRecommendedToYes" parameterType="Long">
+		update blog_blogcontent
+		<set>
+			recommended = 0
+		</set>
+		where cid = #{cid}
+	</update>
+
+	<update id="articleTop">
+		update blog_blogcontent
+		<set>
+			article_top = #{1},
+			gtm_modified=sysdate()
+		</set>
+		where cid = #{0}
+	</update>
+
+	<delete id="deleteBlogcontentById" parameterType="Long">
+		delete from
+		blog_blogcontent where cid = #{value}
+	</delete>
+
+	<delete id="batchDeleteBlogcontent" parameterType="Long">
+		delete from blog_blogcontent where cid in
+		<foreach item="cid" collection="array" open="(" separator=","
+			close=")">
+			#{cid}
+		</foreach>
+	</delete>
+
+	<update id="batchReleaseBlogcontent" parameterType="Long">
+		update blog_blogcontent set status=1 where cid in
+		<foreach item="cid" collection="array" open="(" separator=","
+			close=")">
+			#{cid}
+		</foreach>
+	</update>
+
+	<update id="batchDraftBlogcontent" parameterType="Long">
+		update blog_blogcontent set status=0 where cid in
+		<foreach item="cid" collection="array" open="(" separator=","
+			close=")">
+			#{cid}
+		</foreach>
+	</update>
+
+</mapper>

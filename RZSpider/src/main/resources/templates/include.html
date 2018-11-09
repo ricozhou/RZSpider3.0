@@ -1,0 +1,109 @@
+<head th:fragment="header">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="shortcut icon" th:href="${websiteIco}">
+<link href="../static/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link href="../static/css/font-awesome.css"
+	th:href="@{/css/font-awesome.css}" rel="stylesheet" />
+<!-- bootstrap-table 表格插件样式 -->
+<link href="../static/ajax/libs/bootstrap-table/bootstrap-table.min.css"
+	th:href="@{/ajax/libs/bootstrap-table/bootstrap-table.min.css}"
+	rel="stylesheet" />
+<link href="../static/ajax/libs/jqTreeGrid/jquery.treegrid.css"
+	th:href="@{/ajax/libs/jqTreeGrid/jquery.treegrid.css}" rel="stylesheet" />
+<link href="../static/css/animate.css" th:href="@{/css/animate.css}"
+	rel="stylesheet" />
+<link href="../static/css/style.css" th:href="@{/css/style.css}"
+	rel="stylesheet" />
+<link href="../static/css/checkbox.css" th:href="@{/css/checkbox.css}"
+	rel="stylesheet" />
+<!-- bootstrap开关 -->
+<link
+	href="../static/ajax/libs/bootstrap-switch/css/bootstrap-switch.min.css"
+	th:href="@{/ajax/libs/bootstrap-switch/css/bootstrap-switch.min.css}"
+	rel="stylesheet" />
+<!-- bootstrap自增input-->
+<link
+	href="../static/ajax/libs/bootstrap-spinner/css/bootstrap-spinner.css"
+	th:href="@{/ajax/libs/bootstrap-spinner/css/bootstrap-spinner.css}"
+	rel="stylesheet" />
+<!--summernote css -->
+<link href="../static/css/plugins/summernote/summernote-0.8.8.css"
+	th:href="@{/css/plugins/summernote/summernote-0.8.8.css}"
+	rel="stylesheet">
+
+<link href="../static/css/layui.css" th:href="@{/css/layui.css}"
+	rel="stylesheet" />
+</head>
+<div th:fragment="footer">
+	<script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+	<script src="../static/js/bootstrap.min.js"
+		th:src="@{/js/bootstrap.min.js}"></script>
+
+	<!-- bootstrap-table 表格插件 -->
+	<script
+		src="../static/ajax/libs/bootstrap-table/bootstrap-table.min.js"
+		th:src="@{/ajax/libs/bootstrap-table/bootstrap-table.min.js}"></script>
+	<script
+		src="../static/ajax/libs/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"
+		th:src="@{/ajax/libs/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+	<script
+		src="../static/ajax/libs/bootstrap-table/extensions/mobile/bootstrap-table-mobile.min.js"
+		th:src="@{/ajax/libs/bootstrap-table/extensions/mobile/bootstrap-table-mobile.min.js}"></script>
+	<script
+		src="../static/ajax/libs/bootstrap-table/extensions/toolbar/bootstrap-table-toolbar.min.js"
+		th:src="@{/ajax/libs/bootstrap-table/extensions/toolbar/bootstrap-table-toolbar.min.js}"></script>
+	<!-- bootstrap开关 -->
+	<script
+		src="../static/ajax/libs/bootstrap-switch/js/bootstrap-switch.min.js"
+		th:src="@{/ajax/libs/bootstrap-switch/js/bootstrap-switch.min.js}"></script>
+	<!-- bootstrap自增input-->
+	<script
+		src="../static/ajax/libs/bootstrap-spinner/js/jquery.spinner.js"
+		th:src="@{/ajax/libs/bootstrap-spinner/js/jquery.spinner.js}"></script>
+	<!-- jquery-validate 表单验证插件 -->
+	<script src="../static/ajax/libs/validate/jquery.validate.min.js"
+		th:src="@{/ajax/libs/validate/jquery.validate.min.js}"></script>
+	<script src="../static/ajax/libs/validate/messages_zh.min.js"
+		th:src="@{/ajax/libs/validate/messages_zh.min.js}"></script>
+	<script src="../static/ajax/libs/validate/jquery.validate.extend.js"
+		th:src="@{/ajax/libs/validate/jquery.validate.extend.js}"></script>
+	<!-- jquery-validate 表单树插件 -->
+	<script src="../static/ajax/libs/jqTreeGrid/jquery.treegrid.min.js"
+		th:src="@{/ajax/libs/jqTreeGrid/jquery.treegrid.min.js}"></script>
+	<script
+		src="../static/ajax/libs/jqTreeGrid/jquery.treegrid.extension.js"
+		th:src="@{/ajax/libs/jqTreeGrid/jquery.treegrid.extension.js}"></script>
+	<!-- jquery-export 表格导出插件 -->
+	<script
+		src="../static/ajax/libs/bootstrap-table/extensions/export/bootstrap-table-export.js"
+		th:src="@{/ajax/libs/bootstrap-table/extensions/export/bootstrap-table-export.js}"></script>
+	<script
+		src="../static/ajax/libs/bootstrap-table/extensions/export/tableExport.js"
+		th:src="@{/ajax/libs/bootstrap-table/extensions/export/tableExport.js}"></script>
+	<script src="../static/ajax/libs/layer/layer.min.js"
+		th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+	<script src="../static/rzspider/js/common.js?v=1.1.4"
+		th:src="@{/rzspider/js/common.js?v=1.1.4}"></script>
+	<script src="../static/rzspider/js/rz-ui.js?v=1.1.4"
+		th:src="@{/rzspider/js/rz-ui.js?v=1.1.4}"></script>
+	<script th:inline="javascript"> var ctx = [[@{/}]]; </script>
+	<!-- <script src="http://tajs.qq.com/stats?sId=62048022"></script> -->
+	<!--summernote-->
+	<script src="../static/js/plugins/summernote/summernote.js"
+		th:src="@{/js/plugins/summernote/summernote.js}"></script>
+	<script src="../static/js/plugins/summernote/summernote-zh-CN.min.js"
+		th:src="@{/js/plugins/summernote/summernote-zh-CN.min.js}"></script>
+	<script src="../static/js/plugins/summernote/ajax-util.js"
+		th:src="@{/js/plugins/summernote/ajax-util.js}"></script>
+	<!-- 自定义js -->
+	<script src="../static/js/content.js?v=1.0.0"
+		th:src="@{/js/content.js?v=1.0.0}"></script>
+	<!-- 多媒体预览 -->
+	<script src="../static/ajax/plugins/jquery.media.js"
+		th:src="@{/ajax/plugins/jquery.media.js}"></script>
+</div>

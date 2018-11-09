@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzspider.project.commongame.gamelist.mapper.GamelistMapper">
+
+	<resultMap type="Gamelist" id="GamelistResult">
+		<result property="gameListId" column="game_list_id" />
+		<result property="gameBackId" column="game_back_id" />
+		<result property="gameNickName" column="game_nick_name" />
+		<result property="gameName" column="game_name" />
+		<result property="gameInstruction" column="game_instruction" />
+		<result property="gameType" column="game_type" />
+		<result property="srcDownloadStatus" column="src_download_status" />
+		<result property="execexeDownloadStatus" column="execexe_download_status" />
+		<result property="setupexeDownloadStatus" column="setupexe_download_status" />
+		<result property="createBy" column="create_by" />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy" column="update_by" />
+		<result property="updateTime" column="update_time" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<select id="selectGamelistById" parameterType="Integer"
+		resultMap="GamelistResult">
+		select
+		cg.*,cg2.game_back_id,cg2.game_type,cg2.src_download_status,cg2.execexe_download_status,cg2.setupexe_download_status
+		from
+		commongame_gamelist
+		cg left join commongame_gamemanage cg2 on
+		cg.game_name=cg2.game_name
+		where game_list_id = #{gameListId}
+	</select>
+
+	<select id="checkGameNickNameUnique" parameterType="Gamelist"
+		resultMap="GamelistResult">
+		select game_list_id,game_nick_name, game_name,
+		game_instruction, create_by,
+		create_time, update_by, update_time,
+		remark from commongame_gamelist
+		where game_nick_name = #{gameNickName}
+	</select>
+
+	<select id="selectGamelistList" parameterType="Gamelist"
+		resultMap="GamelistResult">
+		select
+		cg.*,cg2.game_back_id,cg2.game_type,cg2.src_download_status,cg2.execexe_download_status,cg2.setupexe_download_status
+		from
+		commongame_gamelist
+		cg left join commongame_gamemanage cg2 on
+		cg.game_name=cg2.game_name
+		<where>
+			<if test="createBy != null and createBy != ''"> and cg.create_by = #{createBy}</if>
+			<if test="searchValue != null and searchValue != ''">
+				AND (cg.game_nick_name like concat(concat('%',
+				#{searchValue}),
+				'%') OR cg.game_name like concat(concat('%',
+				#{searchValue}), '%'))
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertGamelist" parameterType="Gamelist">
+		insert into commongame_gamelist (
+		<if test="gameListId != null and gameListId != '' ">game_list_id, </if>
+		<if test="gameNickName != null and gameNickName != '' ">game_nick_name, </if>
+		<if test="gameName != null and gameName != '' ">game_name, </if>
+		<if test="gameInstruction != null and gameInstruction != '' ">game_instruction, </if>
+		<if test="createBy != null and createBy != '' ">create_by, </if>
+		<if test="remark != null and remark != '' ">remark,</if>
+		create_time,
+		update_time
+		)values(
+		<if test="gameListId != null and gameListId != ''">#{gameListId}, </if>
+		<if test="gameNickName != null and gameNickName != ''">#{gameNickName}, </if>
+		<if test="gameName != null and gameName != ''">#{gameName}, </if>
+		<if test="gameInstruction != null and gameInstruction != ''">#{gameInstruction}, </if>
+		<if test="createBy != null and createBy != ''">#{createBy}, </if>
+		<if test="remark != null and remark != ''">#{remark},</if>
+		sysdate(),
+		sysdate()
+		)
+	</insert>
+
+	<update id="updateGamelist" parameterType="Gamelist">
+		update commongame_gamelist
+		<set>
+			<if test="gameNickName != null and gameNickName != ''">game_nick_name = #{gameNickName}, </if>
+			<if test="gameName != null and gameName != ''">game_name = #{gameName}, </if>
+			<if test="gameInstruction != null and gameInstruction != ''">game_instruction = #{gameInstruction}, </if>
+			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy}, </if>
+			<if test="remark != null and remark != ''">remark = #{remark},</if>
+			<if test="updateTime != null and updateTime != ''">update_time =sysdate()</if>
+		</set>
+		where game_list_id = #{gameListId}
+	</update>
+
+	<delete id="deleteGamelistById" parameterType="Integer">
+		delete from
+		commongame_gamelist where game_list_id = #{value}
+	</delete>
+
+	<delete id="batchDeleteGamelist" parameterType="Integer">
+		delete from commongame_gamelist where game_list_id in
+		<foreach item="gameListId" collection="array" open="("
+			separator="," close=")">
+			#{gameListId}
+		</foreach>
+	</delete>
+
+</mapper>

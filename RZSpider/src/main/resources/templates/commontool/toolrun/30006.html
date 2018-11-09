@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link rel="stylesheet" href="/ajax/plugins/jsonformat/css/s.css"
+	th:href="@{/ajax/plugins/jsonformat/css/s.css}" />
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="form-toolrun-run">
+							<input id="toolBackId" name="toolBackId" th:value="${toolBackId}"
+								type="hidden" />
+							<div class="form-group">
+								<label class="col-sm-2 control-label">选择功能：</label>
+								<div class="col-sm-4">
+									<select class="form-control" name="formatFunction"
+										id="formatFunction">
+										<option value="0">格式化JSON文本</option>
+										<option value="1">多行文本转一行</option>
+									</select>
+								</div>
+								<!-- 		<div id="ControlsRow">
+									<input type="Button" value="格式化" onclick="Process()" /> <span
+										id="TabSizeHolder"> 缩进量 <select id="TabSize"
+										onchange="TabSizeChanged()">
+											<option value="1">1</option>
+											<option value="2" selected="true">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+											<option value="6">6</option>
+									</select>
+									</span> <label for="QuoteKeys"> <input type="checkbox"
+										id="QuoteKeys" onclick="QuoteKeysClicked()" checked="true" />
+										引号
+									</label>&nbsp; <a href="javascript:void(0);"
+										onclick="SelectAllClicked()">全选</a> &nbsp; <span
+										id="CollapsibleViewHolder"> <label
+										for="CollapsibleView"> <input type="checkbox"
+											id="CollapsibleView" onclick="CollapsibleViewClicked()"
+											checked="true" /> 显示控制
+									</label>
+									</span> <span id="CollapsibleViewDetail"> <a
+										href="javascript:void(0);" onclick="ExpandAllClicked()">展开</a>
+										<a href="javascript:void(0);" onclick="CollapseAllClicked()">叠起</a>
+										<a href="javascript:void(0);" onclick="CollapseLevel(3)">2级</a>
+										<a href="javascript:void(0);" onclick="CollapseLevel(4)">3级</a>
+										<a href="javascript:void(0);" onclick="CollapseLevel(5)">4级</a>
+										<a href="javascript:void(0);" onclick="CollapseLevel(6)">5级</a>
+										<a href="javascript:void(0);" onclick="CollapseLevel(7)">6级</a>
+										<a href="javascript:void(0);" onclick="CollapseLevel(8)">7级</a>
+										<a href="javascript:void(0);" onclick="CollapseLevel(9)">8级</a>
+									</span>
+								</div> -->
+
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"><em
+									class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>输入文本：</label>
+								<div class="col-sm-10">
+									<textarea id="content" name="content" rows="5"
+										class="form-control"></textarea>
+									<label style="color: red" id="showJsonStatus"></label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">输出文本：</label>
+								<div class="col-sm-10">
+									<textarea id="exportContent" name="exportContent" rows="10"
+										class="form-control"></textarea>
+								</div>
+								<!-- <div id="Canvas" class="Canvas"></div> -->
+
+							</div>
+							<div class="form-group">
+								<div class="form-control-static col-sm-offset-9">
+									<button class="btn btn-primary" type="submit"
+										id="runFormatText">格式化</button>
+									<button class="btn btn-warning" type="button" id="clearText2"
+										onclick="clearText()">清空</button>
+									<button class="btn btn-primary" type="button" disabled
+										id="copyText2" onclick="copyText()">复制</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script src="/ajax/plugins/jsonformat/js/c.js"
+		th:src="@{/ajax/plugins/jsonformat/js/c.js}">
+		
+	</script>
+	<script src="/rzspider/commontool/toolrun/30006.js"
+		th:src="@{/rzspider/commontool/toolrun/30006.js}">
+		
+	</script>
+</body>
+</html>

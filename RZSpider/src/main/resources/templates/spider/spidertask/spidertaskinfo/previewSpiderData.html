@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content">
+		<div class="btn-group hidden-xs" id="tableToolbar" role="group">
+			<button type="button" class="btn btn-outline btn-default"
+				th:onclick="'javascript:downloadSpiderData(1)'"
+				shiro:hasPermission="spider:spidertask:spidertaskinfo:downloadData">
+				<i class="glyphicon fa fa-download"></i>下载
+			</button>
+			<button type="button" class="btn btn-outline btn-default"
+				th:onclick="'javascript:downloadSpiderData(2)'"
+				shiro:hasPermission="spider:spidertask:spidertaskinfo:downloadData">
+				<i class="glyphicon fa fa-download"></i>下载全部
+			</button>
+			<label>&nbsp;共&nbsp;[[${dataCount}]]&nbsp;条数据</label>
+		</div>
+		<input id="jsonColumn" name="jsonColumn" th:value="${jsonColumn}"
+			type="hidden"> <input id="jsonData" name="jsonData"
+			th:value="${jsonData}" type="hidden"> <input id="taskId"
+			name="taskId" th:value="${taskId}" type="hidden"> <input
+			id="taskInfoId" name="taskInfoId" th:value="${taskInfoId}"
+			type="hidden"> <input id="dataCount" name="dataCount"
+			th:value="${dataCount}" type="hidden">
+		<table class="bootstrap-table" data-mobile-responsive="true">
+		</table>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script
+		src="/rzspider/spider/spidertask/spidertaskinfo/previewSpiderData.js"
+		th:src="@{/rzspider/spider/spidertask/spidertaskinfo/previewSpiderData.js}"></script>
+</body>
+</html>

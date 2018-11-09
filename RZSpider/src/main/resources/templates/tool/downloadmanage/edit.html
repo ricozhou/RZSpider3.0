@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link href="/ajax/libs/iCheck/custom.css"
+	th:href="@{/ajax/libs/iCheck/custom.css}" rel="stylesheet" />
+<link
+	href="/ajax/libs/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css"
+	th:href="@{/ajax/libs/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css}"
+	rel="stylesheet" />
+<!-- 上传插件 -->
+<link rel="stylesheet"
+	href="/ajax/plugins/bootstrap-fileinput/css/fileinput.css"
+	th:href="@{/ajax/plugins/bootstrap-fileinput/css/fileinput.css}" />
+<link href="/css/font-awesome.css" th:href="@{/css/font-awesome.css}"
+	rel="stylesheet" />
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-downloadmanage-edit">
+			<input id="downloadmanageId" name="downloadmanageId"
+				th:value="${downloadmanage.downloadmanageId}" type="hidden">
+			<input id="downloadFileType" name="downloadFileType"
+				th:value="${downloadmanage.downloadFileType}" type="hidden">
+			<input id="downloadFileUuidName" name="downloadFileUuidName"
+				th:value="${downloadmanage.downloadFileUuidName}" type="hidden">
+			<input id="downloadFileSize" name="downloadFileSize"
+				th:value="${downloadmanage.downloadFileSize}" type="hidden">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">下载文件类型：</label>
+				<div class="col-sm-8">
+					<label class="checkbox-inline i-checks"> <input
+						type="radio" name="downloadFileType" value="0" id="radio1" /> 文件
+					</label> <label class="checkbox-inline i-checks"> <input
+						type="radio" name="downloadFileType" value="1" id="radio2" /> 图片
+					</label> <label class="checkbox-inline i-checks"> <input
+						type="radio" name="downloadFileType" value="2" id="radio3" /> 视频
+					</label> <label class="checkbox-inline i-checks"> <input
+						type="radio" name="downloadFileType" value="3" id="radio4" /> 音频
+					</label><label class="checkbox-inline i-checks"> <input
+						type="radio" name="downloadFileType" value="4" id="radio5" /> 其他
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">上传下载文件：</label>
+				<div class="col-sm-8">
+					<input id="file-5" class="file" type="file" name="file">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><em class="gg-star"
+					style="color: red; font-style: normal;">*&nbsp;</em>下载文件名称：</label>
+				<div class="col-sm-6">
+					<input id="downloadFileName" name="downloadFileName"
+						class="form-control" type="text"
+						th:value="${downloadmanage.downloadFileName}">
+				</div>
+				<div class="col-sm-2">
+					<input id="downloadFileExtensionName"
+						name="downloadFileExtensionName" class="form-control"
+						th:value="${downloadmanage.downloadFileExtensionName}" type="text"
+						readonly></input>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><em class="gg-star"
+					style="color: red; font-style: normal;">*&nbsp;</em>下载限制次数：</label>
+				<div class="col-sm-8">
+					<div class="input-group spinner" data-trigger="spinner">
+						<input type="text" class="form-control text-center"
+							th:value="${downloadmanage.downloadFileLimitDownNum}"
+							data-rule="quantity" id="downloadFileLimitDownNum"
+							name="downloadFileLimitDownNum" data-max="99999999" data-min="0">
+						<div class="input-group-addon">
+							<a href="javascript:;" class="spin-up" data-spin="up"><i
+								class="fa fa-caret-up"></i></a> <a href="javascript:;"
+								class="spin-down" data-spin="down"><i
+								class="fa fa-caret-down"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><em class="gg-star"
+					style="color: red; font-style: normal;">*&nbsp;</em>下载限制时间：</label>
+				<div class="col-sm-8">
+					<div class="input-group date form_datetime col-sm-12"
+						data-date-format="yyyy-mm-dd hh:ii:ss"
+						data-link-field="dtp_input1">
+						<input class="form-control" type="text" value="" readonly
+							id="downloadFileLimitDownTime"
+							th:value="${downloadmanage.downloadFileLimitDownTime}"> <span
+							class="input-group-addon"><span
+							class="glyphicon glyphicon-remove"></span></span> <span
+							class="input-group-addon"><span
+							class="glyphicon glyphicon-th"></span></span>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">可用状态：</label>
+				<div class="col-sm-8">
+					<div class="onoffswitch">
+						<input type="checkbox" 
+							class="onoffswitch-checkbox" id="status" name="status"
+							th:checked="${downloadmanage.status == 0 ? true : false}">
+						<label class="onoffswitch-label" for="status"> <span
+							class="onoffswitch-inner"></span> <span
+							class="onoffswitch-switch"></span>
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="remark" name="remark" class="form-control" type="text"
+						th:value="${downloadmanage.remark}">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="form-control-static col-sm-offset-9">
+					<button type="submit" class="btn btn-primary">提交</button>
+					<button th:onclick="'javascript:layer_close()'"
+						class="btn btn-danger" type="button">关闭</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div th:include="include::footer"></div>
+	<script src="/ajax/plugins/bootstrap-fileinput/js/fileinput.min.js"
+		th:src="@{/ajax/plugins/bootstrap-fileinput/js/fileinput.min.js}"></script>
+	<script src="/ajax/plugins/bootstrap-fileinput/js/locales/zh.js"
+		th:src="@{/ajax/plugins/bootstrap-fileinput/js/locales/zh.js  }"></script>
+	<script src="/ajax/plugins/bootstrap-fileinput/js/locales/fr.js"
+		th:src="@{/ajax/plugins/bootstrap-fileinput/js/locales/fr.js  }"></script>
+	<script
+		src="/ajax/libs/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"
+		th:src="@{/ajax/libs/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js}">
+	</script>
+	<script
+		src="/ajax/libs/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"
+		th:src="@{/ajax/libs/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js}">
+		
+	</script>
+	<script src="/rzspider/tool/downloadmanage/edit.js"
+		th:src="@{/rzspider/tool/downloadmanage/edit.js}">
+		
+	</script>
+	<script src="/ajax/libs/iCheck/icheck.min.js"
+		th:src="@{/ajax/libs/iCheck/icheck.min.js}"></script>
+	<script>
+		$(document).ready(function() {
+			$(".i-checks").iCheck({
+				checkboxClass : "icheckbox_square-green",
+				radioClass : "iradio_square-green",
+			})
+		});
+	</script>
+	<script>
+		var downloadFileName = "未知";
+		var downloadFileUuidName = "";
+		var downloadFileExtensionName = "";
+		var downloadFileSize = "0";
+		// 上传文件
+		$("#file-5").fileinput({
+			language : 'zh', // 设置语言
+			uploadUrl : ctx + "tool/downloadmanage/uploadFile/",
+			showUpload : true, // 是否显示上传按钮
+			showRemove : false, // 是否显示移除按钮
+			showCaption : false,// 是否显示标题
+			browseClass : "btn btn-primary", // 按钮样式
+			dropZoneEnabled : true,//是否显示拖拽区域
+			uploadAsync : true,
+			showBrowse : true,
+			allowedPreviewTypes : ['image', 'html', 'text', 'video', 'audio', 'flash'],
+			browseOnZoneClick : false,
+			maxFileCount : 1, // 表示允许同时上传的最大文件个数
+			enctype : 'multipart/form-data',
+			maxFileSize : 512000
+		// 单位为kb，如果为0表示不限制文件大小
+		//最大五百兆
+		}).on("filebatchselected", function(event, files) {
+			//返回文件名
+			downloadFileName = getFileNameNotExtension(files[0].name);
+			downloadFileExtensionName = getFileExtension(files[0].name);
+			downloadFileSize = getFileSize(files[0].size);
+		}).on('filesuccessremove', function(event, id){
+			downloadFileName='未知';
+			downloadFileExtensionName='';
+			downloadFileSize='0';
+			downloadFileUuidName="";
+			//清除显示后缀
+			$("#downloadFileExtensionName").val('');
+			$("#downloadFileName").val('');
+			$("#downloadFileUuidName").val('');
+			$("#downloadFileSize").val('');
+		}).on("fileuploaded", function(event, data) {
+			//返回文件修改名
+			downloadFileUuidName = (data.response.code == 0) ? (data.response.fileName) : null;
+			if(downloadFileUuidName!=null){
+				//设置显示后缀
+				$("#downloadFileExtensionName").val(downloadFileExtensionName);
+				//设置显示名称
+				$("#downloadFileName").val(downloadFileName);
+				$("#downloadFileUuidName").val(downloadFileUuidName);
+				$("#downloadFileSize").val(downloadFileSize);
+			}
+		});
+		//获取后缀
+		function getFileExtension(downloadFileName) {
+			var index1 = downloadFileName.lastIndexOf('.');
+			var index2 = downloadFileName.length;
+			if (index2 < 1 || index1 < 1) {
+				return '';
+			}
+			return downloadFileName.substring(index1, index2);
+		}
+		//获取文件名不含后缀
+		function getFileNameNotExtension(downloadFileName) {
+			var index1 = downloadFileName.lastIndexOf('.');
+			var index2 = downloadFileName.length;
+			if (index2 < 0 || index1 < 1) {
+				return downloadFileName;
+			}
+			return downloadFileName.substring(0, index1);
+		}
+		//获取大小
+		function getFileSize(size) {
+			if(size<1){
+				return '1 B';
+			}
+			if(size<1024){
+				return size+' B'
+			}
+			if(size<1048576){
+				return (size/1024).toFixed(2)+' KB'
+			}
+			if(size<1048576*1024){
+				return (size/1024/1024).toFixed(2)+' MB'
+			}
+			return (size/1024/1024/1024).toFixed(2)+' GB'
+		}
+	</script>
+</body>
+</html>

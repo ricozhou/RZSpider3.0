@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.rzspider.project.spider.spidermanage.mapper.SpiderListMapper">
+
+	<resultMap type="SpiderList" id="SpiderListResult">
+		<result property="spiderId" column="spider_id" />
+		<result property="customSpiderId" column="custom_spider_id" />
+		<result property="spiderBackId" column="spider_back_id" />
+		<result property="spiderDes" column="spider_des" />
+		<result property="spiderVersion" column="spider_version" />
+		<result property="createType" column="create_type" />
+		<result property="customSpiderType" column="custom_spider_type" />
+		<result property="spiderDefaultParamsAll" column="spider_default_params_all" />
+		<result property="spiderDefaultParams" column="spider_default_params" />
+		<result property="status" column="status" />
+		<result property="updateBy" column="update_by" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<select id="selectSpiderListById" parameterType="Integer"
+		resultMap="SpiderListResult">
+		select spider_id,
+		custom_spider_id,spider_back_id,spider_des,spider_version,
+		create_type,
+		custom_spider_type,spider_default_params_all,spider_default_params,status,
+		update_by, update_time from
+		spider_spider_list
+		where spider_id =
+		#{spiderId}
+	</select>
+
+	<select id="selectSpiderListBySpiderBackId" parameterType="Integer"
+		resultMap="SpiderListResult">
+		select spider_id,
+		custom_spider_id,spider_back_id,spider_des,spider_version,
+		create_type,
+		custom_spider_type,spider_default_params_all,spider_default_params,status,
+		update_by, update_time from
+		spider_spider_list
+		where
+		spider_back_id=#{spiderBackId}
+	</select>
+
+	<select id="selectSpiderListList" parameterType="SpiderList"
+		resultMap="SpiderListResult">
+		select spider_id,custom_spider_id, spider_back_id,
+		spider_des,spider_version,create_type,
+		custom_spider_type,spider_default_params_all,spider_default_params,status,
+		update_by, update_time from
+		spider_spider_list
+		<where>
+			<if test="spiderId != null and spiderId != ''"> and spider_id = #{spiderId}</if>
+			<if test="customSpiderId != null and customSpiderId != ''"> and custom_spider_id = #{customSpiderId}</if>
+			<if test="spiderBackId != null and spiderBackId != ''"> and spider_back_id = #{spiderBackId}</if>
+			<if test="createType != null and createType != ''"> and create_type = #{createType}</if>
+			<if test="customSpiderType != null and customSpiderType != ''"> and custom_spider_type = #{customSpiderType}</if>
+			<if test="status != null and status != ''"> and status = #{status}</if>
+			<if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy}</if>
+			<if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+		</where>
+	</select>
+	<select id="selectSpiderListListByStatus" parameterType="Integer"
+		resultMap="SpiderListResult">
+		select spider_id,custom_spider_id,
+		spider_back_id,spider_des,spider_version,
+		create_type,
+		custom_spider_type,spider_default_params_all,spider_default_params,status,
+		update_by,
+		update_time from spider_spider_list
+		where status = #{status}
+	</select>
+
+	<insert id="insertSpiderList" parameterType="SpiderList">
+		insert into
+		spider_spider_list (
+		<if test="spiderDes != null and spiderDes != ''">spider_des,</if>
+		custom_spider_id,
+		spider_back_id,
+		spider_version,
+		create_type,
+		custom_spider_type,
+		spider_default_params_all,
+		spider_default_params,
+		status,
+		update_by,
+		update_time
+		)values(
+		<if test="spiderDes != null and spiderDes != '' ">#{spiderDes},</if>
+		#{customSpiderId},
+		#{spiderBackId},
+		#{spiderVersion},
+		#{createType},
+		#{customSpiderType},
+		#{spiderDefaultParamsAll},
+		#{spiderDefaultParams},
+		#{status},
+		#{updateBy},
+		sysdate()
+		)
+	</insert>
+
+	<update id="updateSpiderList" parameterType="SpiderList">
+		update spider_spider_list
+		<set>
+			<if test="spiderDes != null and spiderDes != ''">spider_des = #{spiderDes},</if>
+			custom_spider_id = #{customSpiderId},
+			spider_back_id =
+			#{spiderBackId},
+			spider_version =
+			#{spiderVersion},
+			create_type =
+			#{createType},
+			custom_spider_type =
+			#{customSpiderType},
+			spider_default_params_all =
+			#{spiderDefaultParamsAll},
+			spider_default_params =
+			#{spiderDefaultParams},
+			update_by =
+			#{updateBy},
+			status = #{status},
+			update_time = sysdate()
+		</set>
+		where spider_id = #{spiderId}
+	</update>
+
+	<update id="updateSpiderList2" parameterType="SpiderList">
+		update spider_spider_list
+		<set>
+			<if test="spiderDes != null and spiderDes != ''">spider_des = #{spiderDes},</if>
+			spider_back_id = #{spiderBackId},
+			spider_version =
+			#{spiderVersion},
+			create_type = #{createType},
+			custom_spider_type = #{customSpiderType},
+			spider_default_params_all =
+			#{spiderDefaultParamsAll},
+			spider_default_params =
+			#{spiderDefaultParams},
+			update_by =
+			#{updateBy},
+			status = #{status},
+			update_time = sysdate()
+		</set>
+		where custom_spider_id = #{customSpiderId}
+	</update>
+
+
+	<delete id="deleteSpiderListById" parameterType="Integer">
+		delete from
+		spider_spider_list where spider_id = #{value}
+	</delete>
+
+	<delete id="deleteSpiderListByCustomSpiderId" parameterType="Integer">
+		delete from spider_spider_list where custom_spider_id =
+		#{value}
+	</delete>
+
+	<delete id="batchDeleteSpiderList" parameterType="Integer">
+		delete from spider_spider_list where spider_id in
+		<foreach item="spiderId" collection="array" open="("
+			separator="," close=")">
+			#{spiderId}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.rzspider.project.tool.straightlinkmanage.mapper.StraightlinkmanageMapper">
+
+	<resultMap type="Straightlinkmanage" id="StraightlinkmanageResult">
+		<result property="straightlinkmanageId" column="straightlinkmanage_id" />
+		<result property="straightlinkFileName" column="straightlink_file_name" />
+		<result property="straightlinkFileUuidName" column="straightlink_file_uuid_name" />
+		<result property="straightlinkFileType" column="straightlink_file_type" />
+		<result property="straightlinkFileExtensionName" column="straightlink_file_extension_name" />
+		<result property="straightlinkFileSize" column="straightlink_file_size" />
+		<result property="straightlinkFileUrlKey" column="straightlink_file_url_key" />
+		<result property="straightlinkFileUrl" column="straightlink_file_url" />
+		<result property="straightlinkFileDownNum" column="straightlink_file_down_num" />
+		<result property="status" column="status" />
+		<result property="useStatus" column="use_status" />
+		<result property="createBy" column="create_by" />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy" column="update_by" />
+		<result property="updateTime" column="update_time" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<select id="selectStraightlinkmanageById" parameterType="Integer"
+		resultMap="StraightlinkmanageResult">
+		select straightlinkmanage_id, straightlink_file_name,
+		straightlink_file_uuid_name, straightlink_file_type,
+		straightlink_file_extension_name, straightlink_file_size,
+		straightlink_file_url_key, straightlink_file_url,
+		straightlink_file_down_num, status, use_status, create_by,
+		create_time, update_by, update_time, remark from
+		tool_straightlinkmanage
+		where straightlinkmanage_id =
+		#{straightlinkmanageId}
+	</select>
+
+	<select id="selectStraightlinkmanageList" parameterType="Straightlinkmanage"
+		resultMap="StraightlinkmanageResult">
+		select straightlinkmanage_id, straightlink_file_name,
+		straightlink_file_uuid_name, straightlink_file_type,
+		straightlink_file_extension_name, straightlink_file_size,
+		straightlink_file_url_key, straightlink_file_url,
+		straightlink_file_down_num, status, use_status, create_by,
+		create_time, update_by, update_time, remark from
+		tool_straightlinkmanage
+		<where>
+			<if test="straightlinkmanageId != null and straightlinkmanageId != ''"> and straightlinkmanage_id = #{straightlinkmanageId}</if>
+			<if test="straightlinkFileName != null and straightlinkFileName != ''"> and straightlink_file_name = #{straightlinkFileName}
+			</if>
+			<if
+				test="straightlinkFileUuidName != null and straightlinkFileUuidName != ''"> and straightlink_file_uuid_name = #{straightlinkFileUuidName}
+			</if>
+			<if test="straightlinkFileType != null and straightlinkFileType != ''"> and straightlink_file_type = #{straightlinkFileType}
+			</if>
+			<if
+				test="straightlinkFileExtensionName != null and straightlinkFileExtensionName != ''"> and straightlink_file_extension_name =
+				#{straightlinkFileExtensionName}
+			</if>
+			<if test="straightlinkFileSize != null and straightlinkFileSize != ''"> and straightlink_file_size = #{straightlinkFileSize}
+			</if>
+			<if test="straightlinkFileUrlKey != null and straightlinkFileUrlKey != ''"> and straightlink_file_url_key =
+				#{straightlinkFileUrlKey}
+			</if>
+			<if test="straightlinkFileUrl != null and straightlinkFileUrl != ''"> and straightlink_file_url = #{straightlinkFileUrl}</if>
+			<if
+				test="straightlinkFileDownNum != null and straightlinkFileDownNum != ''"> and straightlink_file_down_num = #{straightlinkFileDownNum}
+			</if>
+			<if test="status != null and status != ''"> and status = #{status}</if>
+			<if test="useStatus != null and useStatus != ''"> and use_status = #{useStatus}</if>
+			<if test="createBy != null and createBy != ''"> and create_by = #{createBy}</if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+			<if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy}</if>
+			<if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+			<if test="remark != null and remark != ''"> and remark = #{remark}</if>
+			<if test="searchValue != null and searchValue != ''">
+				AND straightlink_file_name like concat(concat('%',
+				#{searchValue}), '%')
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertStraightlinkmanage" parameterType="Straightlinkmanage">
+		insert into
+		tool_straightlinkmanage (
+		straightlink_file_name,
+		straightlink_file_uuid_name,
+		straightlink_file_type,
+		straightlink_file_extension_name,
+		straightlink_file_size,
+		straightlink_file_url_key,
+		straightlink_file_url,
+		status,
+		create_by,
+		create_time,
+		update_by,
+		update_time,
+		remark
+		)values(
+		#{straightlinkFileName},
+		#{straightlinkFileUuidName},
+		#{straightlinkFileType},
+		#{straightlinkFileExtensionName},
+		#{straightlinkFileSize},
+		#{straightlinkFileUrlKey},
+		#{straightlinkFileUrl},
+		#{status},
+		#{createBy},
+		sysdate(),
+		#{updateBy},
+		sysdate(),
+		#{remark}
+		)
+	</insert>
+
+	<update id="updateStraightlinkmanage" parameterType="Straightlinkmanage">
+		update tool_straightlinkmanage
+		<set>
+			straightlink_file_name = #{straightlinkFileName},
+			straightlink_file_uuid_name = #{straightlinkFileUuidName},
+			straightlink_file_type = #{straightlinkFileType},
+			straightlink_file_extension_name =
+			#{straightlinkFileExtensionName},
+			straightlink_file_size = #{straightlinkFileSize},
+			straightlink_file_url_key = #{straightlinkFileUrlKey},
+			straightlink_file_url = #{straightlinkFileUrl},
+			status = #{status},
+			update_by = #{updateBy},
+			update_time = sysdate(),
+			remark = #{remark}
+		</set>
+		where straightlinkmanage_id = #{straightlinkmanageId}
+	</update>
+
+	<delete id="deleteStraightlinkmanageById" parameterType="Integer">
+		delete
+		from tool_straightlinkmanage where straightlinkmanage_id = #{value}
+	</delete>
+
+	<delete id="batchDeleteStraightlinkmanage" parameterType="Integer">
+		delete from tool_straightlinkmanage where straightlinkmanage_id in
+		<foreach item="straightlinkmanageId" collection="array" open="("
+			separator="," close=")">
+			#{straightlinkmanageId}
+		</foreach>
+	</delete>
+
+</mapper>

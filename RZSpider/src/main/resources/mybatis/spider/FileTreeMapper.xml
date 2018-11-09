@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzspider.project.spider.customspider.mapper.FileTreeMapper">
+
+	<resultMap type="FileTree" id="FileTreeResult">
+		<result property="filetreeId" column="filetree_id" />
+		<result property="childId" column="child_id" />
+		<result property="parentId" column="parent_id" />
+		<result property="customSpiderId" column="custom_spider_id" />
+		<result property="customSpiderBackId" column="custom_spider_back_id" />
+		<result property="fileName" column="file_name" />
+		<result property="filePath" column="file_path" />
+		<result property="fileContent" column="file_content" />
+	</resultMap>
+
+	<select id="selectFileTreeById" parameterType="Integer"
+		resultMap="FileTreeResult">
+		select filetree_id, child_id, parent_id, custom_spider_id,
+		custom_spider_back_id, file_name, file_path, file_content from
+		spider_spiderfiletree
+		where filetree_id = #{filetreeId}
+	</select>
+	<select id="selectFileTreeByCSIdAndChildId" parameterType="FileTree"
+		resultMap="FileTreeResult">
+		select filetree_id, child_id, parent_id, custom_spider_id,
+		custom_spider_back_id, file_name, file_path, file_content from
+		spider_spiderfiletree
+		where custom_spider_id = #{customSpiderId} and
+		child_id=#{childId}
+	</select>
+
+	<select id="selectFileTreeList" parameterType="FileTree"
+		resultMap="FileTreeResult">
+		select filetree_id, child_id, parent_id, custom_spider_id,
+		custom_spider_back_id, file_name, file_path, file_content from
+		spider_spiderfiletree
+		<where>
+			<if test="filetreeId != null and filetreeId != ''"> and filetree_id = #{filetreeId}</if>
+			<if test="childId != null and childId != ''"> and child_id = #{childId}</if>
+			<if test="parentId != null and parentId != ''"> and parent_id = #{parentId}</if>
+			<if test="customSpiderId != null and customSpiderId != ''"> and custom_spider_id = #{customSpiderId}</if>
+			<if test="customSpiderBackId != null and customSpiderBackId != ''"> and custom_spider_back_id = #{customSpiderBackId}</if>
+			<if test="fileName != null and fileName != ''"> and file_name = #{fileName}</if>
+			<if test="filePath != null and filePath != ''"> and file_path = #{filePath}</if>
+			<if test="fileContent != null and fileContent != ''"> and file_content = #{fileContent}</if>
+		</where>
+	</select>
+
+	<insert id="insertFileTree" parameterType="FileTree">
+		insert into spider_spiderfiletree (
+		<if test="fileName != null and fileName != '' ">file_name, </if>
+		<if test="filePath != null and filePath != '' ">file_path, </if>
+		<if test="fileContent != null and fileContent != '' ">file_content,</if>
+		child_id,
+		parent_id,
+		custom_spider_id,
+		custom_spider_back_id
+		)values(
+		<if test="fileName != null and fileName != ''">#{fileName}, </if>
+		<if test="filePath != null and filePath != ''">#{filePath}, </if>
+		<if test="fileContent != null and fileContent != ''">#{fileContent},</if>
+		#{childId},
+		#{parentId},
+		#{customSpiderId},
+		#{customSpiderBackId}
+		)
+	</insert>
+
+	<update id="updateFileTree" parameterType="FileTree">
+		update spider_spiderfiletree
+		<set>
+			<if test="childId != null and childId != ''">child_id = #{childId}, </if>
+			<if test="parentId != null and parentId != ''">parent_id = #{parentId}, </if>
+			<if test="customSpiderId != null and customSpiderId != ''">custom_spider_id = #{customSpiderId}, </if>
+			<if test="customSpiderBackId != null and customSpiderBackId != ''">custom_spider_back_id = #{customSpiderBackId}, </if>
+			<if test="fileName != null and fileName != ''">file_name = #{fileName}, </if>
+			<if test="filePath != null and filePath != ''">file_path = #{filePath}, </if>
+			<if test="fileContent != null and fileContent != ''">file_content = #{fileContent}</if>
+		</set>
+		where filetree_id = #{filetreeId}
+	</update>
+
+	<delete id="deleteFileTreeById" parameterType="Integer">
+		delete from
+		spider_spiderfiletree where filetree_id = #{value}
+	</delete>
+	<delete id="deleteFileTreeByCustomSpiderId" parameterType="Integer">
+		delete from spider_spiderfiletree where custom_spider_id =
+		#{customSpiderId}
+	</delete>
+
+	<delete id="batchDeleteFileTree" parameterType="Integer">
+		delete from spider_spiderfiletree where filetree_id in
+		<foreach item="filetreeId" collection="array" open="("
+			separator="," close=")">
+			#{filetreeId}
+		</foreach>
+	</delete>
+
+</mapper>

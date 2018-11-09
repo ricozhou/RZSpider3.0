@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link href="/ajax/libs/select/select2.css"
+	th:href="@{/ajax/libs/select/select2.css}" rel="stylesheet" />
+<link href="/rzspider/css/RZSpider.css"
+	th:href="@{/rzspider/css/RZSpider.css}" rel="stylesheet" />
+
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-recommendset-update">
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><em class="gg-star"
+					style="color: red; font-style: normal;">*&nbsp;</em>滚动推荐（小于[[${blogset.blogsetScrollRecommendedShowNum+1}]]篇）：</label>
+				<div class="col-sm-9">
+					<select id="scrollRecommended" name="scrollRecommended"
+						class="form-control select2-hidden-accessible" multiple="">
+						<option th:each="Blogcontent:${blogcontentRecommends}"
+							th:value="${Blogcontent.cid}" th:text="${Blogcontent.title}"
+							th:selected="${Blogcontent.scrollRecommended== 0 ? true : false}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">特别推荐（小于[[${blogset.blogsetSpecialRecdShowNum+1}]]篇）：</label>
+				<div class="col-sm-9">
+					<select id="specialRecommended" name="specialRecommended"
+						class="form-control select2-hidden-accessible" multiple="">
+						<option th:each="Blogcontent:${blogcontentRecommends}"
+							th:value="${Blogcontent.cid}" th:text="${Blogcontent.title}"
+							th:selected="${Blogcontent.specialRecommended== 0 ? true : false}"></option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">列表推荐（小于[[${blogset.blogsetRecommendedShowNum+1}]]篇）：</label>
+				<div class="col-sm-9">
+					<select id="recommended" name="recommended"
+						class="form-control select2-hidden-accessible" multiple="">
+						<option th:each="Blogcontent:${blogcontentRecommends}"
+							th:value="${Blogcontent.cid}" th:text="${Blogcontent.title}"
+							th:selected="${Blogcontent.recommended== 0 ? true : false}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="form-control-static col-sm-offset-9">
+					<button type="submit" class="btn btn-primary">提交</button>
+					<button th:onclick="'javascript:layer_close()'"
+						class="btn btn-danger" type="button">关闭</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div th:include="include::footer"></div>
+	<script src="/ajax/libs/select/select2.js"
+		th:src="@{/ajax/libs/select/select2.js}"></script>
+	<script th:inline="javascript">
+	var blogset=[[${blogset}]];
+		</script>
+	<script src="/rzspider/blog/blogcontent/recommendset.js"
+		th:src="@{/rzspider/blog/blogcontent/recommendset.js}">
+	</script>
+</body>
+</html>

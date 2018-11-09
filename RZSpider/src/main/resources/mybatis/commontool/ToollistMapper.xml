@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzspider.project.commontool.toollist.mapper.ToollistMapper">
+
+	<resultMap type="Toollist" id="ToollistResult">
+		<result property="toolListId" column="tool_list_id" />
+		<result property="toolBackId" column="tool_back_id" />
+		<result property="toolNickName" column="tool_nick_name" />
+		<result property="toolName" column="tool_name" />
+		<result property="toolInstruction" column="tool_instruction" />
+		<result property="toolType" column="tool_type" />
+		<result property="srcDownloadStatus" column="src_download_status" />
+		<result property="execexeDownloadStatus" column="execexe_download_status" />
+		<result property="setupexeDownloadStatus" column="setupexe_download_status" />
+		<result property="createBy" column="create_by" />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy" column="update_by" />
+		<result property="updateTime" column="update_time" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<select id="selectToollistById" parameterType="Integer"
+		resultMap="ToollistResult">
+		select
+		ct.*,ct2.tool_back_id,ct2.tool_type,ct2.src_download_status,ct2.execexe_download_status,ct2.setupexe_download_status
+		from
+		commontool_toollist
+		ct left join commontool_toolmanage ct2 on
+		ct.tool_name=ct2.tool_name
+		where tool_list_id = #{toolListId}
+	</select>
+
+	<select id="checkToolNickNameUnique" parameterType="Toollist"
+		resultMap="ToollistResult">
+		select tool_list_id,tool_nick_name, tool_name,
+		tool_instruction, create_by,
+		create_time, update_by, update_time,
+		remark from commontool_toollist
+		where tool_nick_name = #{toolNickName}
+	</select>
+
+	<select id="selectToollistList" parameterType="Toollist"
+		resultMap="ToollistResult">
+		select
+		ct.*,ct2.tool_back_id,ct2.tool_type,ct2.src_download_status,ct2.execexe_download_status,ct2.setupexe_download_status
+		from
+		commontool_toollist
+		ct left join commontool_toolmanage ct2 on
+		ct.tool_name=ct2.tool_name
+		<where>
+			<if test="createBy != null and createBy != ''"> and ct.create_by = #{createBy}</if>
+			<if test="searchValue != null and searchValue != ''">
+				AND (ct.tool_nick_name like concat(concat('%',
+				#{searchValue}),
+				'%') OR ct.tool_name like concat(concat('%',
+				#{searchValue}), '%'))
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertToollist" parameterType="Toollist">
+		insert into commontool_toollist (
+		<if test="toolListId != null and toolListId != '' ">tool_list_id, </if>
+		<if test="toolNickName != null and toolNickName != '' ">tool_nick_name, </if>
+		<if test="toolName != null and toolName != '' ">tool_name, </if>
+		<if test="toolInstruction != null and toolInstruction != '' ">tool_instruction, </if>
+		<if test="createBy != null and createBy != '' ">create_by, </if>
+		<if test="remark != null and remark != '' ">remark,</if>
+		create_time,
+		update_time
+		)values(
+		<if test="toolListId != null and toolListId != ''">#{toolListId}, </if>
+		<if test="toolNickName != null and toolNickName != ''">#{toolNickName}, </if>
+		<if test="toolName != null and toolName != ''">#{toolName}, </if>
+		<if test="toolInstruction != null and toolInstruction != ''">#{toolInstruction}, </if>
+		<if test="createBy != null and createBy != ''">#{createBy}, </if>
+		<if test="remark != null and remark != ''">#{remark},</if>
+		sysdate(),
+		sysdate()
+		)
+	</insert>
+
+	<update id="updateToollist" parameterType="Toollist">
+		update commontool_toollist
+		<set>
+			<if test="toolNickName != null and toolNickName != ''">tool_nick_name = #{toolNickName}, </if>
+			<if test="toolName != null and toolName != ''">tool_name = #{toolName}, </if>
+			<if test="toolInstruction != null and toolInstruction != ''">tool_instruction = #{toolInstruction}, </if>
+			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy}, </if>
+			<if test="remark != null and remark != ''">remark = #{remark},</if>
+			<if test="updateTime != null and updateTime != ''">update_time =sysdate()</if>
+		</set>
+		where tool_list_id = #{toolListId}
+	</update>
+
+	<delete id="deleteToollistById" parameterType="Integer">
+		delete from
+		commontool_toollist where tool_list_id = #{value}
+	</delete>
+
+	<delete id="batchDeleteToollist" parameterType="Integer">
+		delete from commontool_toollist where tool_list_id in
+		<foreach item="toolListId" collection="array" open="("
+			separator="," close=")">
+			#{toolListId}
+		</foreach>
+	</delete>
+
+</mapper>

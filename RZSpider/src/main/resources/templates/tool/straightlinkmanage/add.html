@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link href="/ajax/libs/iCheck/custom.css"
+	th:href="@{/ajax/libs/iCheck/custom.css}" rel="stylesheet" />
+<link
+	href="/ajax/libs/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css"
+	th:href="@{/ajax/libs/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css}"
+	rel="stylesheet" />
+<!-- 上传插件 -->
+<link rel="stylesheet"
+	href="/ajax/plugins/bootstrap-fileinput/css/fileinput.css"
+	th:href="@{/ajax/plugins/bootstrap-fileinput/css/fileinput.css}" />
+<link href="/css/font-awesome.css" th:href="@{/css/font-awesome.css}"
+	rel="stylesheet" />
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-straightlinkmanage-add">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">直链文件类型：</label>
+				<div class="col-sm-8">
+					<label class="checkbox-inline i-checks"> <input
+						type="radio" name="straightlinkFileType" value="0" id="radio1"
+						checked="checked" /> 压缩文件
+					</label> <label class="checkbox-inline i-checks"> <input
+						type="radio" name="straightlinkFileType" value="1" id="radio2" />
+						图片
+					</label> <label class="checkbox-inline i-checks"> <input
+						type="radio" name="straightlinkFileType" value="2" id="radio3" />
+						视频
+					</label> <label class="checkbox-inline i-checks"> <input
+						type="radio" name="straightlinkFileType" value="3" id="radio4" />
+						音频
+					</label><label class="checkbox-inline i-checks"> <input
+						type="radio" name="straightlinkFileType" value="4" id="radio5" />
+						其他
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">上传直链文件：</label>
+				<div class="col-sm-8">
+					<input id="file-5" class="file" type="file" name="file">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><em class="gg-star"
+					style="color: red; font-style: normal;">*&nbsp;</em>直链文件名称：</label>
+				<div class="col-sm-6">
+					<input id="straightlinkFileName" name="straightlinkFileName"
+						class="form-control" type="text" readonly>
+				</div>
+				<div class="col-sm-2">
+					<input id="straightlinkFileExtensionName"
+						name="straightlinkFileExtensionName" class="form-control"
+						type="text" readonly></input>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">可用状态：</label>
+				<div class="col-sm-8">
+					<div class="onoffswitch">
+						<input type="checkbox" th:checked="true"
+							class="onoffswitch-checkbox" id="status" name="status"> <label
+							class="onoffswitch-label" for="status"> <span
+							class="onoffswitch-inner"></span> <span
+							class="onoffswitch-switch"></span>
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="remark" name="remark" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="form-control-static col-sm-offset-9">
+					<button type="submit" class="btn btn-primary">提交</button>
+					<button th:onclick="'javascript:layer_close_to_back()'"
+						class="btn btn-danger" type="button">关闭</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div th:include="include::footer"></div>
+	<script src="/ajax/plugins/bootstrap-fileinput/js/fileinput.min.js"
+		th:src="@{/ajax/plugins/bootstrap-fileinput/js/fileinput.min.js}"></script>
+	<script src="/ajax/plugins/bootstrap-fileinput/js/locales/zh.js"
+		th:src="@{/ajax/plugins/bootstrap-fileinput/js/locales/zh.js  }"></script>
+	<script src="/ajax/plugins/bootstrap-fileinput/js/locales/fr.js"
+		th:src="@{/ajax/plugins/bootstrap-fileinput/js/locales/fr.js  }"></script>
+	<script
+		src="/ajax/libs/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"
+		th:src="@{/ajax/libs/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js}">
+	</script>
+	<script
+		src="/ajax/libs/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"
+		th:src="@{/ajax/libs/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js}">
+		
+	</script>
+	<script src="/rzspider/tool/straightlinkmanage/add.js"
+		th:src="@{/rzspider/tool/straightlinkmanage/add.js}">
+		
+	</script>
+	<script src="/ajax/libs/iCheck/icheck.min.js"
+		th:src="@{/ajax/libs/iCheck/icheck.min.js}"></script>
+	<script>
+		$(document).ready(function() {
+			$(".i-checks").iCheck({
+				checkboxClass : "icheckbox_square-green",
+				radioClass : "iradio_square-green",
+			})
+		});
+	</script>
+	<script>
+		var straightlinkFileName = "未知";
+		var straightlinkFileUuidName = "";
+		var straightlinkFileUrlKey = "";
+		var straightlinkFileExtensionName = "";
+		var straightlinkFileSize = "0";
+		// 上传文件
+		$("#file-5").fileinput({
+			language : 'zh', // 设置语言
+			uploadUrl : ctx + "tool/straightlinkmanage/uploadFile?straightlinkFileUrlKey="+straightlinkFileUrlKey,
+			showUpload : true, // 是否显示上传按钮
+			showRemove : false, // 是否显示移除按钮
+			showCaption : false,// 是否显示标题
+			browseClass : "btn btn-primary", // 按钮样式
+			dropZoneEnabled : true,//是否显示拖拽区域
+			uploadAsync : true,
+			showBrowse : true,
+			allowedPreviewTypes : ['image', 'html', 'text', 'video', 'audio', 'flash'],
+			browseOnZoneClick : false,
+			maxFileCount : 1, // 表示允许同时上传的最大文件个数
+			enctype : 'multipart/form-data',
+			maxFileSize : 102400
+		// 单位为kb，如果为0表示不限制文件大小
+		//最大一百兆
+		}).on("filebatchselected", function(event, files) {
+			//返回文件名
+			straightlinkFileName = getFileNameNotExtension(files[0].name);
+			straightlinkFileExtensionName = getFileExtension(files[0].name);
+			straightlinkFileSize = getFileSize(files[0].size);
+		}).on('filesuccessremove', function(event, id){
+			straightlinkFileName='未知';
+			straightlinkFileExtensionName='';
+			straightlinkFileSize='0';
+			straightlinkFileUuidName="";
+			straightlinkFileUrlKey="";
+			//清除显示后缀
+			$("#straightlinkFileExtensionName").val('');
+			$("#straightlinkFileName").val('');
+			//删除刚刚后台上传的文件
+			
+		}).on("fileuploaded", function(event, data) {
+			//返回文件修改名
+			straightlinkFileUuidName = (data.response.code == 0) ? (data.response.fileName) : null;
+			straightlinkFileUrlKey = (data.response.code == 0) ? (data.response.folderName) : null;
+			if(straightlinkFileUuidName!=null){
+				//设置显示后缀
+				$("#straightlinkFileExtensionName").val(straightlinkFileExtensionName);
+				//设置显示名称
+				$("#straightlinkFileName").val(straightlinkFileName);
+			}
+		});
+		//获取后缀
+		function getFileExtension(straightlinkFileName) {
+			var index1 = straightlinkFileName.lastIndexOf('.');
+			var index2 = straightlinkFileName.length;
+			if (index2 < 1 || index1 < 1) {
+				return '';
+			}
+			return straightlinkFileName.substring(index1, index2);
+		}
+		//获取文件名不含后缀
+		function getFileNameNotExtension(straightlinkFileName) {
+			var index1 = straightlinkFileName.lastIndexOf('.');
+			var index2 = straightlinkFileName.length;
+			if (index2 < 0 || index1 < 1) {
+				return straightlinkFileName;
+			}
+			return straightlinkFileName.substring(0, index1);
+		}
+		//获取大小
+		function getFileSize(size) {
+			if(size<1){
+				return '1 B';
+			}
+			if(size<1024){
+				return size+' B'
+			}
+			if(size<1048576){
+				return (size/1024).toFixed(2)+' KB'
+			}
+			if(size<1048576*1024){
+				return (size/1024/1024).toFixed(2)+' MB'
+			}
+			return (size/1024/1024/1024).toFixed(2)+' GB'
+		}
+	</script>
+</body>
+</html>

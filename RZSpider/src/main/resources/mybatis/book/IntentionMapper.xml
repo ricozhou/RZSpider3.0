@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzspider.project.book.intention.mapper.IntentionMapper">
+
+	<resultMap type="Intention" id="IntentionResult">
+		<result property="bookId" column="book_id" />
+		<result property="bookName" column="book_name" />
+		<result property="bookAuthor" column="book_author" />
+		<result property="bookPublisher" column="book_publisher" />
+		<result property="bookIsbn" column="book_ISBN" />
+		<result property="bookDes" column="book_des" />
+		<result property="bookOriginalPrice" column="book_original_price" />
+		<result property="bookClassification" column="book_classification" />
+		<result property="bookBinding" column="book_binding" />
+		<result property="bookPages" column="book_pages" />
+		<result property="bookReadStar" column="book_read_star" />
+		<result property="userId" column="user_id" />
+		<result property="createBy" column="create_by" />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy" column="update_by" />
+		<result property="updateTime" column="update_time" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<select id="selectIntentionById" parameterType="Integer"
+		resultMap="IntentionResult">
+		select book_id, book_name, book_author, book_publisher,
+		book_ISBN, book_des,
+		book_original_price,book_classification,
+		book_binding, book_pages,
+		book_read_star,
+		user_id, create_by,
+		create_time,
+		update_by, update_time, remark from
+		book_intention
+		where
+		book_id = #{bookId}
+	</select>
+
+	<select id="selectIntentionList" parameterType="Intention"
+		resultMap="IntentionResult">
+		select book_id, book_name, book_author, book_publisher, book_ISBN,
+		book_des,
+		book_original_price,book_classification, book_binding,
+		book_pages,
+		book_read_star,
+		user_id, create_by, create_time,
+		update_by,
+		update_time, remark from
+		book_intention
+		<where>
+			<if test="bookId != null and bookId != ''"> and book_id = #{bookId}</if>
+			<if test="bookName != null and bookName != ''"> and book_name = #{bookName}</if>
+			<if test="bookAuthor != null and bookAuthor != ''"> and book_author = #{bookAuthor}</if>
+			<if test="bookPublisher != null and bookPublisher != ''"> and book_publisher = #{bookPublisher}</if>
+			<if test="bookIsbn != null and bookIsbn != ''"> and book_ISBN = #{bookIsbn}</if>
+			<if test="bookDes != null and bookDes != ''"> and book_des = #{bookDes}</if>
+			<if test="bookOriginalPrice != null and bookOriginalPrice != ''"> and book_original_price = #{bookOriginalPrice}</if>
+			<if test="bookClassification != null and bookClassification != ''"> and book_classification = #{bookClassification}</if>
+			<if test="bookBinding != null and bookBinding != ''"> and book_binding = #{bookBinding}</if>
+			<if test="bookPages != null and bookPages != ''"> and book_pages = #{bookPages}</if>
+			<if test="bookReadStar != null and bookReadStar != ''"> and book_read_star = #{bookReadStar}</if>
+			<if test="userId != null and userId != ''"> and user_id = #{userId}</if>
+			<if test="createBy != null and createBy != ''"> and create_by = #{createBy}</if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+			<if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy}</if>
+			<if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+			<if test="remark != null and remark != ''"> and remark = #{remark}</if>
+			<if test="searchValue != null and searchValue != ''">
+				AND (book_name like concat(concat('%', #{searchValue}),
+				'%') OR book_author like concat(concat('%', #{searchValue}), '%') OR
+				book_classification like concat(concat('%', #{searchValue}), '%'))
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertIntention" parameterType="Intention">
+		insert into book_intention (
+		<if test="bookId != null and bookId != '' ">book_id, </if>
+		<if test="bookName != null and bookName != '' ">book_name, </if>
+		<if test="bookAuthor != null and bookAuthor != '' ">book_author, </if>
+		<if test="bookPublisher != null and bookPublisher != '' ">book_publisher, </if>
+		<if test="bookIsbn != null and bookIsbn != '' ">book_ISBN, </if>
+		<if test="bookDes != null and bookDes != '' ">book_des, </if>
+		<if test="bookOriginalPrice != null and bookOriginalPrice != '' ">book_original_price, </if>
+		<if test="bookClassification != null and bookClassification != '' ">book_classification, </if>
+		<if test="bookBinding != null and bookBinding != '' ">book_binding, </if>
+		<if test="bookPages != null and bookPages != '' ">book_pages, </if>
+		<if test="bookReadStar != null and bookReadStar != '' ">book_read_star, </if>
+		<if test="userId != null and userId != '' ">user_id, </if>
+		<if test="createBy != null and createBy != '' ">create_by, </if>
+		<if test="remark != null and remark != '' ">remark,</if>
+		create_time
+		)values(
+		<if test="bookId != null and bookId != ''">#{bookId}, </if>
+		<if test="bookName != null and bookName != ''">#{bookName}, </if>
+		<if test="bookAuthor != null and bookAuthor != ''">#{bookAuthor}, </if>
+		<if test="bookPublisher != null and bookPublisher != ''">#{bookPublisher}, </if>
+		<if test="bookIsbn != null and bookIsbn != ''">#{bookIsbn}, </if>
+		<if test="bookDes != null and bookDes != ''">#{bookDes}, </if>
+		<if test="bookOriginalPrice != null and bookOriginalPrice != ''">#{bookOriginalPrice}, </if>
+		<if test="bookClassification != null and bookClassification != ''">#{bookClassification}, </if>
+		<if test="bookBinding != null and bookBinding != ''">#{bookBinding}, </if>
+		<if test="bookPages != null and bookPages != ''">#{bookPages}, </if>
+		<if test="bookReadStar != null and bookReadStar != ''">#{bookReadStar}, </if>
+		<if test="userId != null and userId != ''">#{userId}, </if>
+		<if test="createBy != null and createBy != ''">#{createBy}, </if>
+		<if test="remark != null and remark != ''">#{remark},</if>
+		sysdate()
+		)
+	</insert>
+
+	<update id="updateIntention" parameterType="Intention">
+		update book_intention
+		<set>
+			<if test="bookName != null and bookName != ''">book_name = #{bookName}, </if>
+			<if test="bookAuthor != null and bookAuthor != ''">book_author = #{bookAuthor}, </if>
+			<if test="bookPublisher != null and bookPublisher != ''">book_publisher = #{bookPublisher}, </if>
+			<if test="bookIsbn != null and bookIsbn != ''">book_ISBN = #{bookIsbn}, </if>
+			<if test="bookDes != null and bookDes != ''">book_des = #{bookDes}, </if>
+			<if test="bookOriginalPrice != null and bookOriginalPrice != ''">book_original_price = #{bookOriginalPrice}, </if>
+			<if test="bookClassification != null and bookClassification != ''">book_classification = #{bookClassification}, </if>
+			<if test="bookBinding != null and bookBinding != ''">book_binding = #{bookBinding}, </if>
+			<if test="bookPages != null and bookPages != ''">book_pages = #{bookPages}, </if>
+			<if test="bookReadStar != null and bookReadStar != ''">book_read_star = #{bookReadStar}, </if>
+			<if test="userId != null and userId != ''">user_id = #{userId}, </if>
+			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy}, </if>
+			<if test="remark != null and remark != ''">remark = #{remark},</if>
+			update_time = sysdate()
+		</set>
+		where book_id = #{bookId}
+	</update>
+
+	<delete id="deleteIntentionById" parameterType="Integer">
+		delete from
+		book_intention where book_id = #{value}
+	</delete>
+
+	<delete id="batchDeleteIntention" parameterType="Integer">
+		delete from book_intention where book_id in
+		<foreach item="bookId" collection="array" open="(" separator=","
+			close=")">
+			#{bookId}
+		</foreach>
+	</delete>
+
+</mapper>

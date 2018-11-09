@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzspider.project.blog.blogcomment.mapper.BlogcommentMapper">
+
+	<resultMap type="Blogcomment" id="BlogcommentResult">
+		<result property="blogCommentId" column="blog_comment_id" />
+		<result property="parentId" column="parent_id" />
+		<result property="showId" column="show_id" />
+		<result property="title" column="title" />
+		<result property="replyName" column="reply_name" />
+		<result property="beReplyName" column="be_reply_name" />
+		<result property="replyQqNum" column="reply_qq_num" />
+		<result property="replyEmail" column="reply_email" />
+		<result property="replyHeadImg" column="reply_head_img" />
+		<result property="replyContent" column="reply_content" />
+		<result property="replyTime" column="reply_time" />
+		<result property="likeNum" column="like_num" />
+		<result property="status" column="status" />
+		<result property="updateBy" column="update_by" />
+		<result property="updateTime" column="update_time" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<select id="selectBlogcommentById" parameterType="Integer"
+		resultMap="BlogcommentResult">
+		select blog_comment_id,parent_id, show_id, title,reply_name,
+		be_reply_name,
+		reply_qq_num, reply_email, reply_head_img,
+		reply_content, reply_time,like_num,
+		status, update_by, update_time,
+		remark from
+		blog_blogcomment
+		where blog_comment_id = #{blogCommentId}
+	</select>
+
+	<select id="selectBlogcommentList" parameterType="Blogcomment"
+		resultMap="BlogcommentResult">
+		select blog_comment_id,parent_id, show_id,title, reply_name,
+		be_reply_name,
+		reply_qq_num, reply_email, reply_head_img,
+		reply_content, reply_time,like_num,
+		status, update_by, update_time,
+		remark from
+		blog_blogcomment
+		<where>
+			<if test="blogCommentId != null and blogCommentId != ''"> and blog_comment_id = #{blogCommentId}</if>
+			<if test="parentId != null and parentId != ''"> and parent_id = #{parentId}</if>
+			<if test="showId != null and showId != ''"> and show_id = #{showId}</if>
+			<if test="replyName != null and replyName != ''"> and reply_name = #{replyName}</if>
+			<if test="beReplyName != null and beReplyName != ''"> and be_reply_name = #{beReplyName}</if>
+			<if test="replyQqNum != null and replyQqNum != ''"> and reply_qq_num = #{replyQqNum}</if>
+			<if test="replyEmail != null and replyEmail != ''"> and reply_email = #{replyEmail}</if>
+			<if test="replyHeadImg != null and replyHeadImg != ''"> and reply_head_img = #{replyHeadImg}</if>
+			<if test="replyContent != null and replyContent != ''"> and reply_content = #{replyContent}</if>
+			<if test="replyTime != null and replyTime != ''"> and reply_time = #{replyTime}</if>
+			<if test="status != null and status != ''"> and status = #{status}</if>
+			<if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy}</if>
+			<if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+			<if test="remark != null and remark != ''"> and remark = #{remark}</if>
+		</where>
+		order by blog_comment_id desc
+	</select>
+
+	<select id="selectBlogcommentListByParentId" parameterType="Blogcomment"
+		resultMap="BlogcommentResult">
+		select blog_comment_id,parent_id, show_id,title, reply_name,
+		be_reply_name, reply_head_img,
+		reply_content, reply_time,like_num from
+		blog_blogcomment
+		where parent_id = #{1} and status = 0 and
+		show_id
+		=#{0}
+		order by
+		blog_comment_id desc
+	</select>
+
+	<insert id="insertBlogcomment" parameterType="Blogcomment"
+		useGeneratedKeys="true" keyProperty="blogCommentId">
+		insert into
+		blog_blogcomment (
+		parent_id,
+		show_id,
+		title,
+		reply_name,
+		be_reply_name,
+		reply_qq_num,
+		reply_email,
+		reply_head_img,
+		reply_content,
+		reply_time,
+		status,
+		remark
+		)values(
+		#{parentId},
+		#{showId},
+		#{title},
+		#{replyName},#{beReplyName},#{replyQqNum}, #{replyEmail},
+		#{replyHeadImg}, #{replyContent}, #{replyTime},#{status},#{remark}
+		)
+	</insert>
+
+	<update id="updateBlogcomment" parameterType="Blogcomment">
+		update blog_blogcomment
+		<set>
+			status = #{status},
+			update_by = #{updateBy},
+			update_time =
+			sysdate(),
+			remark = #{remark}
+		</set>
+		where blog_comment_id = #{blogCommentId}
+	</update>
+
+	<update id="addCommentLike" parameterType="Integer">
+		update blog_blogcomment
+		<set>
+			like_num = like_num+1
+		</set>
+		where blog_comment_id = #{blogCommentId}
+	</update>
+
+	<delete id="deleteBlogcommentById" parameterType="Integer">
+		delete from
+		blog_blogcomment where blog_comment_id = #{value} or parent_id =
+		#{value}
+	</delete>
+
+	<delete id="deleteBlogcommentByShowId" parameterType="String">
+		delete from
+		blog_blogcomment where show_id = #{showId}
+	</delete>
+
+</mapper>

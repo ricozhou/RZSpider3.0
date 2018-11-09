@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html>
+<title>[[${blogset.basicsetTitle}]]</title>
+<head th:include="blog/index/include_blog::header">
+</head>
+
+<body>
+	<!--menu begin-->
+	<nav th:include="blog/index/include_blog::navv"></nav>
+	<!--menu end-->
+	<!--mnav begin-->
+	<nav th:include="blog/index/include_blog::mnav"></nav>
+	<!--mnav end-->
+	<div class="pagebg sh"></div>
+	<article class="article2">
+		<h1 class="t_nav">
+			<span id="timelineMsg"></span><a href="/rzblog" class="n1" id="n1">首页</a><a
+				href="/" class="n2" id="n2" style="display: none"></a>
+		</h1>
+		<div class="timebox" id="blogsbox">
+			<ul id="list">
+			</ul>
+		</div>
+		<div id="incomeNum"></div>
+		<!-- sidebar -->
+		<!-- <nav th:include="blog/index/include_blog::sidebar"></nav> -->
+	</article>
+	<div th:include="blog/index/include_blog::footer"></div>
+</body>
+<script type="text/javascript" th:inline="javascript">
+     var basicsetTitle=[[${blogset.basicsetTitle}]];
+</script>
+<script src="/rzspider/blog/index/timeline.js"
+	th:src="@{/rzspider/blog/index/timeline.js}"></script>
+
+<!-- <script src="/rzspider/blog/index/include_blog_last.js"
+	th:src="@{/rzspider/blog/index/include_blog_last.js}"></script> -->
+<script src="/rzspider/blog/index/include_blog_style.js"
+	th:src="@{/rzspider/blog/index/include_blog_style.js}"></script>
+</html>

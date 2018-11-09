@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link href="/ajax/libs/iCheck/custom.css"
+	th:href="@{/ajax/libs/iCheck/custom.css}" rel="stylesheet" />
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-toolset-ocrset">
+			<input id="id" name="id" type="hidden" th:value="${toolset.id}"></input>
+			<input id="toolOcrsetType2" name="toolOcrsetType2" type="hidden"
+				th:value="${toolset.toolOcrsetType}"></input>
+			<div class="form-group">
+				<label class="col-sm-4 control-label">OCR引擎：</label>
+				<div class="col-sm-8">
+					<label class="checkbox-inline i-checks" id="clickLabel1"> <input
+						type="radio" name="toolOcrsetType" value="0" id="radio1" /> 百度
+						OCR
+					</label> <label class="checkbox-inline i-checks" id="clickLabel2">
+						<input type="radio" name="toolOcrsetType" value="1" id="radio2" />
+						Tesseract OCR
+					</label>
+				</div>
+			</div>
+			<div class="form-group" id="show1">
+				<label class="col-sm-4 control-label">百度OCR API_ID：</label>
+				<div class="col-sm-8">
+					<input id="toolOcrsetBaiduocrApiId" name="toolOcrsetBaiduocrApiId"
+						th:value="${toolset.toolOcrsetBaiduocrApiId}" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group" id="show2">
+				<label class="col-sm-4 control-label">百度OCR API_KEY：</label>
+				<div class="col-sm-8">
+					<input id="toolOcrsetBaiduocrApiKey"
+						name="toolOcrsetBaiduocrApiKey"
+						th:value="${toolset.toolOcrsetBaiduocrApiKey}"
+						class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group" id="show3">
+				<label class="col-sm-4 control-label">百度OCR SECRET_KEY：</label>
+				<div class="col-sm-8">
+					<input id="toolOcrsetBaiduocrSecretKey"
+						name="toolOcrsetBaiduocrSecretKey"
+						th:value="${toolset.toolOcrsetBaiduocrSecretKey}"
+						class="form-control" type="text">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-4 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="toolOcrsetRemark" name="toolOcrsetRemark"
+						th:value="${toolset.toolOcrsetRemark}" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="form-control-static col-sm-offset-9">
+					<button type="submit" class="btn btn-primary">提交</button>
+					<button th:onclick="'javascript:layer_close()'"
+						class="btn btn-danger" type="button">关闭</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div th:include="include::footer"></div>
+	<script src="/rzspider/commontool/toolmanage/toolset/ocrSet.js"
+		th:src="@{/rzspider/commontool/toolmanage/toolset/ocrSet.js}">
+		
+	</script>
+	<script src="/ajax/libs/iCheck/icheck.min.js"
+		th:src="@{/ajax/libs/iCheck/icheck.min.js}"></script>
+	<script>
+		$(document).ready(function() {
+			$(".i-checks").iCheck({
+				checkboxClass : "icheckbox_square-green",
+				radioClass : "iradio_square-green",
+			})
+		});
+	</script>
+</body>
+</html>

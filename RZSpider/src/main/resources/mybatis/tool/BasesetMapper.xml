@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzspider.project.tool.baseset.mapper.BasesetMapper">
+
+	<resultMap type="Baseset" id="BasesetResult">
+		<result property="basesetId" column="baseset_id" />
+		<result property="themeName" column="theme_name" />
+		<result property="loginbgName" column="loginbg_name" />
+		<result property="loginbgFileName" column="loginbg_file_name" />
+		<result property="loginbgType" column="loginbg_type" />
+		<result property="homeIntroduction" column="home_introduction" />
+		<result property="spiderJavaPackagePrefix" column="spider_java_package_prefix" />
+		<result property="spiderJavaCodeExample" column="spider_java_code_example" />
+		<result property="spiderPythonCodeExample" column="spider_python_code_example" />
+		<result property="spiderJavascriptCodeExample" column="spider_javascript_code_example" />
+		<result property="downloadFileNamePrefix" column="download_file_name_prefix" />
+		<result property="spiderWebsiteManual" column="spider_website_manual" />
+		<result property="spiderWebsiteManualType" column="spider_website_manual_type" />
+		<result property="spiderUseManualType" column="spider_use_manual_type" />
+		<result property="spiderUseManual" column="spider_use_manual" />
+		<result property="showMusicToolStatus" column="show_music_tool_status" />
+		<result property="musicInfo" column="music_info" />
+		<result property="status" column="status" />
+		<result property="useStatus" column="use_status" />
+
+		<result property="musicAutoPlay" column="music_auto_play" />
+		<result property="musicLrcStart" column="music_lrc_start" />
+		<result property="musicShowLrc" column="music_show_lrc" />
+		<result property="musicFixed" column="music_fixed" />
+		<result property="musicListFolded" column="music_list_folded" />
+		<result property="musicListMaxHeight" column="music_list_max_height" />
+
+		<result property="createBy" column="create_by" />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy" column="update_by" />
+		<result property="updateTime" column="update_time" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<select id="selectBasesetById" parameterType="Integer"
+		resultMap="BasesetResult">
+		select * from
+		tool_baseset
+		where baseset_id = #{basesetId}
+	</select>
+	<select id="checkThemeNameUnique" parameterType="Baseset"
+		resultMap="BasesetResult">
+		select baseset_id, theme_name,
+		loginbg_name,loginbg_file_name,loginbg_type,
+		home_introduction,
+		spider_java_package_prefix,
+		spider_java_code_example,
+		spider_python_code_example,
+		spider_javascript_code_example,
+		download_file_name_prefix,
+		spider_website_manual,spider_website_manual_type,spider_use_manual_type,
+		spider_use_manual,show_music_tool_status,music_info,
+		status,
+		use_status,
+		create_by, create_time, update_by, update_time,
+		remark from
+		tool_baseset
+		where theme_name = #{themeName}
+	</select>
+	<select id="selectBasesetByUseStatus" parameterType="Integer"
+		resultMap="BasesetResult">
+		select * from
+		tool_baseset
+		where use_status = #{useStatus}
+	</select>
+
+	<select id="selectBasesetList" parameterType="Baseset"
+		resultMap="BasesetResult">
+		select baseset_id, theme_name,
+		loginbg_name,loginbg_file_name,loginbg_type,
+		home_introduction,
+		spider_java_package_prefix,
+		spider_java_code_example,
+		spider_python_code_example,
+		spider_javascript_code_example,
+		download_file_name_prefix,
+		spider_website_manual,
+		spider_use_manual,spider_website_manual_type,spider_use_manual_type,
+		show_music_tool_status,music_info,status, use_status, create_by,
+		create_time,
+		update_by, update_time, remark from tool_baseset
+		<where>
+			<if test="basesetId != null and basesetId != ''"> and baseset_id = #{basesetId}</if>
+			<if test="themeName != null and themeName != ''"> and theme_name = #{themeName}</if>
+			<if
+				test="spiderJavaPackagePrefix != null and spiderJavaPackagePrefix != ''"> and spider_java_package_prefix = #{spiderJavaPackagePrefix}
+			</if>
+			<if test="downloadFileNamePrefix != null and downloadFileNamePrefix != ''"> and download_file_name_prefix =
+				#{downloadFileNamePrefix}
+			</if>
+			<if test="searchValue != null and searchValue != ''">
+				AND theme_name like concat(concat('%', #{searchValue}), '%')
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertBaseset" parameterType="Baseset">
+		insert into tool_baseset (
+		theme_name,
+		<if
+			test="spiderJavaPackagePrefix != null and spiderJavaPackagePrefix != '' ">spider_java_package_prefix, </if>
+		<if test="downloadFileNamePrefix != null and downloadFileNamePrefix != '' ">download_file_name_prefix, </if>
+		<if test="remark != null and remark != '' ">remark,</if>
+		show_music_tool_status,
+		status,
+		use_status,
+		create_by,
+		create_time,
+		update_time
+		)values(
+		#{themeName},
+		<if
+			test="spiderJavaPackagePrefix != null and spiderJavaPackagePrefix != ''">#{spiderJavaPackagePrefix}, </if>
+		<if test="downloadFileNamePrefix != null and downloadFileNamePrefix != ''">#{downloadFileNamePrefix}, </if>
+		<if test="remark != null and remark != ''">#{remark},</if>
+		#{showMusicToolStatus},
+		#{status},
+		#{useStatus},
+		#{createBy},
+		sysdate(),
+		sysdate()
+		)
+	</insert>
+
+	<update id="updateBaseset" parameterType="Baseset">
+		update tool_baseset
+		<set>
+			theme_name = #{themeName},
+			<if
+				test="spiderJavaPackagePrefix != null and spiderJavaPackagePrefix != ''">spider_java_package_prefix = #{spiderJavaPackagePrefix}, </if>
+			<if test="downloadFileNamePrefix != null and downloadFileNamePrefix != ''">download_file_name_prefix = #{downloadFileNamePrefix},
+			</if>
+			<if test="remark != null and remark != ''">remark = #{remark},</if>
+			show_music_tool_status = #{showMusicToolStatus},
+			status = #{status},
+			use_status = #{useStatus},
+			update_by = #{updateBy},
+			update_time
+			=sysdate()
+		</set>
+		where baseset_id = #{basesetId}
+	</update>
+
+	<update id="updateBasesetEdit" parameterType="Baseset">
+		update tool_baseset
+		<set>
+			<if test="loginbgName != null">loginbg_name = #{loginbgName}, </if>
+			<if test="homeIntroduction != null and homeIntroduction != ''"> home_introduction = #{homeIntroduction},</if>
+			<if test="spiderJavaCodeExample != null">spider_java_code_example = #{spiderJavaCodeExample},
+			</if>
+			<if test="spiderPythonCodeExample != null">spider_python_code_example = #{spiderPythonCodeExample},
+			</if>
+			<if test="spiderJavascriptCodeExample != null">spider_javascript_code_example =
+				#{spiderJavascriptCodeExample},
+			</if>
+			update_by = #{updateBy},
+			update_time =sysdate()
+		</set>
+		where baseset_id = #{basesetId}
+	</update>
+	<update id="updateLoginsetEdit" parameterType="Baseset">
+		update tool_baseset
+		<set>
+			<if test="loginbgName != null">loginbg_name = #{loginbgName}, </if>
+			<if test="loginbgFileName != null">loginbg_file_name = #{loginbgFileName}, </if>
+			loginbg_type = #{loginbgType},
+			update_by = #{updateBy},
+			update_time
+			=sysdate()
+		</set>
+		where baseset_id = #{basesetId}
+	</update>
+	<update id="updateManualEdit" parameterType="Baseset">
+		update tool_baseset
+		<set>
+			<if test="spiderWebsiteManualType != null"> spider_website_manual_type = #{spiderWebsiteManualType},
+			</if>
+			<if test="spiderWebsiteManual != null">spider_website_manual = #{spiderWebsiteManual},
+			</if>
+			<if test="spiderUseManualType != null">spider_use_manual_type = #{spiderUseManualType},
+			</if>
+			<if test="spiderUseManual != null">spider_use_manual =
+				#{spiderUseManual},
+			</if>
+			update_by = #{updateBy},
+			update_time =sysdate()
+		</set>
+		where baseset_id = #{basesetId}
+	</update>
+	<update id="updateMusicInfo" parameterType="Baseset">
+		update tool_baseset
+		<set>
+			music_info=#{musicInfo},
+			update_by = #{updateBy},
+			update_time
+			=sysdate()
+		</set>
+		where baseset_id = #{basesetId}
+	</update>
+	<update id="updateMusicOtherSet" parameterType="Baseset">
+		update tool_baseset
+		<set>
+			<if test="musicListMaxHeight != null"> music_list_max_height = #{musicListMaxHeight},
+			</if>
+			music_auto_play=#{musicAutoPlay},
+			music_lrc_start=#{musicLrcStart},
+			music_show_lrc=#{musicShowLrc},
+			music_fixed=#{musicFixed},
+			music_list_folded=#{musicListFolded},
+			update_time
+			=sysdate()
+		</set>
+		where baseset_id = #{basesetId}
+	</update>
+	<update id="changeAllUseStatusToStop" parameterType="Integer">
+		update tool_baseset
+		<set>
+			use_status = #{useStatus},
+			update_time =sysdate()
+		</set>
+		where 1=1
+	</update>
+
+	<update id="changeUseStatusToStartByBasesetId" parameterType="Integer">
+		update tool_baseset
+		<set>
+			use_status = 0,
+			update_time =sysdate()
+		</set>
+		where baseset_id = #{basesetId}
+	</update>
+
+	<delete id="deleteBasesetById" parameterType="Integer">
+		delete from
+		tool_baseset where baseset_id = #{value}
+	</delete>
+
+	<delete id="batchDeleteBaseset" parameterType="Integer">
+		delete from tool_baseset where baseset_id in
+		<foreach item="basesetId" collection="array" open="("
+			separator="," close=")">
+			#{basesetId}
+		</foreach>
+	</delete>
+
+</mapper>

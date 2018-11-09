@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<!-- 图表插件 -->
+<link rel="stylesheet" href="/ajax/libs/charts/css/morris-0.4.3.min.css"
+	th:href="@{/ajax/libs/charts/css/morris-0.4.3.min.css}" />
+<!-- 百度图表 -->
+<script src="/ajax/libs/baiducharts/js/echarts-all.js"
+	th:src="@{/ajax/libs/baiducharts/js/echarts-all.js}" /></script>
+<style>
+h1 {
+	font-size: 30px;
+	font-weight: 100
+}
+</style>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+		<div class="row">
+			<div class="clients-list">
+				<ul class="nav nav-tabs">
+					<li class="active"><a data-toggle="tab" href="#tab-1"><i
+							class="fa fa-area-chart"></i>总览</a></li>
+					<li class=""><a data-toggle="tab" href="#tab-2"><i
+							class="fa fa-bar-chart"></i>当日</a></li>
+					<li class=""><a data-toggle="tab" href="#tab-3"><i
+							class="fa fa-line-chart"></i>当月</a></li>
+					<li class=""><a data-toggle="tab" href="#tab-4"><i
+							class="fa fa-pie-chart"></i>当年</a></li>
+				</ul>
+				<div class="tab-content">
+					<div id="tab-1" class="tab-pane active">
+						<div class="full-height-scroll">
+							<div class="table-responsive">
+								<div class="form-group">
+									<div class="col-sm-6">
+										<div class="widget yellow-bg no-padding">
+											<div class="p-m">
+												<h1 class="font-bold no-margins" id="blogTimeOnline2">上线时间：1970-01-01
+													00:00:00</h1>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="widget navy-bg no-padding">
+											<div class="p-m">
+												<h1 class="font-bold no-margins" id="blogTimeOnline">已上线：0
+													年 0 天 0 时 0 分 0 秒</h1>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="form-group">
+									<div class="col-sm-3">
+										<div class="ibox float-e-margins">
+											<div class="ibox-title">
+												<span class="label label-success pull-right"><i
+													class="fa fa-eye"></i> 浏览量</span>
+												<h5>总览</h5>
+											</div>
+											<div class="ibox-content">
+												<h1 class="no-margins" id="allBrowseNum">0 次</h1>
+												<small>总浏览量</small>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="ibox float-e-margins">
+											<div class="ibox-title">
+												<span class="label label-info pull-right"><i
+													class="fa fa-thumbs-up"></i> 点赞数</span>
+												<h5>总览</h5>
+											</div>
+											<div class="ibox-content">
+												<h1 class="no-margins" id="allLikeNum">0 个</h1>
+												<small>总点赞数</small>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="ibox float-e-margins">
+											<div class="ibox-title">
+												<span class="label label-primary pull-right"><i
+													class="fa fa-comment"></i> 评论数</span>
+												<h5>总览</h5>
+											</div>
+											<div class="ibox-content">
+												<h1 class="no-margins" id="allCommentNum">0 条</h1>
+												<small>总评论数</small>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="ibox float-e-margins">
+											<div class="ibox-title">
+												<span class="label label-danger pull-right"><i
+													class="fa fa-rmb"></i> 赞助</span>
+												<h5>总览</h5>
+											</div>
+											<div class="ibox-content">
+												<h1 class="no-margins" id="allAppreciateNum">0 元</h1>
+												<small>赞助资金总数</small>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-sm-3">
+										<div class="ibox float-e-margins">
+											<div class="ibox-title">
+												<span class="label label-success pull-right"><i
+													class="fa fa-book"></i> 文章数</span>
+												<h5>总览</h5>
+											</div>
+											<div class="ibox-content">
+												<h1 class="no-margins" id="allArticleNum">0 篇</h1>
+												<small>总文章数</small>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="ibox float-e-margins">
+											<div class="ibox-title">
+												<span class="label label-info pull-right"><i
+													class="fa fa-tags icon"></i> 标签数</span>
+												<h5>总览</h5>
+											</div>
+											<div class="ibox-content">
+												<h1 class="no-margins" id="allTagNum">0 个</h1>
+												<small>总标签数</small>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="ibox float-e-margins">
+											<div class="ibox-title">
+												<span class="label label-primary pull-right"><i
+													class="fa fa-columns"></i> 专栏数</span>
+												<h5>总览</h5>
+											</div>
+											<div class="ibox-content">
+												<h1 class="no-margins" id="allColumnNum">0 个</h1>
+												<small>总专栏数</small>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="ibox float-e-margins">
+											<div class="ibox-title">
+												<span class="label label-danger pull-right"><i
+													class="fa fa-volume-up"></i> 公告数</span>
+												<h5>总览</h5>
+											</div>
+											<div class="ibox-content">
+												<h1 class="no-margins" id="allNoticeNum">0 条</h1>
+												<small>总公告数</small>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+
+								<!-- 百度图表插件 -->
+								<div class="form-group">
+									<div class="col-sm-6">
+										<div class="ibox float-e-margins">
+											<div class="ibox-title">
+												<h5>总览变化折线图</h5>
+												<div class="ibox-tools">
+													<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+													</a>
+													<!-- <a class="dropdown-toggle" data-toggle="dropdown"
+														href="graph_flot.html#"> <i class="fa fa-wrench"></i>
+													</a>
+													<ul class="dropdown-menu dropdown-user">
+														<li><a href="graph_flot.html#">选项1</a></li>
+														<li><a href="graph_flot.html#">选项2</a></li>
+													</ul> -->
+													<a class="close-link"> <i class="fa fa-times"></i>
+													</a>
+												</div>
+											</div>
+											<div class="ibox-content">
+												<div class="echarts" id="echarts-line-chart"></div>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="ibox float-e-margins">
+											<div class="ibox-title">
+												<h5>总览变化柱状图</h5>
+												<div class="ibox-tools">
+													<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+													</a>
+													<!-- <a class="dropdown-toggle" data-toggle="dropdown"
+														href="graph_flot.html#"> <i class="fa fa-wrench"></i>
+													</a>
+													<ul class="dropdown-menu dropdown-user">
+														<li><a href="graph_flot.html#">选项1</a></li>
+														<li><a href="graph_flot.html#">选项2</a></li>
+													</ul> -->
+													<a class="close-link"> <i class="fa fa-times"></i>
+													</a>
+												</div>
+											</div>
+											<div class="ibox-content">
+
+												<div class="echarts" id="echarts-bar-chart"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-sm-12">
+										<div class="ibox float-e-margins">
+											<div class="ibox-title">
+												<h5>浏览量分布图</h5>
+												<div class="ibox-tools">
+													<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+													</a> <a class="dropdown-toggle" data-toggle="dropdown"
+														href="graph_flot.html#"> <i class="fa fa-wrench"></i>
+													</a>
+													<ul class="dropdown-menu dropdown-user">
+														<li><a href="graph_flot.html#">选项1</a></li>
+														<li><a href="graph_flot.html#">选项2</a></li>
+													</ul>
+													<a class="close-link"> <i class="fa fa-times"></i>
+													</a>
+												</div>
+											</div>
+											<div class="ibox-content">
+												<div style="height: 600px" id="echarts-map-chart"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+							</div>
+						</div>
+					</div>
+					<div id="tab-2" class="tab-pane">
+						<div class="full-height-scroll">
+							<div class="table-responsive">
+								<div class="col-sm-3">
+									<div class="ibox float-e-margins">
+										<div class="ibox-title">
+											<span class="label label-success pull-right"><i
+												class="fa fa-eye"></i> 浏览量</span>
+											<h5>当日</h5>
+										</div>
+										<div class="ibox-content">
+											<h1 class="no-margins" id="dayBrowseNum">0 次</h1>
+											<div class="stat-percent font-bold text-success"
+												id="dayBrowseNumPer">
+												0% <i class="fa fa-level-up"></i>
+											</div>
+											<small>日浏览量</small>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="ibox float-e-margins">
+										<div class="ibox-title">
+											<span class="label label-info pull-right"><i
+												class="fa fa-book"></i> 文章数</span>
+											<h5>当日</h5>
+										</div>
+										<div class="ibox-content">
+											<h1 class="no-margins" id="dayArticleNum">0 篇</h1>
+											<div class="stat-percent font-bold text-info"
+												id="dayArticleNumPer">
+												0% <i class="fa fa-level-up"></i>
+											</div>
+											<small>日文章数</small>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="ibox float-e-margins">
+										<div class="ibox-title">
+											<span class="label label-primary pull-right"><i
+												class="fa fa-comment"></i> 评论数</span>
+											<h5>当日</h5>
+										</div>
+										<div class="ibox-content">
+											<h1 class="no-margins" id="dayCommentNum">0 条</h1>
+											<div class="stat-percent font-bold text-navy"
+												id="dayCommentNumPer">
+												0% <i class="fa fa-level-up"></i>
+											</div>
+											<small>日评论数</small>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="ibox float-e-margins">
+										<div class="ibox-title">
+											<span class="label label-danger pull-right"><i
+												class="fa fa-rmb"></i> 赞助</span>
+											<h5>当日</h5>
+										</div>
+										<div class="ibox-content">
+											<h1 class="no-margins" id="dayAppreciateNum">0 元</h1>
+											<div class="stat-percent font-bold text-danger"
+												id="dayAppreciateNumPer">
+												0% <i class="fa fa-level-up"></i>
+											</div>
+											<small>日赞助资金</small>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="tab-3" class="tab-pane">
+						<div class="full-height-scroll">
+							<div class="table-responsive">
+								<div class="col-sm-3">
+									<div class="ibox float-e-margins">
+										<div class="ibox-title">
+											<span class="label label-success pull-right"><i
+												class="fa fa-eye"></i> 浏览量</span>
+											<h5>当月</h5>
+										</div>
+										<div class="ibox-content">
+											<h1 class="no-margins" id="monthBrowseNum">0 次</h1>
+											<div class="stat-percent font-bold text-success"
+												id="monthBrowseNumPer">
+												0% <i class="fa fa-level-up"></i>
+											</div>
+											<small>月浏览量</small>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="ibox float-e-margins">
+										<div class="ibox-title">
+											<span class="label label-info pull-right"><i
+												class="fa fa-book"></i> 文章数</span>
+											<h5>当月</h5>
+										</div>
+										<div class="ibox-content">
+											<h1 class="no-margins" id="monthArticleNum">0 篇</h1>
+											<div class="stat-percent font-bold text-info"
+												id="monthArticleNumPer">
+												0% <i class="fa fa-level-up"></i>
+											</div>
+											<small>月文章数</small>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="ibox float-e-margins">
+										<div class="ibox-title">
+											<span class="label label-primary pull-right"><i
+												class="fa fa-comment"></i> 评论数</span>
+											<h5>当月</h5>
+										</div>
+										<div class="ibox-content">
+											<h1 class="no-margins" id="monthCommentNum">0 条</h1>
+											<div class="stat-percent font-bold text-navy"
+												id="monthCommentNumPer">
+												0% <i class="fa fa-level-up"></i>
+											</div>
+											<small>月评论数</small>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="ibox float-e-margins">
+										<div class="ibox-title">
+											<span class="label label-danger pull-right"><i
+												class="fa fa-rmb"></i> 赞助</span>
+											<h5>当月</h5>
+										</div>
+										<div class="ibox-content">
+											<h1 class="no-margins" id="monthAppreciateNum">0 元</h1>
+											<div class="stat-percent font-bold text-danger"
+												id="monthAppreciateNumPer">
+												0% <i class="fa fa-level-up"></i>
+											</div>
+											<small>月赞助资金</small>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="tab-4" class="tab-pane">
+						<div class="full-height-scroll">
+							<div class="table-responsive">
+								<div class="col-sm-3">
+									<div class="ibox float-e-margins">
+										<div class="ibox-title">
+											<span class="label label-success pull-right"><i
+												class="fa fa-eye"></i> 浏览量</span>
+											<h5>当年</h5>
+										</div>
+										<div class="ibox-content">
+											<h1 class="no-margins" id="yearBrowseNum">0 次</h1>
+											<div class="stat-percent font-bold text-success"
+												id="yearBrowseNumPer">
+												0% <i class="fa fa-level-up"></i>
+											</div>
+											<small>年浏览量</small>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="ibox float-e-margins">
+										<div class="ibox-title">
+											<span class="label label-info pull-right"><i
+												class="fa fa-book"></i> 文章数</span>
+											<h5>当年</h5>
+										</div>
+										<div class="ibox-content">
+											<h1 class="no-margins" id="yearArticleNum">0 篇</h1>
+											<div class="stat-percent font-bold text-info"
+												id="yearArticleNumPer">
+												0% <i class="fa fa-level-up"></i>
+											</div>
+											<small>年文章数</small>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="ibox float-e-margins">
+										<div class="ibox-title">
+											<span class="label label-primary pull-right"><i
+												class="fa fa-comment"></i> 评论数</span>
+											<h5>当年</h5>
+										</div>
+										<div class="ibox-content">
+											<h1 class="no-margins" id="yearCommentNum">0 条</h1>
+											<div class="stat-percent font-bold text-navy"
+												id="yearCommentNumPer">
+												0% <i class="fa fa-level-up"></i>
+											</div>
+											<small>年评论数</small>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="ibox float-e-margins">
+										<div class="ibox-title">
+											<span class="label label-danger pull-right"><i
+												class="fa fa-rmb"></i> 赞助</span>
+											<h5>当年</h5>
+										</div>
+										<div class="ibox-content">
+											<h1 class="no-margins" id="yearAppreciateNum">0 元</h1>
+											<div class="stat-percent font-bold text-danger"
+												id="yearAppreciateNumPer">
+												0% <i class="fa fa-level-up"></i>
+											</div>
+											<small>年赞助资金</small>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+
+
+	</div>
+	</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<!-- <script src="/ajax/libs/charts/js/morris.js"
+		th:src="@{/ajax/libs/charts/js/morris.js}"></script>
+	<script src="/ajax/libs/charts/js/jquery.easypiechart.js"
+		th:src="@{/ajax/libs/charts/js/jquery.easypiechart.js}"></script> -->
+
+	<script th:inline="javascript">
+	     var blogoverview=[[${blogoverview}]];
+	</script>
+	<script>
+		$(function() {
+			
+			
+			
+			var t = echarts.init(document.getElementById("echarts-bar-chart")), n = {
+				title : {
+					text : "某地区蒸发量和降水量"
+				},
+				tooltip : {
+					trigger : "axis"
+				},
+				legend : {
+					data : [ "蒸发量", "降水量" ]
+				},
+				grid : {
+					x : 30,
+					x2 : 40,
+					y2 : 24
+				},
+				calculable : !0,
+				xAxis : [ {
+					type : "category",
+					data : [ "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月",
+							"9月", "10月", "11月", "12月" ]
+				} ],
+				yAxis : [ {
+					type : "value"
+				} ],
+				series : [
+						{
+							name : "蒸发量",
+							type : "bar",
+							data : [ 2, 4.9, 7, 23.2, 25.6, 76.7, 135.6, 162.2,
+									32.6, 20, 6.4, 3.3 ],
+							markPoint : {
+								data : [ {
+									type : "max",
+									name : "最大值"
+								}, {
+									type : "min",
+									name : "最小值"
+								} ]
+							},
+							markLine : {
+								data : [ {
+									type : "average",
+									name : "平均值"
+								} ]
+							}
+						},
+						{
+							name : "降水量",
+							type : "bar",
+							data : [ 2.6, 5.9, 9, 26.4, 28.7, 70.7, 175.6,
+									182.2, 48.7, 18.8, 6, 2.3 ],
+							markPoint : {
+								data : [ {
+									name : "年最高",
+									value : 182.2,
+									xAxis : 7,
+									yAxis : 183,
+									symbolSize : 18
+								}, {
+									name : "年最低",
+									value : 2.3,
+									xAxis : 11,
+									yAxis : 3
+								} ]
+							},
+							markLine : {
+								data : [ {
+									type : "average",
+									name : "平均值"
+								} ]
+							}
+						} ]
+			};
+			t.setOption(n), window.onresize = t.resize;
+			
+			
+			
+			
+
+			
+
+		});
+	</script>
+	<script src="/rzspider/blog/blogoverview/blogoverview.js"
+		th:src="@{/rzspider/blog/blogoverview/blogoverview.js}">
+		
+	</script>
+
+</body>
+</html>

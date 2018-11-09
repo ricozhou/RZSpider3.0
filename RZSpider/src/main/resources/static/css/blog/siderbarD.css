@@ -1,0 +1,29 @@
+/*sidebarL*/
+.sidebarL {
+	width: 23%;
+	overflow: hidden;
+	float: left
+}
+.sidebar {
+	width: 23%;
+	overflow: hidden;
+	float: right
+}
+
+/*blogsbox*/
+.blogsbox {
+	width: 50%;
+	overflow: hidden;
+	float: none;
+	margin:0 auto;
+}
+article{
+	width:95%;
+}
+
+.infosbox {
+	width: 50%;
+	overflow: hidden;
+	float: none;
+	margin:0 auto;
+}

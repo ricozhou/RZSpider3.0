@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[[${blogset.basicsetTitle}]] - 404</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/animate.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
+    <link rel="shortcut icon" th:href="${blogset.basicsetWebsiteIco}" />
+</head>
+<body class="gray-bg">
+    <div class="middle-box text-center animated fadeInDown">
+        <h1>404</h1>
+        <h3 class="font-bold">找不到网页！</h3>
+        <div class="error-desc">
+                                对不起，您正在寻找的博客已不存在。请浏览其他博客。
+            <a href="javascript:top.document.location.href='/rzblog'" class="btn btn-primary m-t">首页</a>
+        </div>
+    </div>
+    <script src="/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+</body>
+</html>

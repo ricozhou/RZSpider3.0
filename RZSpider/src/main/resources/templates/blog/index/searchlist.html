@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<title></title>
+<head th:include="blog/index/include_blog::header"></head>
+<body>
+	<nav th:include="blog/index/include_blog::navv"></nav>
+	<nav th:include="blog/index/include_blog::mnav"></nav>
+	<article class="article">
+		<h1 class="t_nav">
+			<span id="tagsMsg"></span><a href="/rzblog" class="n1" id="n1">首页</a><a
+				href="/" class="n2" id="n2" style="display: none"></a>
+		</h1>
+		<!--blogsbox begin-->
+		<div class="blank"></div>
+		<!-- sidebar -->
+		<nav th:include="blog/index/include_blog::sidebar"></nav>
+		<nav th:include="blog/index/include_blog::sidebarL"></nav>
+		<div class="blogsbox" id="blogsbox"></div>
+		<div id="incomeNum"></div>
+	</article>
+</body>
+<div th:include="blog/index/include_blog::footer"></div>
+<script type="text/javascript" th:inline="javascript">
+     var keyword=[[${keyword}]];
+     var basicsetTitle=[[${blogset.basicsetTitle}]];
+</script>
+<script src="/rzspider/blog/index/searchlist.js"
+	th:src="@{/rzspider/blog/index/searchlist.js}"></script>
+
+<script src="/rzspider/blog/index/include_blog_last.js"
+	th:src="@{/rzspider/blog/index/include_blog_last.js}"></script>
+<script src="/rzspider/blog/index/include_blog_style.js"
+	th:src="@{/rzspider/blog/index/include_blog_style.js}"></script>
+</html>

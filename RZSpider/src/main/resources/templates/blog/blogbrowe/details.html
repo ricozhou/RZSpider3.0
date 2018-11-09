@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-blogbrowe-details">
+			<input id="blogBroweId" name="blogBroweId"
+				th:value="${blogbrowe.blogBroweId}" type="hidden">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">客户端UA：</label>
+				<div class="col-sm-10">
+					<textarea id="clientUserAgent" name="clientUserAgent"
+						th:text="${blogbrowe.clientUserAgent}" class="form-control"
+						disabled></textarea>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">客户端平台：</label>
+				<div class="col-sm-4">
+					<input id="clientPlatform" name="clientPlatform"
+						th:value="${blogbrowe.clientPlatform}" class="form-control"
+						type="text" disabled>
+				</div>
+				<label class="col-sm-2 control-label">浏览器系统：</label>
+				<div class="col-sm-4">
+					<input id="clientBrowsePlatform" name="clientBrowsePlatform"
+						th:value="${blogbrowe.clientBrowsePlatform}" class="form-control"
+						type="text" disabled>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">浏览器名称：</label>
+				<div class="col-sm-4">
+					<input id="clientBrowseName" name="clientBrowseName"
+						th:value="${blogbrowe.clientBrowseName}" class="form-control"
+						type="text" disabled>
+				</div>
+				<label class="col-sm-2 control-label">浏览器版本：</label>
+				<div class="col-sm-4">
+					<input id="clientBrowseVersion" name="clientBrowseVersion"
+						th:value="${blogbrowe.clientBrowseVersion}" class="form-control"
+						type="text" disabled>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">IP：</label>
+				<div class="col-sm-4">
+					<input id="clientBrowseIp" name="clientBrowseIp"
+						th:value="${blogbrowe.clientBrowseIp}" class="form-control"
+						type="text" disabled>
+				</div>
+				<label class="col-sm-2 control-label">所在地：</label>
+				<div class="col-sm-4">
+					<input id="clientBrowseCity" name="clientBrowseCity"
+						th:value="${blogbrowe.clientBrowseCity}" class="form-control"
+						type="text" disabled>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">客户端类型：</label>
+				<div class="col-sm-4">
+					<input id="clientBrowseAppAndPc" name="clientBrowseAppAndPc"
+						th:value="${blogbrowe.clientBrowseAppAndPc}" class="form-control"
+						type="text" disabled>
+				</div>
+				<label class="col-sm-2 control-label">浏览时间：</label>
+				<div class="col-sm-4">
+					<input id="createTime" name="createTime" class="form-control"
+						type="text" disabled>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">浏览URL：</label>
+				<div class="col-sm-10">
+					<a class="form-control" th:href="${blogbrowe.clientBrowseUrl}"
+						target="_Blank">[[${blogbrowe.clientBrowseUrl}]]</a>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="form-control-static col-sm-offset-10">
+					<button th:onclick="'javascript:layer_close()'"
+						class="btn btn-danger" type="button">关闭</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div th:include="include::footer"></div>
+
+	<script th:inline="javascript">
+        var createTime = [[${blogbrowe.createTime}]];
+       $('#createTime').val(new Date(createTime).format("yyyy-MM-dd hh:mm:ss"));
+    </script>
+	<script src="/rzspider/blog/blogbrowe/details.js"
+		th:src="@{/rzspider/blog/blogbrowe/details.js}">
+		
+	</script>
+</body>
+</html>

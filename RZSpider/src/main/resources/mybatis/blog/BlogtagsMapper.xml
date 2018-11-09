@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzspider.project.blog.blogtags.mapper.BlogtagsMapper">
+
+	<resultMap type="Blogtags" id="BlogtagsResult">
+		<result property="blogTagsId" column="blog_tags_id" />
+		<result property="blogTagsName" column="blog_tags_name" />
+		<result property="status" column="status" />
+		<result property="tagsMessage" column="tags_message" />
+		<result property="backImg" column="back_img" />
+		<result property="createBy" column="create_by" />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy" column="update_by" />
+		<result property="updateTime" column="update_time" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<select id="selectBlogtagsById" parameterType="Integer"
+		resultMap="BlogtagsResult">
+		select * from blog_blogtags
+		where
+		blog_tags_id = #{blogTagsId}
+	</select>
+	<select id="selectAllBlogTagsNum" resultType="Integer">
+		select count(*)
+		from blog_blogtags where status=0
+	</select>
+	<select id="selectBlogtagsByName" parameterType="String"
+		resultMap="BlogtagsResult">
+		select blog_tags_id, blog_tags_name from blog_blogtags
+		where
+		blog_tags_name = #{blogTagsName}
+	</select>
+
+	<select id="selectBlogtagsByCid" parameterType="Long" resultMap="BlogtagsResult">
+		SELECT r.blog_tags_id, r.blog_tags_name
+		FROM blog_blogcontent u
+		LEFT
+		JOIN blog_blogtags_blogcontent ur ON u.cid = ur.cid
+		LEFT JOIN
+		blog_blogtags r ON ur.blog_tags_id = r.blog_tags_id
+		WHERE ur.cid
+		=
+		#{cid}
+	</select>
+
+	<select id="selectBlogtagsListByStatus" parameterType="Integer"
+		resultMap="BlogtagsResult">
+		select blog_tags_id, blog_tags_name from blog_blogtags where
+		status=#{status}
+	</select>
+
+	<insert id="insertBlogtagsName" parameterType="String"
+		useGeneratedKeys="true" keyProperty="blogTagsId">
+		insert into blog_blogtags (
+		blog_tags_name
+		)values(
+		#{blogTagsName}
+		)
+	</insert>
+	<select id="selectBlogtagsListWithoutImg" parameterType="Blogtags"
+		resultMap="BlogtagsResult">
+		select blog_tags_id, blog_tags_name, status, tags_message from
+		blog_blogtags
+		<where>
+			<if test="blogTagsName != null and blogTagsName != ''"> and blog_tags_name = #{blogTagsName}</if>
+			<if test="status != null and status != ''"> and status = #{status}</if>
+		</where>
+	</select>
+	<select id="selectBlogtagsByStatusAndName" parameterType="Blogtags"
+		resultMap="BlogtagsResult">
+		select blog_tags_id, blog_tags_name, status, tags_message, back_img,
+		create_by, create_time, update_by, update_time, remark from
+		blog_blogtags
+		<where>
+			<if test="blogTagsName != null and blogTagsName != ''"> and blog_tags_name = #{blogTagsName}</if>
+			<if test="status != null and status != ''"> and status = #{status}</if>
+		</where>
+	</select>
+
+	<!-- 以上是前台调用sql，以下是后台管理sql -->
+
+	<select id="selectBlogtagsList" parameterType="Blogtags"
+		resultMap="BlogtagsResult">
+		select blog_tags_id, blog_tags_name, status, tags_message, back_img,
+		create_by, create_time, update_by, update_time, remark from
+		blog_blogtags
+		<where>
+			<if test="blogTagsId != null and blogTagsId != ''"> and blog_tags_id = #{blogTagsId}</if>
+			<if test="blogTagsName != null and blogTagsName != ''"> and blog_tags_name = #{blogTagsName}</if>
+			<if test="status != null and status != ''"> and status = #{status}</if>
+			<if test="tagsMessage != null and tagsMessage != ''"> and tags_message = #{tagsMessage}</if>
+			<if test="backImg != null and backImg != ''"> and back_img = #{backImg}</if>
+			<if test="createBy != null and createBy != ''"> and create_by = #{createBy}</if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+			<if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy}</if>
+			<if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+			<if test="remark != null and remark != ''"> and remark = #{remark}</if>
+			<if test="searchValue != null and searchValue != ''">
+				AND blog_tags_name like concat(concat('%',
+				#{searchValue}), '%')
+			</if>
+		</where>
+	</select>
+	<insert id="insertBlogtags" parameterType="Blogtags">
+		insert into
+		blog_blogtags (
+		blog_tags_name,
+		status,
+		tags_message,
+		back_img,
+		create_by,
+		create_time,
+		update_by,
+		update_time,
+		remark
+		)values(
+		#{blogTagsName},
+		#{status},
+		#{tagsMessage},
+		#{backImg},
+		#{createBy},
+		sysdate(),
+		#{updateBy},
+		sysdate(),
+		#{remark}
+		)
+	</insert>
+
+	<update id="updateBlogtags" parameterType="Blogtags">
+		update blog_blogtags
+		<set>
+			blog_tags_name = #{blogTagsName},
+			status = #{status},
+			tags_message
+			= #{tagsMessage},
+			back_img = #{backImg},
+			update_by = #{updateBy},
+			update_time = sysdate(),
+			remark = #{remark}
+		</set>
+		where blog_tags_id = #{blogTagsId}
+	</update>
+
+	<delete id="deleteBlogtagsById" parameterType="Integer">
+		delete from
+		blog_blogtags where blog_tags_id = #{value}
+	</delete>
+
+	<delete id="batchDeleteBlogtags" parameterType="Integer">
+		delete from blog_blogtags where blog_tags_id in
+		<foreach item="blogTagsId" collection="array" open="("
+			separator="," close=")">
+			#{blogTagsId}
+		</foreach>
+	</delete>
+</mapper>

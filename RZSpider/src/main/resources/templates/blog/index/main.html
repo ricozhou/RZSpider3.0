@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<title>[[${blogset.basicsetTitle}]]</title>
+<head th:include="blog/index/include_blog::header">
+</head>
+<style>
+</style>
+<body>
+	<nav th:include="blog/index/include_blog::navv"></nav>
+	<nav th:include="blog/index/include_blog::mnav"></nav>
+	<article>
+		<nav class="breadcrumb" id="breadcrumb" style="display: none">
+			<div class="notify">
+				<i class="fa fa-volume-up"></i>
+			</div>
+			<div id="scrolldiv">
+				<div class="scrolltext">
+					<ul class="list-unstyled" id="notice-box">
+					</ul>
+				</div>
+			</div>
+			<!-- <div class="closenotify">
+				<a><i class="fa fa-close"></i>close</a>
+			</div> -->
+		</nav>
+		<!--banner begin-->
+		<div class="picsbox">
+			<div class="banner" id="banner2">
+				<div id="banner" class="fader">
+					<!-- 滚动推荐 -->
+					<div class="fader_controls">
+						<div class="page prev" data-target="prev">&lsaquo;</div>
+						<div class="page next" data-target="next">&rsaquo;</div>
+						<ul class="pager_list">
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!--banner end-->
+			<div class="toppic">
+				<div id="toppic" style="display: none"></div>
+			</div>
+		</div>
+		<div class="blank"></div>
+		<!-- 以下动态生成 -->
+		<!-- sidebar -->
+		<nav th:include="blog/index/include_blog::sidebar"></nav>
+		<nav th:include="blog/index/include_blog::sidebarL"></nav>
+		<!--bloglist start-->
+		<div class="blogsbox" id="blogsbox"></div>
+		<!--bloglist end-->
+
+		<div id="incomeNum"></div>
+
+	</article>
+	<!-- footer -->
+	<div th:include="blog/index/include_blog::footer"></div>
+</body>
+
+<script src="/rzspider/blog/index/main.js"
+	th:src="@{/rzspider/blog/index/main.js}"></script>
+<script src="/rzspider/blog/index/include_blog_last.js"
+	th:src="@{/rzspider/blog/index/include_blog_last.js}"></script>
+<script src="/rzspider/blog/index/include_blog_style.js"
+	th:src="@{/rzspider/blog/index/include_blog_style.js}"></script>
+
+</html>

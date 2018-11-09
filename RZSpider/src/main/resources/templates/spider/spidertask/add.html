@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link
+	href="/ajax/libs/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css"
+	th:href="@{/ajax/libs/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css}"
+	rel="stylesheet" />
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-spidertask-add">
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><em class="gg-star"
+					style="color: red; font-style: normal;">*&nbsp;</em>任务名称：</label>
+				<div class="col-sm-8">
+					<input id="taskName" name="taskName" class="form-control"
+						type="text">
+				</div>
+			</div>
+			<!-- 选择爬虫 -->
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><em class="gg-star"
+					style="color: red; font-style: normal;">*&nbsp;</em>选择爬虫：</label>
+				<div class="col-sm-3">
+					<select class="form-control" name="spiderType" id="spiderType">
+					</select>
+				</div>
+				<div class="col-sm-5">
+					<select class="form-control" name="spiderName" id="spiderName">
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">任务状态：</label>
+				<div class="col-sm-8"
+					th:with="datas=${@dictService.selectDictData('sys_job_status')}">
+					<div th:each="dict : ${datas}" th:class="${dict['cssClass']}">
+						<input type="radio" th:id="${dict['dictCode']}" name="taskStatus"
+							th:value="${dict['dictValue']}"
+							th:checked="${dict['isDefault'] == 'Y' ? true : false}">
+						<label th:for="${dict['dictCode']}" th:text="${dict['dictLabel']}"></label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">任务执行策略：</label>
+				<div class="col-sm-4">
+					<select class="form-control" name="taskExecfrequency"
+						id="taskExecfrequency">
+						<option value="0">只执行一次（定时执行）</option>
+						<option value="1">固定频次执行（定时执行）</option>
+						<option value="2">cron表达式执行（表达式执行）</option>
+						<option value="3">只执行一次（立即执行）</option>
+					</select>
+				</div>
+				<div class="col-sm-4" style="display: none" id="customSet4">
+					<input id="cronExpression" name="cronExpression"
+						class="form-control" type="text" placeholder="请输入cron表达式">
+				</div>
+				<div class="col-sm-2" style="display: none" id="customSet1">
+					<input id="times" name="times" class="form-control" type="text">
+				</div>
+				<div class="col-sm-2" style="display: none" id="customSet2">
+					<select class="form-control" name="taskExecfrequency2"
+						id="taskExecfrequency2">
+						<option value="0">时/次</option>
+						<option value="1">日/次</option>
+						<option value="2">周/次</option>
+						<option value="3">月/次</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group" id="customSet3">
+				<label for="dtp_input1" class="col-sm-3 control-label">首次执行时间：</label>
+				<div class="col-sm-8">
+					<div class="input-group date form_datetime col-sm-12"
+						data-date-format="yyyy-mm-dd hh:ii:ss"
+						data-link-field="dtp_input1">
+						<input class="form-control" type="text" value="" readonly
+							id="firstStartTime"> <span class="input-group-addon"><span
+							class="glyphicon glyphicon-remove"></span></span> <span
+							class="input-group-addon"><span
+							class="glyphicon glyphicon-th"></span></span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="remark" name="remark" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="form-control-static col-sm-offset-9">
+					<button type="submit" class="btn btn-primary">创建</button>
+					<button th:onclick="'javascript:layer_close()'"
+						class="btn btn-danger" type="button">关闭</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div th:include="include::footer"></div>
+	<script src="/rzspider/spider/spidertask/add.js"
+		th:src="@{/rzspider/spider/spidertask/add.js}">
+		
+	</script>
+	<script
+		src="/ajax/libs/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"
+		th:src="@{/ajax/libs/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js}">
+	</script>
+	<script
+		src="/ajax/libs/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"
+		th:src="@{/ajax/libs/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js}">
+		
+	</script>
+</body>
+</html>

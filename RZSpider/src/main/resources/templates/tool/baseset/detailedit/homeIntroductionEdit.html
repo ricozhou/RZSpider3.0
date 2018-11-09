@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="form-homeIntroduction-edit">
+							<input id="basesetId" name="basesetId" type="hidden"
+								th:value="${baseset.basesetId}">
+							<div class="form-group">
+								<input id="homeIntroduction" name="homeIntroduction" type="hidden"
+									th:value="${baseset.homeIntroduction}"> <label
+									class="col-sm-1 control-label">内容：</label>
+								<div class="col-sm-11">
+									<div class="ibox-content no-padding">
+										<div id="content_sn" class="summernote"></div>
+									</div>
+								</div>
+							</div>
+							<div class="text-right form-group">
+								<button class="btn btn-primary" type="submit">保存</button>
+								<button th:onclick="'javascript:layer_close()'"
+									class="btn btn-danger" type="button">关闭</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	    <script src="/rzspider/tool/baseset/detailedit/homeIntroductionEdit.js" th:src="@{/rzspider/tool/baseset/detailedit/homeIntroductionEdit.js}">
+	</script>
+</body>
+</html>

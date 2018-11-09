@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<!-- 上传插件 -->
+<link rel="stylesheet"
+	href="/ajax/plugins/bootstrap-fileinput/css/fileinput.css"
+	th:href="@{/ajax/plugins/bootstrap-fileinput/css/fileinput.css}" />
+<link href="/css/font-awesome.css" th:href="@{/css/font-awesome.css}"
+	rel="stylesheet" />
+<link href="/ajax/libs/iCheck/custom.css"
+	th:href="@{/ajax/libs/iCheck/custom.css}" rel="stylesheet" />
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="form-toolrun-run">
+							<input id="toolBackId" name="toolBackId" th:value="${toolBackId}"
+								type="hidden" />
+							<div class="form-group">
+								<label class="col-sm-2 control-label">缩放原图大小：</label>
+								<div class="col-sm-2">
+									<select class="form-control" name="sfImgSize" id="sfImgSize">
+										<option value="0">原图尺寸</option>
+										<option value="100">100 X 100</option>
+										<option value="300">300 X 300</option>
+										<option value="500">500 X 500</option>
+										<option value="800">800 X 800</option>
+										<option value="1000">1000 X 1000</option>
+										<option value="-1">自定义</option>
+									</select>
+								</div>
+								<div class="col-sm-1" id="show1" style="visibility: hidden">
+									<input id="sfImgSizeW" name="sfImgSizeW" class="form-control"
+										type="text" disabled>
+								</div>
+								<div class="col-sm-1" id="show2" style="visibility: hidden">
+									<input id="sfImgSizeH" name="sfImgSizeH" class="form-control"
+										type="text" disabled>
+								</div>
+								<label class="col-sm-2 control-label">生成图片大小：</label>
+								<div class="col-sm-2">
+									<select class="form-control" name="createImgSize"
+										id="createImgSize">
+										<option value="0">原图尺寸</option>
+										<option value="100">100 X 100</option>
+										<option value="300">300 X 300</option>
+										<option value="500">500 X 500</option>
+										<option value="800">800 X 800</option>
+										<option value="1000">1000 X 1000</option>
+										<option value="-1">自定义</option>
+									</select>
+								</div>
+								<div class="col-sm-1" id="show3" style="visibility: hidden">
+									<input id="createImgSizeW" name="createImgSizeW"
+										class="form-control" type="text" disabled>
+								</div>
+								<div class="col-sm-1" id="show4" style="visibility: hidden">
+									<input id="createImgSizeH" name="createImgSizeH"
+										class="form-control" type="text" disabled>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">字符画字符集：</label>
+								<div class="col-sm-2">
+									<select class="form-control" name="charArray" id="charArray">
+										<option value="0">默认字符集</option>
+										<option value="8@#&$%*o!;.">8@#&$%*o!;.</option>
+										<option value="-1">自定义</option>
+									</select>
+								</div>
+								<div class="col-sm-2" id="show5" style="visibility: hidden">
+									<input id="charArray2" name="charArray2" class="form-control"
+										type="text" disabled>
+								</div>
+								<label class="col-sm-2 control-label">选择字符大小：</label>
+								<div class="col-sm-2">
+									<select class="form-control" name="charSize" id="charSize">
+										<option value="0">自适应</option>
+										<option value="8">8</option>
+										<option value="10">10</option>
+										<option value="12">12</option>
+										<option value="14">14</option>
+										<option value="16">16</option>
+										<option value="18">18</option>
+										<option value="20">20</option>
+										<option value="-1">自定义</option>
+									</select>
+								</div>
+								<div class="col-sm-2" id="show6" style="visibility: hidden">
+									<input id="charSize2" name="charSize2" class="form-control"
+										type="text" disabled>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">输入图片链接：</label>
+								<div class="col-sm-4">
+									<label class="checkbox-inline i-checks" id="clickLabel1">
+										<input type="radio" value="0" id="radio1" th:checked="true" />
+										在线图片
+									</label> <label class="checkbox-inline i-checks" id="clickLabel2">
+										<input type="radio" value="1" id="radio2" /> 图片上传
+									</label>
+								</div>
+								<label class="col-sm-2 control-label">字符集密集度：</label>
+								<div class="col-sm-2">
+									<select class="form-control" name="imgIntensity"
+										id="imgIntensity">
+										<option value="0">自适应</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+										<option value="-1">自定义</option>
+									</select>
+								</div>
+								<div class="col-sm-2" id="show7" style="visibility: hidden">
+									<input id="imgIntensity2" name="imgIntensity2"
+										class="form-control" type="text" disabled>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"></label>
+								<div class="col-sm-4" id="pic2">
+									<input id="pic" name="pic" class="form-control" type="text"
+										placeholder="可直接填写图片链接">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"></label>
+								<div class="col-sm-4" style="display: none" id="show8">
+									<input id="file-5" class="file" type="file" name="file">
+								</div>
+								<div class="col-sm-3" style="display: none" id="show9">
+									<img id="showImg"></img>
+								</div>
+								<div class="col-sm-3" style="display: none" id="show10"
+									align="center">
+									<img id="showImg2" width="285" height="285"></img>
+								</div>
+							</div>
+
+							<input id="imgToCharFileName" name="imgToCharFileName"
+								type="hidden" />
+							<div class="form-group">
+								<div class="form-control-static col-sm-offset-10">
+									<button class="btn btn-primary" type="submit" id="runImgToChar">生成</button>
+									<button class="btn btn-primary" type="button" disabled
+										id="imgSave2" onclick="imgSave()">保存</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script src="/ajax/libs/iCheck/icheck.min.js"
+		th:src="@{/ajax/libs/iCheck/icheck.min.js}"></script>
+	<script>
+		$(document).ready(function() {
+			$(".i-checks").iCheck({
+				checkboxClass : "icheckbox_square-green",
+				radioClass : "iradio_square-green",
+			})
+		});
+	</script>
+	<script src="/rzspider/commontool/toolrun/30005.js"
+		th:src="@{/rzspider/commontool/toolrun/30005.js}">
+		
+	</script>
+	<script src="/ajax/plugins/bootstrap-fileinput/js/fileinput.min.js"
+		th:src="@{/ajax/plugins/bootstrap-fileinput/js/fileinput.min.js}"></script>
+	<script src="/ajax/plugins/bootstrap-fileinput/js/locales/zh.js"
+		th:src="@{/ajax/plugins/bootstrap-fileinput/js/locales/zh.js  }"></script>
+	<script src="/ajax/plugins/bootstrap-fileinput/js/locales/fr.js"
+		th:src="@{/ajax/plugins/bootstrap-fileinput/js/locales/fr.js  }"></script>
+	<script>
+		var imgFileName;
+		// 上传文件
+		$("#file-5")
+				.fileinput({
+					language : 'zh', // 设置语言
+					uploadUrl : ctx + "commontool/toolrun/uploadToolFile/0",
+					allowedFileExtensions : [ 'jpg', 'png', 'jpeg', 'gif' ],// 接收的文件后缀
+					showUpload : true, // 是否显示上传按钮
+					showCaption : false,// 是否显示标题
+					browseClass : "btn btn-primary", // 按钮样式
+					dropZoneEnabled : true,//是否显示拖拽区域
+					uploadAsync : true,
+					showBrowse : true,
+					browseOnZoneClick : false,
+					maxFileCount : 1, // 表示允许同时上传的最大文件个数
+					enctype : 'multipart/form-data',
+					maxFileSize : 3000
+				// 单位为kb，如果为0表示不限制文件大小，后台处理此图片耗时，需严格控制大小
+				})
+				.on(
+						"fileuploaded",
+						function(event, data) {
+							//返回文件名
+							imgFileName = (data.response.code == 0) ? (data.response.msg)
+									: "";
+							//直接将值填入文本框
+							$('#pic').val(
+									(imgFileName == "") ? ""
+											: ('/cachefiles/' + imgFileName));
+							//显示
+							$("#show9").css('display', 'block');
+							showImg();
+							selectImgOnline();
+						});
+	</script>
+</body>
+</html>

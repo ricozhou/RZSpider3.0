@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<!-- 上传插件 -->
+<link rel="stylesheet"
+	href="/ajax/plugins/bootstrap-fileinput/css/fileinput.css"
+	th:href="@{/ajax/plugins/bootstrap-fileinput/css/fileinput.css}" />
+<link href="/css/font-awesome.css" th:href="@{/css/font-awesome.css}"
+	rel="stylesheet" />
+<link href="/ajax/libs/iCheck/custom.css"
+	th:href="@{/ajax/libs/iCheck/custom.css}" rel="stylesheet" />
+<link
+	href="/ajax/libs/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css"
+	th:href="@{/ajax/libs/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css}"
+	rel="stylesheet" />
+<link href="/ajax/libs/bootstrap-slider/css/bootstrap-slider.min.css"
+	th:href="@{/ajax/libs/bootstrap-slider/css/bootstrap-slider.min.css}"
+	rel="stylesheet" />
+
+<link href="/ajax/libs/select/select2.css"
+	th:href="@{/ajax/libs/select/select2.css}" rel="stylesheet" />
+<link href="/rzspider/css/RZSpider.css"
+	th:href="@{/rzspider/css/RZSpider.css}" rel="stylesheet" />
+<link
+	href="/ajax/libs/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css"
+	th:href="@{/ajax/libs/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css}"
+	rel="stylesheet" />
+<style>
+p {
+	position: absolute;
+	top: 25%;
+	left: 0;
+	right: 0;
+	color: #FFF;
+	text-align: center;
+	font-size: 15px;
+	overflow: hidden;
+	margin-top: 20px;
+	padding: 0 40px;
+}
+
+p a {
+	color: #fff;
+}
+
+.imgbtn {
+	width: 80px;
+	margin: 10px auto;
+	background: transparent;
+	font-size: 12px;
+	border: 1px solid #FFF;
+	border-radius: 40px;
+	padding: 4px 0;
+	color: #FFF;
+	display: block;
+	clear: both;
+	-webkit-transition: all .3s ease;
+	-moz-transition: all .3s ease;
+	-ms-transition: all .3s ease;
+	-o-transition: all .3s ease;
+	transition: all .3s ease;
+}
+</style>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<div class="row">
+			<div class="clients-list">
+				<ul class="nav nav-tabs">
+					<li class="active"><a data-toggle="tab" href="#tab-1"><i
+							class="fa fa-gear"></i>基础设置</a></li>
+					<li class=""><a data-toggle="tab" href="#tab-2"><i
+							class="fa fa-user"></i>博主设置</a></li>
+					<li class=""><a data-toggle="tab" href="#tab-3"><i
+							class="fa fa-book"></i>博客设置</a></li>
+					<li class=""><a data-toggle="tab" href="#tab-4"><i
+							class="fa fa-eye"></i>样式设置</a></li>
+				</ul>
+				<div class="tab-content">
+					<div id="tab-1" class="tab-pane active">
+						<div class="full-height-scroll">
+							<div class="table-responsive">
+								<form class="form-horizontal m" id="form-blogset-basicset">
+									<input id="blogSetId" name="blogSetId"
+										th:value="${blogset.blogSetId}" type="hidden"> <input
+										id="basicsetWebsiteOnlinetimeh"
+										name="basicsetWebsiteOnlinetimeh"
+										th:value="${blogset.basicsetWebsiteOnlinetime}" type="hidden">
+									<input id="basicsetArticleEditor" name="basicsetArticleEditor"
+										th:value="${blogset.basicsetArticleEditor}" type="hidden">
+									<div class="form-group">
+										<label class="col-sm-3 control-label"><em
+											class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>博客标题：</label>
+										<div class="col-sm-8">
+											<input id="basicsetTitle" name="basicsetTitle"
+												th:value="${blogset.basicsetTitle}" class="form-control"
+												type="text">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">网站图标：</label>
+										<div class="col-sm-4">
+											<input id="file-8" class="file" type="file" name="file">
+										</div>
+										<div class="col-sm-4" id="show8" align="center"
+											style="display: none">
+											<img id="showImg8" width="285" height="285" src=""></img>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">博客描述：</label>
+										<div class="col-sm-8">
+											<input id="basicsetDes" name="basicsetDes"
+												th:value="${blogset.basicsetDes}" class="form-control"
+												type="text">
+										</div>
+									</div>
+									<!-- <div class="form-group">
+										<label class="col-sm-3 control-label">博客皮肤：</label>
+										<div class="col-sm-8">
+											<input id="basicsetSkin" name="basicsetSkin"
+												th:value="${blogset.basicsetSkin}" class="form-control"
+												type="text">
+										</div>
+									</div> -->
+									<div class="form-group">
+										<label class="col-sm-3 control-label">文章默认编辑器：</label>
+										<div class="col-sm-8">
+											<label class="checkbox-inline i-checks" id="clickLabel1">
+												<input type="radio" name="basicsetArticleEditor" value="0"
+												id="radio1" /> HTML编辑器（summernote）
+											</label> <label class="checkbox-inline i-checks" id="clickLabel2">
+												<input type="radio" name="basicsetArticleEditor" value="1"
+												id="radio2" /> MarkDown编辑器（simplemde）
+											</label>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="dtp_input1" class="col-sm-3 control-label">网站上线时间：</label>
+										<div class="col-sm-8">
+											<div class="input-group date form_datetime col-sm-12"
+												data-date-format="yyyy-mm-dd hh:ii:ss"
+												data-link-field="dtp_input1">
+												<input class="form-control" type="text" value="" readonly
+													id="basicsetWebsiteOnlinetime"
+													th:value="${blogset.basicsetWebsiteOnlinetime}"> <span
+													class="input-group-addon"><span
+													class="glyphicon glyphicon-remove"></span></span> <span
+													class="input-group-addon"><span
+													class="glyphicon glyphicon-th"></span></span>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label">全局允许评论：</label>
+										<div class="col-sm-8">
+											<div class="switch" data-on="primary" data-off="info">
+												<input id="basicsetGlobalAllowComment" name="valueCheckbox"
+													type="checkbox" />
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">全局展示评论：</label>
+										<div class="col-sm-8">
+											<div class="switch" data-on="primary" data-off="info">
+												<input id="basicsetGlobalShowComment" name="valueCheckbox"
+													type="checkbox" />
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">全局允许转载：</label>
+										<div class="col-sm-8">
+											<div class="switch" data-on="primary" data-off="info">
+												<input id="basicsetGlobalAllowReprint" name="valueCheckbox"
+													type="checkbox" />
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">评论是否通知：</label>
+										<div class="col-sm-8">
+											<div class="switch" data-on="primary" data-off="info">
+												<input id="basicsetCommentNotice" name="valueCheckbox"
+													type="checkbox" />
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">赞赏是否开启：</label>
+										<div class="col-sm-8">
+											<div class="switch" data-on="primary" data-off="info">
+												<input id="basicsetOpenAppreciate" name="valueCheckbox"
+													type="checkbox" />
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">文章允许下载：</label>
+										<div class="col-sm-8">
+											<div class="switch" data-on="primary" data-off="info">
+												<input id="basicsetOpenBlogDownload" name="valueCheckbox"
+													type="checkbox" />
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label">网站开启公告：</label>
+										<div class="col-sm-8">
+											<div class="switch" data-on="primary" data-off="info">
+												<input id="basicsetOpenNotice" name="valueCheckbox"
+													type="checkbox" />
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label">文章自动加载：</label>
+										<div class="col-sm-8">
+											<div class="switch" data-on="primary" data-off="info">
+												<input id="basicsetAutoLoading" name="valueCheckbox"
+													type="checkbox" />
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label">显示文章来源：</label>
+										<div class="col-sm-8">
+											<div class="switch" data-on="primary" data-off="info">
+												<input id="basicsetShowArticleSource" name="valueCheckbox"
+													type="checkbox" />
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">评论自动审核：</label>
+										<div class="col-sm-8">
+											<div class="switch" data-on="primary" data-off="info">
+												<input id="basicsetCommentAutoReview" name="valueCheckbox"
+													type="checkbox" />
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">文章图片水印：</label>
+										<div class="col-sm-8">
+											<div class="switch" data-on="primary" data-off="info">
+												<input id="basicsetAddWaterMark" name="valueCheckbox"
+													type="checkbox" />
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">水印设置：</label>
+										<div class="col-sm-2">
+											<select class="form-control" name="markPosition"
+												id="markPosition">
+												<option value="0">右下角</option>
+												<option value="1">左下角</option>
+												<option value="2">右上角</option>
+												<option value="3">左上角</option>
+												<option value="4">中间</option>
+											</select>
+										</div>
+										<label class="col-sm-1 control-label"><em
+											class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>内容：</label>
+										<div class="col-sm-5">
+											<input id="basicsetWaterMarkMsg" name="basicsetWaterMarkMsg"
+												th:value="${blogset.basicsetWaterMarkMsg}"
+												class="form-control" type="text">
+										</div>
+
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label"></label>
+										<div class="col-sm-2">
+											<div name="stylesetColorP"
+												class="input-group colorpicker-component">
+												<input type="text" id="markColor" name="markColor"
+													value="#ffffff" class="form-control" /> <span
+													class="input-group-addon"><i></i></span>
+											</div>
+										</div>
+										<div class="col-sm-2">
+											<select class="form-control" name="markFont" id="markFont">
+												<option value="楷体">楷体</option>
+												<option value="黑体">黑体</option>
+												<option value="宋体">宋体</option>
+												<option value="仿宋">仿宋</option>
+												<option value="微软雅黑">微软雅黑</option>
+											</select>
+										</div>
+										<div class="col-sm-2">
+											<select class="form-control" name="markStyle" id="markStyle">
+												<option value="0">常规</option>
+												<option value="1">粗体</option>
+												<option value="2">斜体</option>
+											</select>
+										</div>
+										<div class="col-sm-2">
+											<div class="input-group spinner" data-trigger="spinner">
+												<input type="text" class="form-control text-center"
+													data-rule="quantity" id="markSize" name="markSize"
+													data-max="72" data-min="8" value="30">
+												<div class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i
+														class="fa fa-caret-up"></i></a> <a href="javascript:;"
+														class="spin-down" data-spin="down"><i
+														class="fa fa-caret-down"></i></a>
+												</div>
+											</div>
+										</div>
+
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label">是否添加原创版权声明：</label>
+										<div class="col-sm-8">
+											<div class="switch" data-on="primary" data-off="info">
+												<input id="basicsetAddCopyrightNotice" name="valueCheckbox"
+													type="checkbox" />
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">原创版权声明信息：</label>
+										<div class="col-sm-8">
+											<input id="basicsetCopyrightNoticeInfo"
+												name="basicsetCopyrightNoticeInfo"
+												th:value="${blogset.basicsetCopyrightNoticeInfo}"
+												class="form-control" type="text">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">基础设置备注：</label>
+										<div class="col-sm-8">
+											<input id="basicsetRemark" name="basicsetRemark"
+												th:value="${blogset.basicsetRemark}" class="form-control"
+												type="text">
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="form-control-static col-sm-offset-9">
+											<button type="submit" class="btn btn-primary">提交</button>
+											<button th:onclick="'javascript:layer_close()'"
+												class="btn btn-danger" type="button">关闭</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div id="tab-2" class="tab-pane">
+						<div class="full-height-scroll">
+							<div class="table-responsive">
+								<form class="form-horizontal m" id="form-blogset-bloggerset">
+									<input id="blogSetId" name="blogSetId"
+										th:value="${blogset.blogSetId}" type="hidden">
+									<div class="form-group">
+										<label class="col-sm-3 control-label"><em
+											class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>博主姓名：</label>
+										<div class="col-sm-8">
+											<input id="bloggersetBloggerName"
+												name="bloggersetBloggerName"
+												th:value="${blogset.bloggersetBloggerName}"
+												class="form-control" type="text">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label"><em
+											class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>博主介绍：</label>
+										<div class="col-sm-8">
+											<input id="bloggersetBloggerDes" name="bloggersetBloggerDes"
+												th:value="${blogset.bloggersetBloggerDes}"
+												class="form-control" type="text">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">博主头像：</label>
+										<div class="col-sm-4">
+											<input id="file-7" class="file" type="file" name="file">
+										</div>
+										<div class="col-sm-4" id="show7" align="center"
+											style="display: none">
+											<img id="showImg7" width="285" height="285" src=""></img>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">博主新浪微博：</label>
+										<div class="col-sm-8">
+											<input id="bloggersetBloggerSinaWeibo"
+												name="bloggersetBloggerSinaWeibo"
+												th:value="${blogset.bloggersetBloggerSinaWeibo}"
+												class="form-control" type="text">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">博主QQ：</label>
+										<div class="col-sm-8">
+											<input id="bloggersetBloggerQqNumber"
+												name="bloggersetBloggerQqNumber"
+												th:value="${blogset.bloggersetBloggerQqNumber}"
+												class="form-control" type="text">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">博主QQ二维码：</label>
+										<div class="col-sm-4">
+											<!-- <input id="bloggersetBloggerQqOrcode"
+												name="bloggersetBloggerQqOrcode"
+												th:value="${blogset.bloggersetBloggerQqOrcode}"
+												class="form-control" type="text"> -->
+											<input id="file-1" class="file" type="file" name="file">
+										</div>
+										<div class="col-sm-4" id="show1" align="center"
+											style="display: none">
+											<img id="showImg1" width="285" height="285" src=""></img>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">QQ群：</label>
+										<div class="col-sm-8">
+											<input id="bloggersetBloggerQqGroupNumber"
+												name="bloggersetBloggerQqGroupNumber"
+												th:value="${blogset.bloggersetBloggerQqGroupNumber}"
+												class="form-control" type="text">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">QQ群二维码：</label>
+										<div class="col-sm-4">
+											<!-- <input id="bloggersetBloggerQqGroupOrcode"
+												name="bloggersetBloggerQqGroupOrcode"
+												th:value="${blogset.bloggersetBloggerQqGroupOrcode}"
+												class="form-control" type="text"> -->
+											<input id="file-2" class="file" type="file" name="file">
+										</div>
+										<div class="col-sm-4" id="show2" align="center"
+											style="display: none">
+											<img id="showImg2" width="285" height="285" src=""></img>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">博主微信：</label>
+										<div class="col-sm-8">
+											<input id="bloggersetBloggerWechatNumber"
+												name="bloggersetBloggerWechatNumber"
+												th:value="${blogset.bloggersetBloggerWechatNumber}"
+												class="form-control" type="text">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">微信群名：</label>
+										<div class="col-sm-8">
+											<input id="bloggersetBloggerWechatGroupName"
+												name="bloggersetBloggerWechatGroupName"
+												th:value="${blogset.bloggersetBloggerWechatGroupName}"
+												class="form-control" type="text">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">博主微信二维码：</label>
+										<div class="col-sm-4">
+											<!-- <input id="bloggersetBloggerWechatOrcode"
+												name="bloggersetBloggerWechatOrcode"
+												th:value="${blogset.bloggersetBloggerWechatOrcode}"
+												class="form-control" type="text"> -->
+											<input id="file-3" class="file" type="file" name="file">
+										</div>
+										<div class="col-sm-4" id="show3" align="center"
+											style="display: none">
+											<img id="showImg3" width="285" height="285" src=""></img>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">微信群二维码：</label>
+										<div class="col-sm-4">
+											<!-- <input id="bloggersetBloggerWechatGroupOrcode"
+												name="bloggersetBloggerWechatGroupOrcode"
+												th:value="${blogset.bloggersetBloggerWechatGroupOrcode}"
+												class="form-control" type="text"> -->
+											<input id="file-4" class="file" type="file" name="file">
+										</div>
+										<div class="col-sm-4" id="show4" align="center"
+											style="display: none">
+											<img id="showImg4" width="285" height="285" src=""></img>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">博主电子邮箱：</label>
+										<div class="col-sm-8">
+											<input id="bloggersetBloggerEmail"
+												name="bloggersetBloggerEmail"
+												th:value="${blogset.bloggersetBloggerEmail}"
+												class="form-control" type="text">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">博主CSDN：</label>
+										<div class="col-sm-8">
+											<input id="bloggersetBloggerCsdn"
+												name="bloggersetBloggerCsdn"
+												th:value="${blogset.bloggersetBloggerCsdn}"
+												class="form-control" type="text">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">博主码云：</label>
+										<div class="col-sm-8">
+											<input id="bloggersetBloggerGitee"
+												name="bloggersetBloggerGitee"
+												th:value="${blogset.bloggersetBloggerGitee}"
+												class="form-control" type="text">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">博主GitHub：</label>
+										<div class="col-sm-8">
+											<input id="bloggersetBloggerGithub"
+												name="bloggersetBloggerGithub"
+												th:value="${blogset.bloggersetBloggerGithub}"
+												class="form-control" type="text">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">打赏支付宝收款码：</label>
+										<div class="col-sm-4">
+											<!-- <input id="bloggersetBloggerRewardAlipayCollectionCode"
+												name="bloggersetBloggerRewardAlipayCollectionCode"
+												th:value="${blogset.bloggersetBloggerRewardAlipayCollectionCode}"
+												class="form-control" type="text"> -->
+											<input id="file-5" class="file" type="file" name="file">
+										</div>
+										<div class="col-sm-4" id="show5" align="center"
+											style="display: none">
+											<img id="showImg5" width="285" height="285" src=""></img>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">打赏微信收款码：</label>
+										<div class="col-sm-4">
+											<!-- <input id="bloggersetBloggerRewardWechatCollectionCode"
+												name="bloggersetBloggerRewardWechatCollectionCode"
+												th:value="${blogset.bloggersetBloggerRewardWechatCollectionCode}"
+												class="form-control" type="text"> -->
+											<input id="file-6" class="file" type="file" name="file">
+										</div>
+										<div class="col-sm-4" id="show6" align="center"
+											style="display: none">
+											<img id="showImg6" width="285" height="285" src=""></img>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">博主设置备注：</label>
+										<div class="col-sm-8">
+											<input id="bloggersetRemark" name="bloggersetRemark"
+												th:value="${blogset.bloggersetRemark}" class="form-control"
+												type="text">
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="form-control-static col-sm-offset-9">
+											<button type="submit" class="btn btn-primary">提交</button>
+											<button th:onclick="'javascript:layer_close()'"
+												class="btn btn-danger" type="button">关闭</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div id="tab-3" class="tab-pane">
+						<div class="full-height-scroll">
+							<div class="table-responsive">
+								<form class="form-horizontal m" id="form-blogset-blogset">
+									<input id="blogSetId" name="blogSetId"
+										th:value="${blogset.blogSetId}" type="hidden"> <input
+										id="blogsetFriendLinks" name="blogsetFriendLinks"
+										th:value="${blogset.blogsetFriendLinks}" type="hidden">
+									<input id="blogsetSidebarOtherMessage"
+										name="blogsetSidebarOtherMessage"
+										th:value="${blogset.blogsetSidebarOtherMessage}" type="hidden">
+									<div class="form-group">
+										<label class="col-sm-3 control-label"><em
+											class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>每页显示文章条数：</label>
+										<div class="col-sm-8">
+											<div class="input-group spinner" data-trigger="spinner">
+												<input type="text" class="form-control text-center"
+													th:value="${blogset.blogsetPerpageShowNum}"
+													data-rule="quantity" id="blogsetPerpageShowNum"
+													name="blogsetPerpageShowNum" data-max="1000" data-min="1">
+												<div class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i
+														class="fa fa-caret-up"></i></a> <a href="javascript:;"
+														class="spin-down" data-spin="down"><i
+														class="fa fa-caret-down"></i></a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label"><em
+											class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>最新文章显示条数：</label>
+										<div class="col-sm-8">
+											<div class="input-group spinner" data-trigger="spinner">
+												<input type="text" class="form-control text-center"
+													th:value="${blogset.blogsetLatestShowNum}"
+													data-rule="quantity" id="blogsetLatestShowNum"
+													name="blogsetLatestShowNum" data-max="10" data-min="1">
+												<div class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i
+														class="fa fa-caret-up"></i></a> <a href="javascript:;"
+														class="spin-down" data-spin="down"><i
+														class="fa fa-caret-down"></i></a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label"><em
+											class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>滚动推荐显示条数：</label>
+										<div class="col-sm-8">
+											<div class="input-group spinner" data-trigger="spinner">
+												<input type="text" class="form-control text-center"
+													th:value="${blogset.blogsetScrollRecommendedShowNum}"
+													data-rule="quantity" id="blogsetScrollRecommendedShowNum"
+													name="blogsetScrollRecommendedShowNum" data-max="10"
+													data-min="1">
+												<div class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i
+														class="fa fa-caret-up"></i></a> <a href="javascript:;"
+														class="spin-down" data-spin="down"><i
+														class="fa fa-caret-down"></i></a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label"><em
+											class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>列表推荐显示条数：</label>
+										<div class="col-sm-8">
+											<div class="input-group spinner" data-trigger="spinner">
+												<input type="text" class="form-control text-center"
+													th:value="${blogset.blogsetRecommendedShowNum}"
+													data-rule="quantity" id="blogsetRecommendedShowNum"
+													name="blogsetRecommendedShowNum" data-max="10" data-min="1">
+												<div class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i
+														class="fa fa-caret-up"></i></a> <a href="javascript:;"
+														class="spin-down" data-spin="down"><i
+														class="fa fa-caret-down"></i></a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label"><em
+											class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>点击排行显示条数：</label>
+										<div class="col-sm-8">
+											<div class="input-group spinner" data-trigger="spinner">
+												<input type="text" class="form-control text-center"
+													th:value="${blogset.blogsetRankingShowNum}"
+													data-rule="quantity" id="blogsetRankingShowNum"
+													name="blogsetRankingShowNum" data-max="10" data-min="1">
+												<div class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i
+														class="fa fa-caret-up"></i></a> <a href="javascript:;"
+														class="spin-down" data-spin="down"><i
+														class="fa fa-caret-down"></i></a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label"><em
+											class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>特别推荐显示条数：</label>
+										<div class="col-sm-8">
+											<div class="input-group spinner" data-trigger="spinner">
+												<input type="text" class="form-control text-center"
+													th:value="${blogset.blogsetSpecialRecdShowNum}"
+													data-rule="quantity" id="blogsetSpecialRecdShowNum"
+													name="blogsetSpecialRecdShowNum" data-max="3" data-min="1">
+												<div class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i
+														class="fa fa-caret-up"></i></a> <a href="javascript:;"
+														class="spin-down" data-spin="down"><i
+														class="fa fa-caret-down"></i></a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label"><em
+											class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>导航菜单显示条数：</label>
+										<div class="col-sm-8">
+											<div class="input-group spinner" data-trigger="spinner">
+												<input type="text" class="form-control text-center"
+													th:value="${blogset.blogsetNavBarShowNum}"
+													data-rule="quantity" id="blogsetNavBarShowNum"
+													name="blogsetNavBarShowNum" data-max="5" data-min="0">
+												<div class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i
+														class="fa fa-caret-up"></i></a> <a href="javascript:;"
+														class="spin-down" data-spin="down"><i
+														class="fa fa-caret-down"></i></a>
+												</div>
+											</div>
+
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label">主文章无图使用默认图片：</label>
+										<div class="switch onoffswitch col-sm-1">
+											<div class="onoffswitch">
+												<input type="checkbox"
+													th:checked="${blogset.blogsetNoPicUseDefault == 0 ? true : false}"
+													class="onoffswitch-checkbox" id="allow_comment"
+													name="allow_comment"> <label
+													class="onoffswitch-label" for="allow_comment"> <span
+													class="onoffswitch-inner"></span> <span
+													class="onoffswitch-switch"></span>
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">无封面图使用内容图：</label>
+										<div class="switch onoffswitch col-sm-1">
+											<div class="onoffswitch">
+												<input type="checkbox"
+													th:checked="${blogset.blogsetNoCoverpicUseContentpic == 0 ? true : false}"
+													class="onoffswitch-checkbox" id="ping" name="ping">
+												<label class="onoffswitch-label" for="ping"> <span
+													class="onoffswitch-inner"></span> <span
+													class="onoffswitch-switch"></span>
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">上传默认图片：</label>
+										<div class="col-sm-8">
+											<input id="file-9" class="file" type="file" name="file">
+										</div>
+									</div>
+									<div class="form-group" id="showDefaultImg"></div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label">友情链接：</label>
+										<div class="col-sm-8">
+											<button class="btn btn-info" type="button"
+												data-toggle="tooltip" title="新增" id="addBlogsetFriendLinks2"
+												onclick="addBlogsetFriendLinks(this)">
+												<span class="glyphicon glyphicon-plus"></span>
+											</button>
+											<label class="control-label">提示：“显示”是页面显示内容，“链接”是URL</label>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">侧边栏其他信息：</label>
+										<div class="col-sm-8">
+											<button class="btn btn-info" type="button"
+												data-toggle="tooltip" title="新增"
+												id="addBlogsetSidebarOtherMessage2"
+												onclick="addBlogsetSidebarOtherMessage(this)">
+												<span class="glyphicon glyphicon-plus"></span>
+											</button>
+											<label class="control-label">提示：“标题”是侧边主标题，“内容”是简单文本信息</label>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">博客设置备注：</label>
+										<div class="col-sm-8">
+											<input id="blogsetRemark" name="blogsetRemark"
+												th:value="${blogset.blogsetRemark}" class="form-control"
+												type="text">
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="form-control-static col-sm-offset-9">
+											<button type="submit" class="btn btn-primary">提交</button>
+											<button th:onclick="'javascript:layer_close()'"
+												class="btn btn-danger" type="button">关闭</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div id="tab-4" class="tab-pane">
+						<div class="full-height-scroll">
+							<div class="table-responsive">
+								<form class="form-horizontal m" id="form-blogset-styleset">
+									<input id="blogSetId" name="blogSetId"
+										th:value="${blogset.blogSetId}" type="hidden"> <input
+										id="blogsetSidebarOtherMessage"
+										name="blogsetSidebarOtherMessage"
+										th:value="${blogset.blogsetSidebarOtherMessage}" type="hidden">
+									<div class="form-group">
+										<label class="col-sm-3 control-label"><em
+											class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>网站色调：</label>
+										<div class="col-sm-8">
+											<div name="stylesetColorP"
+												class="input-group colorpicker-component">
+												<input type="text" id="stylesetColor" name="stylesetColor"
+													th:value="${blogset.stylesetColor}" class="form-control" />
+												<span class="input-group-addon"><i></i></span>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label"><em
+											class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>背景颜色：</label>
+										<div class="col-sm-8">
+											<div name="stylesetColorP"
+												class="input-group colorpicker-component">
+												<input type="text" id="stylesetBackColor"
+													name="stylesetBackColor"
+													th:value="${blogset.stylesetBackColor}"
+													class="form-control" /> <span class="input-group-addon"><i></i></span>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label"><em
+											class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>平滑程度：</label>
+										<div class="col-sm-8">
+											<input id="stylesetSmoothStyle" type="text"
+												data-slider-min="0" class="span2" style="background: green;"
+												data-slider-max="50" data-slider-step="1" /> <span
+												id="ex6CurrentSliderValLabel"> <span
+												id="ex6SliderVal">[[${blogset.stylesetSmoothStyle}]]%</span>
+											</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">显示右侧边栏：</label>
+										<div class="switch onoffswitch col-sm-1">
+											<div class="onoffswitch">
+												<input type="checkbox"
+													th:checked="${blogset.stylesetShowRightSiderbar == 0 ? true : false}"
+													class="onoffswitch-checkbox" id="allow_introduction"
+													name="allow_introduction"> <label
+													class="onoffswitch-label" for="allow_introduction">
+													<span class="onoffswitch-inner"></span> <span
+													class="onoffswitch-switch"></span>
+												</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label"><em
+											class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>右侧边栏内容：</label>
+										<div class="col-sm-8">
+											<select id="stylesetRightSiderbarContent"
+												name="stylesetRightSiderbarContent"
+												class="form-control select2-hidden-accessible" multiple="">
+												<option th:each="Blogsiderbar:${blogsiderbarList}"
+													th:value="${Blogsiderbar.blogSiderbrId}"
+													th:text="${Blogsiderbar.blogSiderbrName}"
+													th:selected="${Blogsiderbar.blogShowRightSiderbr== 0 ? true : false}"></option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">显示左侧边栏：</label>
+										<div class="switch onoffswitch col-sm-1">
+											<div class="onoffswitch">
+												<input type="checkbox"
+													th:checked="${blogset.stylesetShowLeftSiderbar == 0 ? true : false}"
+													class="onoffswitch-checkbox" id="private_article"
+													name="private_article"> <label
+													class="onoffswitch-label" for="private_article"> <span
+													class="onoffswitch-inner"></span> <span
+													class="onoffswitch-switch"></span>
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label"><em
+											class="gg-star" style="color: red; font-style: normal;">*&nbsp;</em>左侧边栏内容：</label>
+										<div class="col-sm-8">
+											<select id="stylesetLeftSiderbarContent"
+												name="stylesetLeftSiderbarContent"
+												class="form-control select2-hidden-accessible" multiple="">
+												<option th:each="Blogsiderbar:${blogsiderbarList}"
+													th:value="${Blogsiderbar.blogSiderbrId}"
+													th:text="${Blogsiderbar.blogSiderbrName}"
+													th:selected="${Blogsiderbar.blogShowLeftSiderbr== 0 ? true : false}"></option>
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label">样式设置备注：</label>
+										<div class="col-sm-8">
+											<input id="stylesetRemark" name="stylesetRemark"
+												th:value="${blogset.stylesetRemark}" class="form-control"
+												type="text">
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="form-control-static col-sm-offset-9">
+											<button type="submit" class="btn btn-primary">提交</button>
+											<button th:onclick="'javascript:layer_close()'"
+												class="btn btn-danger" type="button">关闭</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:include="include::footer"></div>
+		<script src="/ajax/plugins/bootstrap-fileinput/js/fileinput.min.js"
+			th:src="@{/ajax/plugins/bootstrap-fileinput/js/fileinput.min.js}"></script>
+		<script src="/ajax/plugins/bootstrap-fileinput/js/locales/zh.js"
+			th:src="@{/ajax/plugins/bootstrap-fileinput/js/locales/zh.js  }"></script>
+		<script src="/ajax/plugins/bootstrap-fileinput/js/locales/fr.js"
+			th:src="@{/ajax/plugins/bootstrap-fileinput/js/locales/fr.js  }"></script>
+		<script
+			src="/ajax/libs/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"
+			th:src="@{/ajax/libs/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js}"></script>
+		<script src="/ajax/libs/bootstrap-slider/js/bootstrap-slider.min.js"
+			th:src="@{/ajax/libs/bootstrap-slider/js/bootstrap-slider.min.js}"></script>
+		<script src="/ajax/libs/select/select2.js"
+			th:src="@{/ajax/libs/select/select2.js}"></script>
+
+		<script
+			src="/ajax/libs/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"
+			th:src="@{/ajax/libs/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js}">
+	</script>
+		<script
+			src="/ajax/libs/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"
+			th:src="@{/ajax/libs/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js}">
+	</script>
+		<script type="text/javascript">
+			//初始化颜色插件
+			$(function() {
+	             $("div[name='stylesetColorP']").colorpicker();
+	             //初始化滑块插件
+	             $("#stylesetSmoothStyle").slider({
+	            		value:[[${blogset.stylesetSmoothStyle}]]
+	            	});
+	             $(".slider.slider-horizontal").css("width","95%");
+	             $("#stylesetSmoothStyle").on("slide", function(slideEvt) {
+	             	$("#ex6SliderVal").text(slideEvt.value+'%');
+	             });
+	         });
+		</script>
+		<script th:inline="javascript">
+	
+		    var basicsetWaterMarkSetMsg=[[${blogset.basicsetWaterMarkSetMsg}]];
+			 // 添加完之后初始化开关控件
+			$("[name='valueCheckbox']").bootstrapSwitch({
+				onText : 'ON',
+				offText : 'OFF'
+			});
+			// 设置原有值
+				$("#basicsetGlobalAllowComment").bootstrapSwitch(
+						'state', [[${blogset.basicsetGlobalAllowComment}]]==0?true:false);
+			
+				$("#basicsetGlobalShowComment").bootstrapSwitch(
+						'state', [[${blogset.basicsetGlobalShowComment}]]==0?true:false);
+				
+				$("#basicsetGlobalAllowReprint").bootstrapSwitch(
+						'state', [[${blogset.basicsetGlobalAllowReprint}]]==0?true:false);
+				
+				$("#basicsetCommentNotice").bootstrapSwitch(
+						'state', [[${blogset.basicsetCommentNotice}]]==0?true:false);
+				
+				$("#basicsetOpenAppreciate").bootstrapSwitch(
+						'state', [[${blogset.basicsetOpenAppreciate}]]==0?true:false);
+				
+				$("#basicsetOpenBlogDownload").bootstrapSwitch(
+						'state', [[${blogset.basicsetOpenBlogDownload}]]==0?true:false);
+				
+				$("#basicsetOpenNotice").bootstrapSwitch(
+						'state', [[${blogset.basicsetOpenNotice}]]==0?true:false);
+				
+				$("#basicsetAutoLoading").bootstrapSwitch(
+						'state', [[${blogset.basicsetAutoLoading}]]==0?true:false);
+				
+				$("#basicsetShowArticleSource").bootstrapSwitch(
+						'state', [[${blogset.basicsetShowArticleSource}]]==0?true:false);
+				
+				$("#basicsetCommentAutoReview").bootstrapSwitch(
+						'state', [[${blogset.basicsetCommentAutoReview}]]==0?true:false);
+				
+				$("#basicsetAddWaterMark").bootstrapSwitch(
+						'state', [[${blogset.basicsetAddWaterMark}]]==0?true:false);
+				
+				$("#basicsetAddCopyrightNotice").bootstrapSwitch(
+						'state', [[${blogset.basicsetAddCopyrightNotice}]]==0?true:false);
+				// 绑定文章是否打水印按钮
+				//监听都不生效
+				/* $('#basicsetAddWaterMark').bootstrapSwitch({ 
+					onSwitchChange:function(e,data){
+		console.log(111)
+		} });  */
+				/*  $('#basicsetAddWaterMark').on('switch-change', function (e, data) {
+					console.log(111)
+				      value = data.value;
+				    console.log(value);
+				}); */
+				//以下使用bootstrap switch失效
+				/* $(function(){
+			        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+			            // 获取已激活的标签页的名称
+			            var activeTab = $(e.target).text();
+			            if(activeTab=='博客设置'){
+			            	//以下失效
+							$("#blogsetNoPicUseDefault").bootstrapSwitch(
+									'state', true);
+							
+							$("#blogsetNoCoverpicUseContentpic").bootstrapSwitch(
+									'state', [[${blogset.blogsetNoCoverpicUseContentpic}]]==0?true:false);
+			            }
+			        });
+			    });   */
+		</script>
+		<script th:inline="javascript">
+		var fileBase64_1=[[${blogset.bloggersetBloggerQqOrcode}]];
+		//显示
+		if(fileBase64_1!=null&&fileBase64_1!=''){
+			$("#show1").css('display', 'block');
+			document.getElementById("showImg1").src = fileBase64_1;
+		}
+		
+		//上传绑定
+		// 上传文件
+		$("#file-1").fileinput({
+			language : 'zh', // 设置语言
+			uploadUrl : ctx + "blog/blogset/uploadImgFile?blogFileName=blogset",
+			allowedFileExtensions : [ 'jpg', 'png', 'jpeg',
+										'gif' ],// 接收的文件后缀
+			showUpload : true, // 是否显示上传按钮
+			showRemove : false, // 是否显示移除按钮
+			showCaption : false,// 是否显示标题
+			browseClass : "btn btn-primary", // 按钮样式
+			dropZoneEnabled : true,//是否显示拖拽区域
+			uploadAsync : true,
+			showBrowse : true,
+			browseOnZoneClick : false,
+			maxFileCount : 1, // 表示允许同时上传的最大文件个数
+			enctype : 'multipart/form-data',
+			maxFileSize : 3096
+		// 单位为kb，如果为0表示不限制文件大小
+		}).on("filebatchselected", function(event, files) {
+			//返回文件名
+		}).on('filesuccessremove', function(event, id){
+			$("#show1").css('display', 'none');
+			fileBase64_1=null;
+		}).on("fileuploaded", function(event, data) {
+			//返回文件名,改过，实际返回base64编码
+			fileBase64_1 = (data.response.code == 0) ? (data.response.imgbase64String) : null;
+			$("#show1").css('display', 'block');
+			document.getElementById("showImg1").src = fileBase64_1;
+			/* //返回文件修改名
+			fileUuidName = (data.response.code == 0) ? (data.response.fileName) : null; */
+		});
+	</script>
+		<script th:inline="javascript">
+		var fileBase64_2=[[${blogset.bloggersetBloggerQqGroupOrcode}]];
+		//显示
+		if(fileBase64_2!=null&&fileBase64_2!=''){
+			$("#show2").css('display', 'block');
+			document.getElementById("showImg2").src = fileBase64_2;
+		}
+		
+		//上传绑定
+		// 上传文件
+		$("#file-2").fileinput({
+			language : 'zh', // 设置语言
+			uploadUrl : ctx + "blog/blogset/uploadImgFile?blogFileName=blogset",
+			allowedFileExtensions : [ 'jpg', 'png', 'jpeg',
+										'gif' ],// 接收的文件后缀
+			showUpload : true, // 是否显示上传按钮
+			showRemove : false, // 是否显示移除按钮
+			showCaption : false,// 是否显示标题
+			browseClass : "btn btn-primary", // 按钮样式
+			dropZoneEnabled : true,//是否显示拖拽区域
+			uploadAsync : true,
+			showBrowse : true,
+			browseOnZoneClick : false,
+			maxFileCount : 1, // 表示允许同时上传的最大文件个数
+			enctype : 'multipart/form-data',
+			maxFileSize : 3096
+		// 单位为kb，如果为0表示不限制文件大小
+		}).on("filebatchselected", function(event, files) {
+			//返回文件名
+		}).on('filesuccessremove', function(event, id){
+			$("#show2").css('display', 'none');
+			fileBase64_2=null;
+		}).on("fileuploaded", function(event, data) {
+			//返回文件名,改过，实际返回base64编码
+			fileBase64_2 = (data.response.code == 0) ? (data.response.imgbase64String) : null;
+			$("#show2").css('display', 'block');
+			document.getElementById("showImg2").src = fileBase64_2;
+			/* //返回文件修改名
+			fileUuidName = (data.response.code == 0) ? (data.response.fileName) : null; */
+		});
+	</script>
+
+		<script th:inline="javascript">
+		var fileBase64_3=[[${blogset.bloggersetBloggerWechatOrcode}]];
+		//显示
+		if(fileBase64_3!=null&&fileBase64_3!=''){
+			$("#show3").css('display', 'block');
+			document.getElementById("showImg3").src = fileBase64_3;
+		}
+		
+		//上传绑定
+		// 上传文件
+		$("#file-3").fileinput({
+			language : 'zh', // 设置语言
+			uploadUrl : ctx + "blog/blogset/uploadImgFile?blogFileName=blogset",
+			allowedFileExtensions : [ 'jpg', 'png', 'jpeg',
+										'gif' ],// 接收的文件后缀
+			showUpload : true, // 是否显示上传按钮
+			showRemove : false, // 是否显示移除按钮
+			showCaption : false,// 是否显示标题
+			browseClass : "btn btn-primary", // 按钮样式
+			dropZoneEnabled : true,//是否显示拖拽区域
+			uploadAsync : true,
+			showBrowse : true,
+			browseOnZoneClick : false,
+			maxFileCount : 1, // 表示允许同时上传的最大文件个数
+			enctype : 'multipart/form-data',
+			maxFileSize : 3096
+		// 单位为kb，如果为0表示不限制文件大小
+		}).on("filebatchselected", function(event, files) {
+			//返回文件名
+		}).on('filesuccessremove', function(event, id){
+			$("#show3").css('display', 'none');
+			fileBase64_3=null;
+		}).on("fileuploaded", function(event, data) {
+			//返回文件名,改过，实际返回base64编码
+			fileBase64_3 = (data.response.code == 0) ? (data.response.imgbase64String) : null;
+			$("#show3").css('display', 'block');
+			document.getElementById("showImg3").src = fileBase64_3;
+			/* //返回文件修改名
+			fileUuidName = (data.response.code == 0) ? (data.response.fileName) : null; */
+		});
+	</script>
+
+		<script th:inline="javascript">
+		var fileBase64_4=[[${blogset.bloggersetBloggerWechatGroupOrcode}]];
+		//显示
+		if(fileBase64_4!=null&&fileBase64_4!=''){
+			$("#show4").css('display', 'block');
+			document.getElementById("showImg4").src = fileBase64_4;
+		}
+		
+		//上传绑定
+		// 上传文件
+		$("#file-4").fileinput({
+			language : 'zh', // 设置语言
+			uploadUrl : ctx + "blog/blogset/uploadImgFile?blogFileName=blogset",
+			allowedFileExtensions : [ 'jpg', 'png', 'jpeg',
+										'gif' ],// 接收的文件后缀
+			showUpload : true, // 是否显示上传按钮
+			showRemove : false, // 是否显示移除按钮
+			showCaption : false,// 是否显示标题
+			browseClass : "btn btn-primary", // 按钮样式
+			dropZoneEnabled : true,//是否显示拖拽区域
+			uploadAsync : true,
+			showBrowse : true,
+			browseOnZoneClick : false,
+			maxFileCount : 1, // 表示允许同时上传的最大文件个数
+			enctype : 'multipart/form-data',
+			maxFileSize : 3096
+		// 单位为kb，如果为0表示不限制文件大小
+		}).on("filebatchselected", function(event, files) {
+			//返回文件名
+		}).on('filesuccessremove', function(event, id){
+			$("#show4").css('display', 'none');
+			fileBase64_4=null;
+		}).on("fileuploaded", function(event, data) {
+			//返回文件名,改过，实际返回base64编码
+			fileBase64_4 = (data.response.code == 0) ? (data.response.imgbase64String) : null;
+			$("#show4").css('display', 'block');
+			document.getElementById("showImg4").src = fileBase64_4;
+			/* //返回文件修改名
+			fileUuidName = (data.response.code == 0) ? (data.response.fileName) : null; */
+		});
+	</script>
+
+		<script th:inline="javascript">
+		var fileBase64_5=[[${blogset.bloggersetBloggerRewardAlipayCollectionCode}]];
+		//显示
+		if(fileBase64_5!=null&&fileBase64_5!=''){
+			$("#show5").css('display', 'block');
+			document.getElementById("showImg5").src = fileBase64_5;
+		}
+		
+		//上传绑定
+		// 上传文件
+		$("#file-5").fileinput({
+			language : 'zh', // 设置语言
+			uploadUrl : ctx + "blog/blogset/uploadImgFile?blogFileName=blogset",
+			allowedFileExtensions : [ 'jpg', 'png', 'jpeg',
+										'gif' ],// 接收的文件后缀
+			showUpload : true, // 是否显示上传按钮
+			showRemove : false, // 是否显示移除按钮
+			showCaption : false,// 是否显示标题
+			browseClass : "btn btn-primary", // 按钮样式
+			dropZoneEnabled : true,//是否显示拖拽区域
+			uploadAsync : true,
+			showBrowse : true,
+			browseOnZoneClick : false,
+			maxFileCount : 1, // 表示允许同时上传的最大文件个数
+			enctype : 'multipart/form-data',
+			maxFileSize : 3096
+		// 单位为kb，如果为0表示不限制文件大小
+		}).on("filebatchselected", function(event, files) {
+			//返回文件名
+		}).on('filesuccessremove', function(event, id){
+			$("#show5").css('display', 'none');
+			fileBase64_5=null;
+		}).on("fileuploaded", function(event, data) {
+			//返回文件名,改过，实际返回base64编码
+			fileBase64_5 = (data.response.code == 0) ? (data.response.imgbase64String) : null;
+			$("#show5").css('display', 'block');
+			document.getElementById("showImg5").src = fileBase64_5;
+			/* //返回文件修改名
+			fileUuidName = (data.response.code == 0) ? (data.response.fileName) : null; */
+		});
+	</script>
+
+		<script th:inline="javascript">
+		var fileBase64_6=[[${blogset.bloggersetBloggerRewardWechatCollectionCode}]];
+		//显示
+		if(fileBase64_6!=null&&fileBase64_6!=''){
+			$("#show6").css('display', 'block');
+			document.getElementById("showImg6").src = fileBase64_6;
+		}
+		
+		//上传绑定
+		// 上传文件
+		$("#file-6").fileinput({
+			language : 'zh', // 设置语言
+			uploadUrl : ctx + "blog/blogset/uploadImgFile?blogFileName=blogset",
+			allowedFileExtensions : [ 'jpg', 'png', 'jpeg',
+										'gif' ],// 接收的文件后缀
+			showUpload : true, // 是否显示上传按钮
+			showRemove : false, // 是否显示移除按钮
+			showCaption : false,// 是否显示标题
+			browseClass : "btn btn-primary", // 按钮样式
+			dropZoneEnabled : true,//是否显示拖拽区域
+			uploadAsync : true,
+			showBrowse : true,
+			browseOnZoneClick : false,
+			maxFileCount : 1, // 表示允许同时上传的最大文件个数
+			enctype : 'multipart/form-data',
+			maxFileSize : 3096
+		// 单位为kb，如果为0表示不限制文件大小
+		}).on("filebatchselected", function(event, files) {
+			//返回文件名
+		}).on('filesuccessremove', function(event, id){
+			$("#show6").css('display', 'none');
+			fileBase64_6=null;
+		}).on("fileuploaded", function(event, data) {
+			//返回文件名,改过，实际返回base64编码
+			fileBase64_6 = (data.response.code == 0) ? (data.response.imgbase64String) : null;
+			$("#show6").css('display', 'block');
+			document.getElementById("showImg6").src = fileBase64_6;
+			/* //返回文件修改名
+			fileUuidName = (data.response.code == 0) ? (data.response.fileName) : null; */
+		});
+	</script>
+		<script th:inline="javascript">
+		var fileBase64_7=[[${blogset.bloggersetBloggerProfile}]];
+		//显示
+		if(fileBase64_7!=null&&fileBase64_7!=''){
+			$("#show7").css('display', 'block');
+			document.getElementById("showImg7").src = fileBase64_7;
+		}
+		
+		//上传绑定
+		// 上传文件
+		$("#file-7").fileinput({
+			language : 'zh', // 设置语言
+			uploadUrl : ctx + "blog/blogset/uploadImgFile?blogFileName=blogset",
+			allowedFileExtensions : [ 'jpg', 'png', 'jpeg',
+										'gif' ],// 接收的文件后缀
+			showUpload : true, // 是否显示上传按钮
+			showRemove : false, // 是否显示移除按钮
+			showCaption : false,// 是否显示标题
+			browseClass : "btn btn-primary", // 按钮样式
+			dropZoneEnabled : true,//是否显示拖拽区域
+			uploadAsync : true,
+			showBrowse : true,
+			browseOnZoneClick : false,
+			maxFileCount : 1, // 表示允许同时上传的最大文件个数
+			enctype : 'multipart/form-data',
+			maxFileSize : 3096
+		// 单位为kb，如果为0表示不限制文件大小
+		}).on("filebatchselected", function(event, files) {
+			//返回文件名
+		}).on('filesuccessremove', function(event, id){
+			$("#show7").css('display', 'none');
+			fileBase64_7=null;
+		}).on("fileuploaded", function(event, data) {
+			//返回文件名,改过，实际返回base64编码
+			fileBase64_7 = (data.response.code == 0) ? (data.response.imgbase64String) : null;
+			$("#show7").css('display', 'block');
+			document.getElementById("showImg7").src = fileBase64_7;
+		});
+	</script>
+		<script th:inline="javascript">
+		var fileBase64_8=[[${blogset.basicsetWebsiteIco}]];
+		//显示
+		if(fileBase64_8!=null&&fileBase64_8!=''){
+			$("#show8").css('display', 'block');
+			document.getElementById("showImg8").src = fileBase64_8;
+		}
+		
+		//上传绑定
+		// 上传文件
+		$("#file-8").fileinput({
+			language : 'zh', // 设置语言
+			uploadUrl : ctx + "blog/blogset/uploadImgFile?blogFileName=blogset",
+			allowedFileExtensions : [ 'jpg', 'png', 'jpeg',
+										'gif','ico' ],// 接收的文件后缀
+			showUpload : true, // 是否显示上传按钮
+			showRemove : false, // 是否显示移除按钮
+			showCaption : false,// 是否显示标题
+			browseClass : "btn btn-primary", // 按钮样式
+			dropZoneEnabled : true,//是否显示拖拽区域
+			uploadAsync : true,
+			showBrowse : true,
+			browseOnZoneClick : false,
+			maxFileCount : 1, // 表示允许同时上传的最大文件个数
+			enctype : 'multipart/form-data',
+			maxFileSize : 512
+		// 单位为kb，如果为0表示不限制文件大小
+		}).on("filebatchselected", function(event, files) {
+			//返回文件名
+		}).on('filesuccessremove', function(event, id){
+			$("#show8").css('display', 'none');
+			fileBase64_8=null;
+		}).on("fileuploaded", function(event, data) {
+			//返回文件名,改过，实际返回base64编码
+			fileBase64_8 = (data.response.code == 0) ? (data.response.imgbase64String) : null;
+			$("#show8").css('display', 'block');
+			document.getElementById("showImg8").src = fileBase64_8;
+			/* //返回文件修改名
+			fileUuidName = (data.response.code == 0) ? (data.response.fileName) : null; */
+		});
+	</script>
+		<script th:inline="javascript">
+		var fileName_9=[[${blogset.blogsetDefaultPic}]];
+		//显示
+		var html='';
+		var arrayImg=new Array();
+		if(fileName_9!=null&&fileName_9!=''){
+			arrayImg=fileName_9.split(",");
+			reShowImg2();
+		}
+		
+		//上传绑定
+		// 上传文件
+		$("#file-9").fileinput({
+			language : 'zh', // 设置语言
+			uploadUrl : ctx + "blog/blogcontent/uploadBlogImg?blogFileName=blogset&addWaterMark=false",
+			allowedFileExtensions : [ 'jpg', 'png', 'jpeg',
+										'gif'],// 接收的文件后缀
+			showUpload : true, // 是否显示上传按钮
+			showRemove : false, // 是否显示移除按钮
+			showCaption : false,// 是否显示标题
+			browseClass : "btn btn-primary", // 按钮样式
+			dropZoneEnabled : true,//是否显示拖拽区域
+			uploadAsync : true,
+			showBrowse : true,
+			autoReplace : true,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
+			browseOnZoneClick : false,
+			maxFileCount : 1, // 表示允许同时上传的最大文件个数
+			enctype : 'multipart/form-data',
+			maxFileSize : 1024
+		// 单位为kb，如果为0表示不限制文件大小
+		}).on("filebatchselected", function(event, files) {
+			//返回文件名
+			if(arrayImg.length>3){
+				$.modalAlert("最多4张图片！", modal_status.FAIL);
+				console.log(event)
+				//清除文件
+				//此处暂时没有找到好方法
+				return;
+			}
+		}).on('filesuccessremove', function(event, id){
+			if(arrayImg.length>0){
+				//删除最后一个
+				arrayImg.pop();
+			}
+			//重新显示
+			reShowImg();
+		}).on("fileuploaded", function(event, data) {
+			//返回文件名
+			fileName_91 = (data.response.code == 0) ? (data.response.fileName) : null;
+			if(fileName_91!=null&&fileName_91.indexOf('/blogfiles/') == 0&&arrayImg.length<4){
+				//存入集合
+				arrayImg.push(fileName_91);
+				//重新显示
+				reShowImg();
+			}
+			
+		});
+		
+		// 绑定删除
+		$(document).on('click', '#delImg', function() {
+			var el = this.parentNode.parentNode.parentNode
+			var url='';
+			$.modalConfirm("确定要删除此图片？", function(e) {
+				if (e) {
+					el.parentNode.removeChild(el)
+					//删除数组元素
+					url=el.firstChild.nextSibling.getAttribute("src");
+					delArrayEl(url);
+					
+				}
+				// 关闭弹窗
+				layer.closeAll('dialog');
+			})
+		})
+		
+		//重新显示图片
+		function reShowImg(){
+			//先删除
+			//注意：先使用本元素点父元素再删除子元素
+		/* var doc=document.getElementById('showDefaultImg');
+		doc.parentNode.removeChild(doc); */
+		//更新，不再整个元素删除，而是删除所有子元素
+		document.getElementById("showDefaultImg").innerHTML = "";
+			//重新显示
+			 reShowImg2(); 
+		}
+		function reShowImg2(){
+			if(arrayImg!=null&&arrayImg.length>0){
+				/* if(arrayImg.length>=4){
+					//不可用
+					$("#file-9").css('display', 'none');
+				}else{
+					$("#file-9").css('display', 'block');
+				} */
+				html='<label class="col-sm-3 control-label"></label>';
+				for(var i=0;i<arrayImg.length;i++){
+					html=html+'<div class="col-sm-2" id="showDefault'
+					+i
+					+'" align="center"> <img id="showDefaultImg'
+					+i
+					+'" width="180" height="180" src="'
+					+arrayImg[i]
+					+'"></img><p><span class="imgbtn"><a href="#"  id="delImg">删除</a></span></p></div>';
+				}
+				document.getElementById('showDefaultImg').insertAdjacentHTML(
+						'afterBegin', html)				
+			}
+		}
+		
+		//去除数组元素
+		function delArrayEl(url){
+			if(arrayImg!=null&&arrayImg.length>0){
+				for(i=0;i<arrayImg.length;i++){
+					if(arrayImg[i]==url){
+						arrayImg.splice(i,1);
+					}
+				}
+				/* if(arrayImg.length>=4){
+					//不可用
+					$("#file-9").css('display', 'none');
+				}else{
+					$("#file-9").css('display', 'block');
+				} */
+			}
+		}
+	</script>
+		<script src="/rzspider/blog/blogset/blogset.js"
+			th:src="@{/rzspider/blog/blogset/blogset.js}"></script>
+		<script src="/ajax/libs/iCheck/icheck.min.js"
+			th:src="@{/ajax/libs/iCheck/icheck.min.js}"></script>
+		<script>
+		$(document).ready(function() {
+			$(".i-checks").iCheck({
+				checkboxClass : "icheckbox_square-green",
+				radioClass : "iradio_square-green",
+			})
+		});
+	</script>
+</body>
+</html>

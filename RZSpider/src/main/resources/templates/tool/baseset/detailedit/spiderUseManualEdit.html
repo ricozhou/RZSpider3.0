@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<!-- 上传插件 -->
+<link rel="stylesheet"
+	href="/ajax/plugins/bootstrap-fileinput/css/fileinput.css"
+	th:href="@{/ajax/plugins/bootstrap-fileinput/css/fileinput.css}" />
+<link href="/css/font-awesome.css" th:href="@{/css/font-awesome.css}"
+	rel="stylesheet" />
+<meta charset="utf-8">
+<head th:include="include :: header">
+</head>
+<link href="/rzspider/css/RZSpider.css"
+	th:href="@{/rzspider/css/RZSpider.css}" rel="stylesheet" />
+<link href="/ajax/libs/jquery-layout/jquery.layout-latest.css"
+	th:href="@{/ajax/libs/jquery-layout/jquery.layout-latest.css}"
+	rel="stylesheet" />
+<link href="/ajax/libs/iCheck/custom.css"
+	th:href="@{/ajax/libs/iCheck/custom.css}" rel="stylesheet" />
+<body class="gray-bg">
+	<!-- 注意：富文本插件，需要去掉属性animated fadeInRight，否则上传图片图层显示有问题 -->
+	<div class="wrapper wrapper-content ibox-content">
+		<form class="form-horizontal m" id="form-spiderUseManual-edit">
+			<input id="basesetId" name="basesetId" type="hidden"
+				th:value="${baseset.basesetId}"><input id="spiderUseManual"
+				name="spiderUseManual" th:value="${baseset.spiderUseManual}"
+				type="hidden"> <input id="spiderUseManualType"
+				name="spiderUseManualType" th:value="${baseset.spiderUseManualType}"
+				type="hidden">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">编辑方式：</label>
+				<div class="col-sm-8">
+					<label class="checkbox-inline i-checks" id="clickLabel1"> <input
+						type="radio" name="toolCodeType" value="0" id="radio1"
+						th:field="*{baseset.spiderUseManualType}" /> 在线编辑
+					</label> <label class="checkbox-inline i-checks" id="clickLabel2">
+						<input type="radio" name="toolCodeType" value="1" id="radio2"
+						th:field="*{baseset.spiderUseManualType}" /> PDF文件上传
+					</label>
+				</div>
+			</div>
+			<div class="form-group" id="show1">
+				<label class="col-sm-2 control-label">内容编辑：</label>
+				<div class="col-sm-10">
+					<div class="ibox-content no-padding">
+						<div id="content_sn" class="summernote"></div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group" style="display: none" id="show2">
+				<label class="col-sm-2 control-label">上传文件：</label>
+				<div class="col-sm-8">
+					<input id="file-5" class="file" type="file" name="file">
+				</div>
+			</div>
+			<div class="text-right form-group">
+				<button class="btn btn-primary" type="submit">保存</button>
+				<button th:onclick="'javascript:layer_close()'"
+					class="btn btn-danger" type="button">关闭</button>
+			</div>
+		</form>
+	</div>
+
+	<div th:include="include::footer"></div>
+
+	<script src="/ajax/plugins/bootstrap-fileinput/js/fileinput.min.js"
+		th:src="@{/ajax/plugins/bootstrap-fileinput/js/fileinput.min.js}"></script>
+	<script src="/ajax/plugins/bootstrap-fileinput/js/locales/zh.js"
+		th:src="@{/ajax/plugins/bootstrap-fileinput/js/locales/zh.js  }"></script>
+	<script src="/ajax/plugins/bootstrap-fileinput/js/locales/fr.js"
+		th:src="@{/ajax/plugins/bootstrap-fileinput/js/locales/fr.js  }"></script>
+
+	<script src="/ajax/libs/jquery-layout/jquery.layout-latest.js"
+		th:src="@{/ajax/libs/jquery-layout/jquery.layout-latest.js}"></script>
+	<script src="/ajax/libs/iCheck/icheck.min.js"
+		th:src="@{/ajax/libs/iCheck/icheck.min.js}"></script>
+	<script>
+		$(document).ready(function() {
+			$(".i-checks").iCheck({
+				checkboxClass : "icheckbox_square-green",
+				radioClass : "iradio_square-green",
+			})
+		});
+	</script>
+	<script src="/rzspider/tool/baseset/detailedit/spiderUseManualEdit.js"
+		th:src="@{/rzspider/tool/baseset/detailedit/spiderUseManualEdit.js}">
+		
+	</script>
+	<script>
+		var fileName;
+		// 上传文件
+		$("#file-5").fileinput({
+			language : 'zh', // 设置语言
+			uploadUrl : ctx + "tool/baseset/detailedit/uploadManualFile",
+			allowedFileExtensions : [ 'pdf', 'doc', 'docx' ],// 接收的文件后缀
+			showUpload : true, // 是否显示上传按钮
+			showCaption : false,// 是否显示标题
+			browseClass : "btn btn-primary", // 按钮样式
+			dropZoneEnabled: true,//是否显示拖拽区域
+			uploadAsync : true,
+			showBrowse : true,
+			browseOnZoneClick : false,
+			maxFileCount : 1, // 表示允许同时上传的最大文件个数
+			enctype : 'multipart/form-data',
+			maxFileSize : 10000
+		// 单位为kb，如果为0表示不限制文件大小
+		}).on("fileuploaded", function(event, data) {
+			//返回文件名
+			fileName = (data.response.code == 0) ? (data.response.msg) : null;
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+		<div class="btn-group hidden-xs" id="tableToolbar" role="group">
+			<button type="button" class="btn btn-outline btn-default"
+				th:onclick="'javascript:add()'"
+				shiro:hasPermission="spider:spidertask:add">
+				<i class="glyphicon glyphicon-plus"></i>新增爬虫任务
+			</button>
+			<button type="button" class="btn btn-outline btn-default"
+				th:onclick="'javascript:batchRemove()'"
+				shiro:hasPermission="spider:spidertask:batchRemove">
+				<i class="glyphicon glyphicon-trash"></i>删除爬虫任务
+			</button>
+		</div>
+		<table class="bootstrap-table" data-mobile-responsive="true"
+			 data-sort-order="desc">
+		</table>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script src="/rzspider/spider/spidertask/spidertask.js"
+		th:src="@{/rzspider/spider/spidertask/spidertask.js}"></script>
+	<script th:inline="javascript">
+        var paramsFlag = [[${@permissionService.hasPermi('spider:spidertask:params')}]];
+        var editFlag = [[${@permissionService.hasPermi('spider:spidertask:edit')}]];
+        var removeFlag = [[${@permissionService.hasPermi('spider:spidertask:remove')}]];
+		var startTaskFlag = [[${@permissionService.hasPermi('spider:spidertask:startTask')}]];
+		var taskInfoFlag = [[${@permissionService.hasPermi('spider:spidertask:spidertaskinfo:list')}]];
+    </script>
+</body>
+</html>

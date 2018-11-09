@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-blogcomment-edit">
+			<input id="blogCommentId" name="blogCommentId"
+				th:value="${blogcomment.blogCommentId}" type="hidden">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">评论人：</label>
+				<div class="col-sm-4">
+					<input id="replyName" name="replyName"
+						th:value="${blogcomment.replyName}" class="form-control"
+						type="text" disabled>
+				</div>
+				<label class="col-sm-2 control-label">被评论人：</label>
+				<div class="col-sm-4">
+					<input id="beReplyName" name="beReplyName"
+						th:value="${blogcomment.beReplyName}" class="form-control"
+						type="text" disabled>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">QQ：</label>
+				<div class="col-sm-4">
+					<input id="replyQqNum" name="replyQqNum"
+						th:value="${blogcomment.replyQqNum}" class="form-control"
+						type="text" disabled>
+				</div>
+				<label class="col-sm-2 control-label">邮箱：</label>
+				<div class="col-sm-4">
+					<input id="replyEmail" name="replyEmail"
+						th:value="${blogcomment.replyEmail}" class="form-control"
+						type="text" disabled>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">评论内容：</label>
+				<div class="col-sm-10">
+					<textarea id="replyContent" name="replyContent"
+						th:text="${blogcomment.replyContent}" class="form-control"
+						disabled></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">评论文章：</label>
+				<div class="col-sm-10">
+					<a class="form-control"
+						th:href="@{'/rzblog/blogcontent/details/'+${blogcomment.showId}}"
+						target="_Blank">[[${blogcomment.title}]]</a>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">时间：</label>
+				<div class="col-sm-4">
+					<input id="replyTime" name="replyTime"
+						th:value="${blogcomment.replyTime}" class="form-control"
+						type="text" disabled>
+				</div>
+
+				<label class="col-sm-2 control-label">状态：</label>
+				<div class="col-sm-4">
+					<input id="status" name="status"
+						th:value="${blogcomment.status==0?'已通过':blogcomment.status==1?'正在审核':'未通过'}"
+						class="form-control" type="text" disabled>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">更新者：</label>
+				<div class="col-sm-4">
+					<input id="updateBy" name="updateBy"
+						th:value="${blogcomment.updateBy}" class="form-control"
+						type="text" disabled>
+				</div>
+				<label class="col-sm-2 control-label">更新时间：</label>
+				<div class="col-sm-4">
+					<input id="updateTime" name="updateTime"
+						th:value="${blogcomment.updateTime}" class="form-control"
+						type="text" disabled>
+				</div>
+			</div>
+
+			<!-- <div class="form-group">
+				<label class="col-sm-3 control-label">评论人头像：</label>
+				<div class="col-sm-8">
+					<input id="replyHeadImg" name="replyHeadImg"
+						th:value="${blogcomment.replyHeadImg}" class="form-control"
+						type="text">
+				</div>
+			</div> -->
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">备注：</label>
+				<div class="col-sm-10">
+					<input id="remark" name="remark" th:value="${blogcomment.remark}"
+						class="form-control" type="text" disabled>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="form-control-static col-sm-offset-9">
+					<button th:onclick="'javascript:layer_close()'"
+						class="btn btn-danger" type="button">关闭</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div th:include="include::footer"></div>
+	<script src="/rzspider/blog/blogcomment/edit.js"
+		th:src="@{/rzspider/blog/blogcomment/edit.js}">
+		
+	</script>
+</body>
+</html>

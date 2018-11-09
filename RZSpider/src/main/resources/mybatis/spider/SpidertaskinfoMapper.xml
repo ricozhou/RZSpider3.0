@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.rzspider.project.spider.spidertask.mapper.SpidertaskinfoMapper">
+
+	<resultMap type="Spidertaskinfo" id="SpidertaskinfoResult">
+		<result property="taskInfoId" column="task_info_id" />
+		<result property="taskId" column="task_id" />
+		<result property="taskName" column="task_name" />
+		<result property="spiderName" column="spider_name" />
+		<result property="taskStatus" column="task_status" />
+		<result property="finishStatus" column="finish_status" />
+		<result property="spiderDefaultParamsAll" column="spider_default_params_all" />
+		<result property="taskParams" column="task_params" />
+		<result property="startTime" column="start_time" />
+		<result property="endTime" column="end_time" />
+		<result property="consumeTime" column="consume_time" />
+		<result property="spiderResult" column="spider_result" />
+	</resultMap>
+
+	<select id="selectSpidertaskinfoById" parameterType="Integer"
+		resultMap="SpidertaskinfoResult">
+		select task_info_id, task_id, task_name, spider_name,
+		task_status,finish_status,
+		spider_default_params_all,task_params,
+		start_time,
+		end_time,consume_time,
+		spider_result from
+		spider_spidertaskinfo
+		where
+		task_info_id =
+		#{taskInfoId}
+	</select>
+	<select id="selectSpidertaskinfoByTaskId" parameterType="Integer"
+		resultMap="SpidertaskinfoResult">
+		select task_info_id, task_id, task_name, spider_name,
+		task_status,finish_status,
+		spider_default_params_all,task_params,
+		start_time,
+		end_time,consume_time,
+		spider_result from
+		spider_spidertaskinfo
+		where
+		task_id = #{task_id}
+	</select>
+
+	<select id="selectSpidertaskinfoList" parameterType="Spidertaskinfo"
+		resultMap="SpidertaskinfoResult">
+		select task_info_id, task_id, task_name, spider_name,
+		task_status,finish_status,
+		spider_default_params_all,task_params,
+		start_time,
+		end_time,consume_time, spider_result from
+		spider_spidertaskinfo
+		<where>
+			<if test="taskInfoId != null and taskInfoId != ''"> and task_info_id = #{taskInfoId}</if>
+			<if test="taskId != null and taskId != ''"> and task_id = #{taskId}</if>
+			<if test="taskName != null and taskName != ''"> and task_name = #{taskName}</if>
+			<if test="spiderName != null and spiderName != ''"> and spider_name = #{spiderName}</if>
+			<if test="taskStatus != null and taskStatus != ''"> and task_status = #{taskStatus}</if>
+			<if test="taskParams != null and taskParams != ''"> and task_params = #{taskParams}</if>
+			<if test="startTime != null and startTime != ''"> and start_time = #{startTime}</if>
+			<if test="endTime != null and endTime != ''"> and end_time = #{endTime}</if>
+			<if test="spiderResult != null and spiderResult != ''"> and spider_result = #{spiderResult}</if>
+			<if test="searchValue != null and searchValue != ''">
+				AND task_info_id like concat(concat('%', #{searchValue}),
+				'%')
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertSpidertaskinfo" parameterType="Spidertaskinfo">
+		insert into spider_spidertaskinfo (
+		<if test="startTime != null and startTime != '' ">start_time, </if>
+		<if test="endTime != null and endTime != '' ">end_time, </if>
+		<if test="consumeTime != null and consumeTime != '' ">consume_time, </if>
+		<if test="spiderResult != null and spiderResult != '' ">spider_result,</if>
+		task_id,
+		task_name,
+		spider_name,
+		task_status,
+		finish_status,
+		spider_default_params_all,
+		task_params
+		)values(
+		<if test="startTime != null and startTime != ''">sysdate(), </if>
+		<if test="endTime != null and endTime != ''">sysdate(), </if>
+		<if test="consumeTime != null and consumeTime != ''">#{consumeTime}, </if>
+		<if test="spiderResult != null and spiderResult != ''">#{spiderResult},</if>
+		#{taskId},
+		#{taskName},
+		#{spiderName},
+		#{taskStatus},
+		#{finishStatus},
+		#{spiderDefaultParamsAll},
+		#{taskParams}
+		)
+	</insert>
+	<insert id="insertSpidertaskinfo2" parameterType="Spidertaskinfo"
+		useGeneratedKeys="true" keyProperty="taskInfoId">
+		insert into spider_spidertaskinfo (
+		<if test="taskInfoId != null and taskInfoId != '' ">task_info_d, </if>
+		<if test="endTime != null and endTime != '' ">end_time, </if>
+		<if test="spiderResult != null and spiderResult != '' ">spider_result,</if>
+		task_id,
+		task_name,
+		spider_name,
+		task_status,
+		finish_status,
+		spider_default_params_all,
+		task_params,
+		start_time
+
+		)values(
+		<if test="taskInfoId != null and taskInfoId != '' ">taskInfoId, </if>
+		<if test="endTime != null and endTime != ''">sysdate(), </if>
+		<if test="spiderResult != null and spiderResult != ''">#{spiderResult},</if>
+		#{taskId},
+		#{taskName},
+		#{spiderName},
+		#{taskStatus},
+		#{finishStatus},
+		#{spiderDefaultParamsAll},
+		#{taskParams},
+		#{startTime}
+		)
+	</insert>
+
+	<update id="updateSpidertaskinfo" parameterType="Spidertaskinfo">
+		update spider_spidertaskinfo
+		<set>
+			<if test="taskId != null and taskId != ''">task_id = #{taskId}, </if>
+			<if test="taskName != null and taskName != ''">task_name = #{taskName}, </if>
+			<if test="spiderName != null and spiderName != ''">spider_name = #{spiderName}, </if>
+			<if test="taskStatus != null and taskStatus != ''">task_status = #{taskStatus}, </if>
+			<if test="finishStatus != null and finishStatus != ''">finish_status = #{finishStatus}, </if>
+			<if test="spiderDefaultParamsAll != null and spiderDefaultParamsAll != ''">spider_default_params_all = #{spiderDefaultParamsAll},
+			</if>
+			<if test="taskParams != null and taskParams != ''">task_params = #{taskParams}, </if>
+			<if test="startTime != null and startTime != ''">start_time = #{startTime}, </if>
+			<if test="endTime != null and endTime != ''">end_time = #{endTime}, </if>
+			<if test="spiderResult != null and spiderResult != ''">spider_result = #{spiderResult}</if>
+		</set>
+		where task_info_id = #{taskInfoId}
+	</update>
+
+	<update id="updateSpidertaskinfoTaskStatus" parameterType="Spidertaskinfo">
+		update spider_spidertaskinfo
+		<set>
+			task_status = #{taskStatus},
+			finish_status = #{finishStatus},
+			start_time = #{startTime},
+			end_time
+			=#{endTime},
+			consume_time=#{consumeTime}
+		</set>
+		where task_info_id = #{taskInfoId}
+	</update>
+	<update id="updateSpidertaskinfoTaskStatus2" parameterType="Spidertaskinfo">
+		update spider_spidertaskinfo
+		<set>
+			task_status = #{taskStatus},
+			finish_status = #{finishStatus},
+			end_time = #{endTime},
+			consume_time=#{consumeTime}
+		</set>
+		where task_info_id = #{taskInfoId}
+	</update>
+
+	<delete id="deleteSpidertaskinfoById" parameterType="Integer">
+		delete from
+		spider_spidertaskinfo where task_info_id = #{value}
+	</delete>
+
+	<delete id="batchDeleteSpidertaskinfo" parameterType="Integer">
+		delete from spider_spidertaskinfo where task_info_id in
+		<foreach item="taskInfoId" collection="array" open="("
+			separator="," close=")">
+			#{taskInfoId}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <div class="btn-group hidden-xs" id="tableToolbar" role="group">
+        <button type="button" class="btn btn-outline btn-default" th:onclick="'javascript:add()'" shiro:hasPermission="commontool:toollist:add">
+            <i class="glyphicon glyphicon-plus"></i>添加工具
+        </button>
+        <button type="button" class="btn btn-outline btn-default" th:onclick="'javascript:batchRemove()'" shiro:hasPermission="commontool:toollist:batchRemove">
+            <i class="glyphicon glyphicon-trash"></i>删除工具
+        </button>
+        </div>
+        <table class="bootstrap-table" data-mobile-responsive="true">
+        </table>
+    </div>
+    <div th:include="include :: footer"></div>
+    <script src="/rzspider/commontool/toollist/toollist.js" th:src="@{/rzspider/commontool/toollist/toollist.js}"></script>
+    <script th:inline="javascript">
+        var editFlag = [[${@permissionService.hasPermi('commontool:toollist:edit')}]];
+        var removeFlag = [[${@permissionService.hasPermi('commontool:toollist:remove')}]];
+        var runFlag = [[${@permissionService.hasPermi('commontool:toollist:run')}]];
+    </script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.rzspider.project.spider.customspider.mapper.CustomspiderBackupcodeMapper">
+
+	<resultMap type="CustomspiderBackupcode" id="CustomspiderBackupcodeResult">
+		<result property="spiderCustomspiderBackupcodeId" column="spider_customspider_backupcode_id" />
+		<result property="customSpiderBackId" column="custom_spider_back_id" />
+		<result property="customSpiderType" column="custom_spider_Type" />
+		<result property="backupcodeType" column="backupcode_type" />
+		<result property="spiderCodeTypeName" column="spider_code_type_name" />
+		<result property="spiderVersion" column="spider_version" />
+		<result property="spiderFileName" column="spider_file_name" />
+		<result property="spiderFilePath" column="spider_file_path" />
+		<result property="spiderFileCodeContent" column="spider_file_code_content" />
+		<result property="createBy" column="create_by" />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy" column="update_by" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<select id="selectCustomspiderBackupcodeById" parameterType="Integer"
+		resultMap="CustomspiderBackupcodeResult">
+		select spider_customspider_backupcode_id,
+		custom_spider_back_id,
+		custom_spider_Type,
+		backupcode_type,
+		spider_code_type_name,spider_version,
+		spider_file_name,
+		spider_file_path, spider_file_code_content,
+		create_by, create_time,
+		update_by, update_time from
+		spider_customspider_backupcode
+		where
+		spider_customspider_backupcode_id
+		= #{spiderCustomspiderBackupcodeId}
+	</select>
+
+	<select id="selectCustomspiderBackupcodeList" parameterType="CustomspiderBackupcode"
+		resultMap="CustomspiderBackupcodeResult">
+		select spider_customspider_backupcode_id, custom_spider_back_id,
+		custom_spider_Type,backupcode_type,spider_code_type_name,
+		spider_version,
+		spider_file_name,
+		spider_file_path,
+		spider_file_code_content,
+		create_by, create_time,
+		update_by, update_time
+		from
+		spider_customspider_backupcode
+		<where>
+			<if
+				test="spiderCustomspiderBackupcodeId != null and spiderCustomspiderBackupcodeId != ''"> and spider_customspider_backupcode_id =
+				#{spiderCustomspiderBackupcodeId}
+			</if>
+			<if test="customSpiderBackId != null and customSpiderBackId != ''"> and custom_spider_back_id = #{customSpiderBackId}</if>
+			<if test="customSpiderType != null and customSpiderType != ''"> and custom_spider_Type = #{customSpiderType}</if>
+			<if test="backupcodeType != null and backupcodeType != ''"> and backupcode_type = #{backupcodeType}</if>
+			<if test="spiderCodeTypeName != null and spiderCodeTypeName != ''"> and spider_code_type_name = #{spiderCodeTypeName}</if>
+			<if test="spiderVersion != null and spiderVersion != ''"> and spider_version = #{spiderVersion}</if>
+			<if test="spiderFileName != null and spiderFileName != ''"> and spider_file_name = #{spiderFileName}</if>
+			<if test="spiderFilePath != null and spiderFilePath != ''"> and spider_file_path = #{spiderFilePath}</if>
+			<if test="spiderFileCodeContent != null and spiderFileCodeContent != ''"> and spider_file_code_content = #{spiderFileCodeContent}
+			</if>
+			<if test="createBy != null and createBy != ''"> and create_by = #{createBy}</if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+			<if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy}</if>
+			<if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+			<if test="searchValue != null and searchValue != ''">
+				AND (custom_spider_back_id like concat(concat('%',
+				#{searchValue}),
+				'%') OR spider_code_type_name like
+				concat(concat('%',
+				#{searchValue}), '%') OR spider_file_name like
+				concat(concat('%',
+				#{searchValue}), '%'))
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertCustomspiderBackupcode" parameterType="CustomspiderBackupcode">
+		insert
+		into spider_customspider_backupcode (
+		custom_spider_back_id,
+		custom_spider_Type,
+		backupcode_type,
+		spider_code_type_name,
+		spider_version,
+		spider_file_name,
+		spider_file_path,
+		spider_file_code_content,
+		create_time
+		)values(
+		#{customSpiderBackId},
+		#{customSpiderType},
+		#{backupcodeType},
+		#{spiderCodeTypeName},
+		#{spiderVersion},
+		#{spiderFileName},
+		#{spiderFilePath},
+		#{spiderFileCodeContent},
+		sysdate()
+		)
+	</insert>
+
+	<update id="updateCustomspiderBackupcode" parameterType="CustomspiderBackupcode">
+		update spider_customspider_backupcode
+		<set>
+			<if test="customSpiderBackId != null and customSpiderBackId != ''">custom_spider_back_id = #{customSpiderBackId}, </if>
+			<if test="customSpiderType != null and customSpiderType != ''">custom_spider_Type = #{customSpiderType}, </if>
+			<if test="backupcodeType != null and backupcodeType != ''">backupcode_type = #{backupcodeType}, </if>
+			<if test="spiderCodeTypeName != null and spiderCodeTypeName != ''">spider_code_type_name = #{spiderCodeTypeName},</if>
+			<if test="spiderVersion != null and spiderVersion != ''">spider_version = #{spiderVersion}, </if>
+			<if test="spiderFileName != null and spiderFileName != ''">spider_file_name = #{spiderFileName}, </if>
+			<if test="spiderFilePath != null and spiderFilePath != ''">spider_file_path = #{spiderFilePath}, </if>
+			<if test="spiderFileCodeContent != null and spiderFileCodeContent != ''">spider_file_code_content = #{spiderFileCodeContent}, </if>
+			<if test="createBy != null and createBy != ''">create_by = #{createBy}, </if>
+			<if test="createTime != null and createTime != ''">create_time = #{createTime}, </if>
+			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy}, </if>
+			<if test="updateTime != null and updateTime != ''">update_time = #{updateTime}</if>
+		</set>
+		where spider_customspider_backupcode_id =
+		#{spiderCustomspiderBackupcodeId}
+	</update>
+
+	<delete id="deleteCustomspiderBackupcodeById" parameterType="Integer">
+		delete from spider_customspider_backupcode where
+		spider_customspider_backupcode_id = #{value}
+	</delete>
+
+	<delete id="batchDeleteCustomspiderBackupcode" parameterType="Integer">
+		delete from spider_customspider_backupcode where
+		spider_customspider_backupcode_id in
+		<foreach item="spiderCustomspiderBackupcodeId" collection="array"
+			open="(" separator="," close=")">
+			#{spiderCustomspiderBackupcodeId}
+		</foreach>
+	</delete>
+
+</mapper>

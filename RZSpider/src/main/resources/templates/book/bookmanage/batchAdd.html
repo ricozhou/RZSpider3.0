@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link href="/css/layui.css" th:href="@{/css/layui.css}" rel="stylesheet">
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+		<div class="btn-group hidden-xs" id="tableToolbar" role="group">
+			<button type="button" class="btn btn-outline btn-default"
+				id="uploadExcel">
+				<i class="glyphicon fa fa-cloud"></i>上传文件
+			</button>
+			<button type="button" class="btn btn-outline btn-default"
+				th:onclick="'javascript:downExcelTemplate()'"
+				shiro:hasPermission="book:bookmanage:downExcelTemplate">
+				<i class="glyphicon fa fa-download"></i>下载模板
+			</button>
+			<button type="button" class="btn btn-outline btn-default"
+				th:onclick="'javascript:batchSave()'"
+				shiro:hasPermission="book:bookmanage:batchSave" id="batchSave"
+				disabled="true">
+				<i class="glyphicon fa fa-save"></i>全部保存
+			</button>
+		</div>
+		<table class="bootstrap-table" data-mobile-responsive="true"
+			data-sort-name="book_id" data-sort-order="asc">
+		</table>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script src="/rzspider/book/bookmanage/batchAdd.js"
+		th:src="@{/rzspider/book/bookmanage/batchAdd.js}"></script>
+	<script src="/js/layui.js" th:src="@{/js/layui.js}"></script>
+</body>
+</html>

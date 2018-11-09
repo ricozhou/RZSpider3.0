@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.rzspider.project.commongame.gamemanage.mapper.GamemanageMapper">
+
+	<resultMap type="Gamemanage" id="GamemanageResult">
+		<result property="gameId" column="game_id" />
+		<result property="gameBackId" column="game_back_id" />
+		<result property="gameName" column="game_name" />
+		<result property="gameDes" column="game_des" />
+		<result property="gameType" column="game_type" />
+		<result property="gameCodeType" column="game_code_type" />
+		<result property="srcDownloadStatus" column="src_download_status" />
+		<result property="execexeDownloadStatus" column="execexe_download_status" />
+		<result property="setupexeDownloadStatus" column="setupexe_download_status" />
+		<result property="srcFileName" column="src_file_name" />
+		<result property="execexeFileName" column="execexe_file_name" />
+		<result property="setupexeName" column="setupexe_name" />
+		<result property="status" column="status" />
+		<result property="createType" column="create_type" />
+		<result property="createBy" column="create_by" />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy" column="update_by" />
+		<result property="updateTime" column="update_time" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<select id="selectGamemanageById" parameterType="Integer"
+		resultMap="GamemanageResult">
+		select game_id, game_back_id,game_name, game_des, game_type,
+		game_code_type,
+		src_download_status, execexe_download_status,
+		setupexe_download_status,src_file_name, execexe_file_name,
+		setupexe_name, status, create_type,create_by, create_time, update_by,
+		update_time,
+		remark from commongame_gamemanage
+		where game_id =
+		#{gameId}
+	</select>
+	<select id="selectGamemanageByGameBackId" parameterType="Integer"
+		resultMap="GamemanageResult">
+		select game_id, game_back_id,game_name, game_des, game_type,
+		game_code_type,
+		src_download_status, execexe_download_status,
+		setupexe_download_status,src_file_name, execexe_file_name,
+		setupexe_name, status, create_type,create_by, create_time, update_by,
+		update_time,
+		remark from commongame_gamemanage
+		where game_back_id =
+		#{gameBackId}
+	</select>
+	<select id="selectGamemanageByGameName" parameterType="String"
+		resultMap="GamemanageResult">
+		select game_id, game_back_id,game_name, game_des, game_type,
+		game_code_type,
+		src_download_status, execexe_download_status,
+		setupexe_download_status,src_file_name, execexe_file_name,
+		setupexe_name, status,create_type, create_by, create_time, update_by,
+		update_time,
+		remark from commongame_gamemanage
+		where game_name =
+		#{gameName}
+	</select>
+	<select id="selectAllGameNameByStatus" parameterType="Integer"
+		resultMap="GamemanageResult">
+		select game_id,game_back_id, game_name, game_des, game_type,
+		game_code_type,
+		src_download_status, execexe_download_status,
+		setupexe_download_status,src_file_name, execexe_file_name,
+		setupexe_name, status,create_type, create_by, create_time, update_by,
+		update_time,
+		remark from commongame_gamemanage
+		where status =
+		#{status}
+	</select>
+	<select id="checkGameNameUnique" parameterType="Gamemanage"
+		resultMap="GamemanageResult">
+		select game_id,game_back_id, game_name, game_des, game_type,
+		game_code_type,
+		src_download_status, execexe_download_status,
+		setupexe_download_status, status,create_type, create_by, create_time,
+		update_by,
+		update_time, remark from commongame_gamemanage
+		where
+		game_name =
+		#{gameName}
+	</select>
+	<select id="checkgameBackIdUnique" parameterType="Gamemanage"
+		resultMap="GamemanageResult">
+		select game_id,game_back_id, game_name, game_des, game_type,
+		game_code_type,
+		src_download_status, execexe_download_status,
+		setupexe_download_status, status,create_type, create_by, create_time,
+		update_by,
+		update_time, remark from commongame_gamemanage
+		where
+		game_back_id =
+		#{gameBackId}
+	</select>
+
+	<select id="selectGamemanageList" parameterType="Gamemanage"
+		resultMap="GamemanageResult">
+		select game_id,game_back_id, game_name, game_des, game_type,
+		game_code_type,
+		src_download_status, execexe_download_status,
+		setupexe_download_status,src_file_name, execexe_file_name,
+		setupexe_name, status, create_type,create_by, create_time, update_by,
+		update_time,
+		remark from commongame_gamemanage
+		<where>
+			<if test="gameId != null and gameId != ''"> and game_id = #{gameId}</if>
+			<if test="gameBackId != null and gameBackId != ''"> and game_back_id = #{gameBackId}</if>
+			<if test="gameName != null and gameName != ''"> and game_name = #{gameName}</if>
+			<if test="gameDes != null and gameDes != ''"> and game_des = #{gameDes}</if>
+			<if test="gameType != null and gameType != ''"> and game_type = #{gameType}</if>
+			<if test="gameCodeType != null and gameCodeType != ''"> and game_code_type = #{gameCodeType}</if>
+			<if test="srcDownloadStatus != null and srcDownloadStatus != ''"> and src_download_status = #{srcDownloadStatus}</if>
+			<if test="execexeDownloadStatus != null and execexeDownloadStatus != ''"> and execexe_download_status = #{execexeDownloadStatus}
+			</if>
+			<if test="setupexeDownloadStatus != null and setupexeDownloadStatus != ''"> and setupexe_download_status = #{setupexeDownloadStatus}
+			</if>
+			<if test="status != null and status != ''"> and status = #{status}</if>
+			<if test="createType != null and createType != ''"> and create_type= #{createType}</if>
+			<if test="createBy != null and createBy != ''"> and create_by = #{createBy}</if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+			<if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy}</if>
+			<if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+			<if test="remark != null and remark != ''"> and remark = #{remark}</if>
+			<if test="searchValue != null and searchValue != ''">
+				AND game_name like concat(concat('%', #{searchValue}),
+				'%')
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertGamemanage" parameterType="Gamemanage">
+		insert into commongame_gamemanage (
+		<if test="gameId != null and gameId != '' ">game_id, </if>
+		<if test="gameBackId != null and gameBackId != '' ">game_back_id, </if>
+		<if test="gameName != null and gameName != '' ">game_name, </if>
+		<if test="gameDes != null and gameDes != '' ">game_des, </if>
+		<if test="remark != null and remark != '' ">remark,</if>
+		<if test="srcFileName != null and srcFileName != '' ">src_file_name, </if>
+		<if test="execexeFileName != null and execexeFileName != '' ">execexe_file_name, </if>
+		<if test="setupexeName != null and setupexeName != '' ">setupexe_name, </if>
+		game_type,
+		game_code_type,
+		src_download_status,
+		execexe_download_status,
+		setupexe_download_status,
+		status,
+		create_by,
+		create_time,
+		update_time
+		)values(
+		<if test="gameId != null and gameId != ''">#{gameId}, </if>
+		<if test="gameBackId != null and gameBackId != ''">#{gameBackId}, </if>
+		<if test="gameName != null and gameName != ''">#{gameName}, </if>
+		<if test="gameDes != null and gameDes != ''">#{gameDes}, </if>
+		<if test="remark != null and remark != ''">#{remark},</if>
+		<if test="srcFileName != null and srcFileName != ''">#{srcFileName}, </if>
+		<if test="execexeFileName != null and execexeFileName != ''">#{execexeFileName}, </if>
+		<if test="setupexeName != null and setupexeName != ''">#{setupexeName}, </if>
+		#{gameType},
+		#{gameCodeType},
+		#{srcDownloadStatus},
+		#{execexeDownloadStatus},
+		#{setupexeDownloadStatus},
+		#{status},
+		#{createBy},
+		sysdate(),
+		sysdate()
+
+		)
+	</insert>
+
+	<update id="updateGamemanage" parameterType="Gamemanage">
+		update commongame_gamemanage
+		<set>
+			<if test="gameBackId != null and gameBackId != ''">game_back_id = #{gameBackId}, </if>
+			<if test="gameName != null and gameName != ''">game_name = #{gameName}, </if>
+			<if test="gameDes != null and gameDes != ''">game_des = #{gameDes}, </if>
+			<if test="srcFileName != null and srcFileName != ''">src_file_name = #{srcFileName}, </if>
+			<if test="execexeFileName != null and execexeFileName != ''">execexe_file_name = #{execexeFileName}, </if>
+			<if test="setupexeName != null and setupexeName != ''">setupexe_name = #{setupexeName}, </if>
+			game_type = #{gameType},
+			game_code_type = #{gameCodeType},
+			src_download_status = #{srcDownloadStatus},
+			execexe_download_status =
+			#{execexeDownloadStatus},
+			setupexe_download_status =
+			#{setupexeDownloadStatus},
+			status = #{status},
+			update_by = #{updateBy},
+			update_time = sysdate(),
+			remark = #{remark}
+		</set>
+		where game_id = #{gameId}
+	</update>
+
+	<delete id="deleteGamemanageById" parameterType="Integer">
+		delete from
+		commongame_gamemanage where game_id = #{value} and create_type=1
+	</delete>
+
+	<delete id="batchDeleteGamemanage" parameterType="Integer">
+		delete from commongame_gamemanage where create_type=1 and game_id in
+		<foreach item="gameId" collection="array" open="(" separator=","
+			close=")">
+			#{gameId}
+		</foreach>
+	</delete>
+
+</mapper>

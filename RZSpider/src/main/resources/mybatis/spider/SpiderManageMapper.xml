@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.rzspider.project.spider.spidermanage.mapper.SpiderManageMapper">
+	<resultMap type="SpiderManage" id="SpiderManageResult">
+		<id property="spiderId" column="spider_id" />
+		<result property="spiderBackId" column="spider_back_id" />
+		<result property="spiderName" column="spider_name" />
+		<result property="spiderType" column="spider_Type" />
+		<result property="createType" column="create_Type" />
+		<result property="spiderDes" column="spider_Des" />
+		<result property="spiderLink" column="spider_Link" />
+		<result property="spiderDefaultParamsAll" column="spider_default_params_all" />
+		<result property="spiderDefaultParams" column="spider_default_params" />
+		<result property="status" column="status" />
+		<result property="createBy" column="create_by" />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy" column="update_by" />
+		<result property="updateTime" column="update_time" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<select id="selectSpiderManageList" parameterType="SpiderManage"
+		resultMap="SpiderManageResult">
+		select spider_id,spider_back_id, spider_name,
+		spider_Type,create_Type,spider_Des,
+		spider_Link,spider_default_params_all,spider_default_params,
+		status,
+		create_time,
+		remark from spider_spidermanage
+	</select>
+	<select id="selectSpiderManageList2" parameterType="SpiderManage"
+		resultMap="SpiderManageResult">
+		select spider_id,spider_back_id, spider_name,
+		spider_Type,create_Type,spider_Des,
+		spider_Link,spider_default_params_all,spider_default_params,
+		status,
+		create_time,
+		remark from spider_spidermanage
+		<where>
+			<if test="spiderType != null and spiderType != ''"> and spider_Type = #{spiderType}</if>
+			<if test="spiderName != null and spiderName != ''"> and spider_Name = #{spiderName}</if>
+			<if test="status != null and status != ''"> and status = #{status}</if>
+			<if test="searchValue != null and searchValue != ''">
+				AND (spider_name like concat(concat('%', #{searchValue}),
+				'%') OR spider_Type like concat(concat('%', #{searchValue}), '%'))
+			</if>
+		</where>
+	</select>
+	<select id="selectSpiderManageList3" parameterType="SpiderManage"
+		resultMap="SpiderManageResult">
+		select spider_id,spider_back_id, spider_name,
+		spider_Type,create_Type,spider_Des,
+		spider_Link,spider_default_params_all,spider_default_params,
+		status,
+		create_time,
+		remark from spider_spidermanage
+		<where>
+			status = #{status}
+			<if test="spiderType != null and spiderType != ''"> and spider_Type = #{spiderType}</if>
+			<if test="spiderName != null and spiderName != ''"> and spider_Name = #{spiderName}</if>
+		</where>
+	</select>
+
+	<select id="selectSpiderListBySpiderId" parameterType="Long"
+		resultMap="SpiderManageResult">
+		select spider_back_id,status from spider_spider_list where
+		spider_back_id=(select spider_back_id from spider_spidermanage where
+		spider_id =#{spiderId})
+	</select>
+	<select id="selectSpiderListByTaskId" resultMap="SpiderManageResult">
+		select
+		spider_back_id,status from spider_spidermanage where
+		spider_back_id=(select spider_back_id from spider_spidertask where
+		task_id =#{0})
+	</select>
+	<select id="selectSpiderListByTaskId2" parameterType="Integer"
+		resultMap="SpiderManageResult">
+		select
+		spider_back_id,status from spider_spider_list where
+		spider_back_id=(select spider_back_id from spider_spidertask where
+		task_id =#{taskId})
+	</select>
+
+	<select id="checkSpiderNameUnique" parameterType="SpiderManage"
+		resultMap="SpiderManageResult">
+		select spider_id,spider_back_id, spider_name,status,
+		create_time
+		from spider_spidermanage where spider_name=#{spiderName}
+	</select>
+
+	<select id="selectSpiderManageByName" parameterType="SpiderManage"
+		resultMap="SpiderManageResult">
+		select
+		spider_id,spider_back_id,
+		spider_name,spider_type,status,create_Type,spider_default_params_all,spider_default_params
+		from
+		spider_spidermanage where
+		spider_name=#{spiderName}
+	</select>
+
+	<select id="checkSpiderBackIdUnique" parameterType="SpiderManage"
+		resultMap="SpiderManageResult">
+		select
+		spider_id,spider_back_id, spider_name,status,
+		create_time
+		from
+		spider_spidermanage where
+		spider_back_id=#{spiderBackId}
+	</select>
+
+	<insert id="insertSpider" parameterType="SpiderManage"
+		useGeneratedKeys="true" keyProperty="spiderId">
+		insert into spider_spidermanage(
+		<if test="spiderId != null and spiderId != 0">spider_id,</if>
+		<if test="spiderBackId != null and spiderBackId != 0">spider_back_id,</if>
+		<if test="spiderName != null and spiderName != ''">spider_name,</if>
+		<if test="spiderType != null and spiderType != ''">spider_Type,</if>
+		create_Type,
+		<if test="spiderDes != null and spiderDes != ''">spider_Des,</if>
+		<if test="spiderLink != null and spiderLink != ''">spider_Link,</if>
+		<if test="spiderDefaultParamsAll != null and spiderDefaultParamsAll != ''">spider_default_params_all,</if>
+		<if test="spiderDefaultParams != null and spiderDefaultParams != ''">spider_default_params,</if>
+		<if test="status !=null and status != ''">status,</if>
+		<if test="remark != null and remark != ''">remark,</if>
+		<if test="createBy != null and createBy != ''">create_by,</if>
+		create_time
+		)values(
+		<if test="spiderId != null and spiderId != 0">#{spiderId},</if>
+		<if test="spiderBackId != null and spiderBackId != 0">#{spiderBackId},</if>
+		<if test="spiderName != null and spiderName != ''">#{spiderName},</if>
+		<if test="spiderType != null and spiderType != ''">#{spiderType},</if>
+		#{createType},
+		<if test="spiderDes != null and spiderDes != ''">#{spiderDes},</if>
+		<if test="spiderLink != null and spiderLink != ''">#{spiderLink},</if>
+		<if test="spiderDefaultParamsAll != null and spiderDefaultParamsAll!= ''">#{spiderDefaultParamsAll},</if>
+		<if test="spiderDefaultParams != null and spiderDefaultParams != ''">#{spiderDefaultParams},</if>
+		<if test="status !=null and status != ''">#{status},</if>
+		<if test="remark != null and remark != ''">#{remark},</if>
+		<if test="createBy != null and createBy != ''">#{createBy},</if>
+		sysdate()
+		)
+	</insert>
+
+	<select id="selectSpiderManageById" parameterType="Long"
+		resultMap="SpiderManageResult">
+		select spider_id,spider_back_id, spider_name,
+		spider_Type,create_Type,spider_Des,
+		spider_Link,spider_default_params_all,spider_default_params,
+		status,
+		create_time,
+		remark from spider_spidermanage
+		where spider_id =
+		#{spiderId}
+	</select>
+
+	<update id="updateSpiderManage" parameterType="SpiderManage">
+		update spider_spidermanage
+		<set>
+			<if test="spiderBackId != null and spiderBackId != 0">spider_back_id=#{spiderBackId},</if>
+			<if test="spiderName != null and spiderName != ''">spider_name=#{spiderName},</if>
+			<if test="spiderType != null and spiderType != ''">spider_Type=#{spiderType},</if>
+			create_Type=#{createType},
+			spider_Des=#{spiderDes},
+			spider_Link=#{spiderLink},
+			spider_default_params_all =
+			#{spiderDefaultParamsAll},
+			spider_default_params =
+			#{spiderDefaultParams},
+			status = #{status},
+			remark = #{remark},
+			update_by = #{updateBy},
+			update_time = sysdate()
+		</set>
+		where 1=1
+		<if test="spiderId != null">and spider_id = #{spiderId}</if>
+	</update>
+	<update id="updateSpidermanageParams" parameterType="SpiderManage">
+		update spider_spidermanage
+		<set>
+			<if test="spiderDefaultParamsAll != null and spiderDefaultParamsAll!= ''">spider_default_params_all =
+				#{spiderDefaultParamsAll},
+			</if>
+			spider_default_params =
+			#{spiderDefaultParams}
+		</set>
+		where spider_id = #{spiderId}
+	</update>
+	<delete id="deleteSpiderManageById" parameterType="Long">
+		delete from
+		spider_spidermanage
+		where spider_id = #{spiderId}
+	</delete>
+
+	<delete id="batchDeleteSpiderManage" parameterType="Long">
+		delete from spider_spidermanage where spider_id in
+		<foreach collection="array" item="spiderId" open="("
+			separator="," close=")">
+			#{spiderId}
+		</foreach>
+	</delete>
+
+
+</mapper> 

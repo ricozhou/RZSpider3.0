@@ -1,0 +1,63 @@
+<head th:fragment="header">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Spider</title>
+<link href="/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link href="/css/font-awesome.min.css"
+	th:href="@{/css/font-awesome.css}" rel="stylesheet" />
+<link href="/css/main/animate.min.css"
+	th:href="@{/css/main/animate.min.css}" rel="stylesheet" />
+<link href="/css/main/style.min862f.css"
+	th:href="@{/css/main/style.min862f.css}" rel="stylesheet" />
+<link href="/css/blog/clean-blog.css"
+	th:href="@{/css/blog/clean-blog.css}" rel="stylesheet">
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ibox-content" id="show2">
+		<input id="spiderManualType" name="spiderManualType" type="hidden"
+			th:value="${spiderManualType}">
+		<div class="pdf"></div>
+		<div id="spiderManualHtml"></div>
+	</div>
+	<div class="middle-box text-center animated fadeInDown"
+		style="display: none" id="show1">
+		<h2>暂无手册</h2>
+		<div class="error-desc">
+			<a href="javascript:top.document.location.href='/'"
+				class="btn btn-primary m-t">主页</a>
+		</div>
+	</div>
+	<script src="/js/jquery.min.js?v=2.1.4"></script>
+	<script src="/js/bootstrap.min.js?v=3.3.6"></script>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" th:inline="javascript"> 
+		$(function() {
+			if ([[${spiderManual}]] == null
+					|| [[${spiderManual}]] == ''|| [[${spiderManual}]] == '<p><br></p>') {
+				$("#show1").css('display', 'block');
+				$("#show2").css('display', 'none');
+				return;
+			}
+			;
+		});
+		$(function() {
+			var flag = $('#spiderManualType').val();
+			//1表示pdf文件预览
+			if (flag == 1) {
+				$('.pdf').media({
+					width : parseInt(($(window).width() - 50)),
+					height : parseInt(($(window).height() - 50)),
+					autoplay : true,
+					src : '/files/' + [[${spiderManual}]]
+				});
+			} else if (flag == 0) {
+				//0表示网页预览
+				$("#spiderManualHtml").html([[${spiderManual}]]);
+			}
+		});
+	</script>
+</body>
+</html>

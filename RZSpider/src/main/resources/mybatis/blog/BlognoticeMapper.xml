@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzspider.project.blog.blognotice.mapper.BlognoticeMapper">
+
+	<resultMap type="Blognotice" id="BlognoticeResult">
+		<result property="blogNoticeId" column="blog_notice_id" />
+		<result property="noticeTitle" column="notice_title" />
+		<result property="noticeContent" column="notice_content" />
+		<result property="status" column="status" />
+		<result property="createBy" column="create_by" />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy" column="update_by" />
+		<result property="updateTime" column="update_time" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<select id="selectBlognoticeById" parameterType="Integer"
+		resultMap="BlognoticeResult">
+		select blog_notice_id, notice_title, notice_content, status,
+		create_by,
+		create_time, update_by, update_time, remark from
+		blog_blognotice
+		where blog_notice_id = #{blogNoticeId}
+	</select>
+
+	<select id="selectAllBlogNoticeNum" resultType="Integer">
+		select count(*)
+		from blog_blognotice where status=0
+	</select>
+
+	<select id="selectBlognoticeList" parameterType="Blognotice"
+		resultMap="BlognoticeResult">
+		select blog_notice_id, notice_title, notice_content, status,
+		create_by, create_time, update_by, update_time, remark from
+		blog_blognotice
+		<where>
+			<if test="blogNoticeId != null and blogNoticeId != ''"> and blog_notice_id = #{blogNoticeId}</if>
+			<if test="noticeTitle != null and noticeTitle != ''"> and notice_title = #{noticeTitle}</if>
+			<if test="noticeContent != null and noticeContent != ''"> and notice_content = #{noticeContent}</if>
+			<if test="status != null and status != ''"> and status = #{status}</if>
+			<if test="createBy != null and createBy != ''"> and create_by = #{createBy}</if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+			<if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy}</if>
+			<if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+			<if test="remark != null and remark != ''"> and remark = #{remark}</if>
+			<if test="searchValue != null and searchValue != ''">
+				AND notice_title like concat(concat('%', #{searchValue}),
+				'%')
+			</if>
+		</where>
+	</select>
+
+	<select id="selectOpenBlognoticeList" resultMap="BlognoticeResult">
+		select
+		blog_notice_id, notice_title, notice_content, status,
+		create_by,
+		create_time, update_by, update_time, remark from
+		blog_blognotice
+		where
+		status = 0
+	</select>
+
+	<insert id="insertBlognotice" parameterType="Blognotice">
+		insert into
+		blog_blognotice (
+		notice_title,
+		notice_content,
+		status,
+		create_by,
+		create_time,
+		update_by,
+		update_time,
+		remark
+		)values(
+		#{noticeTitle},
+		#{noticeContent},
+		#{status},
+		#{createBy},
+		sysdate(),
+		#{updateBy},
+		sysdate(),
+		#{remark}
+		)
+	</insert>
+
+	<update id="updateBlognotice" parameterType="Blognotice">
+		update blog_blognotice
+		<set>
+			notice_title = #{noticeTitle},
+			notice_content = #{noticeContent},
+			status = #{status},
+			update_by = #{updateBy},
+			update_time = sysdate(),
+			remark = #{remark}
+		</set>
+		where blog_notice_id = #{blogNoticeId}
+	</update>
+
+	<delete id="deleteBlognoticeById" parameterType="Integer">
+		delete from
+		blog_blognotice where blog_notice_id = #{value}
+	</delete>
+
+	<delete id="batchDeleteBlognotice" parameterType="Integer">
+		delete from blog_blognotice where blog_notice_id in
+		<foreach item="blogNoticeId" collection="array" open="("
+			separator="," close=")">
+			#{blogNoticeId}
+		</foreach>
+	</delete>
+
+</mapper>

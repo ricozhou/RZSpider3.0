@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.rzspider.project.commontool.toolmanage.mapper.ToolsetMapper">
+
+	<resultMap type="Toolset" id="ToolsetResult">
+		<result property="id" column="id" />
+		<result property="toolOcrsetType" column="tool_ocrset_type" />
+		<result property="toolOcrsetBaiduocrApiId" column="tool_ocrset_baiduocr_api_id" />
+		<result property="toolOcrsetBaiduocrApiKey" column="tool_ocrset_baiduocr_api_key" />
+		<result property="toolOcrsetBaiduocrSecretKey" column="tool_ocrset_baiduocr_secret_key" />
+		<result property="toolOcrsetRemark" column="tool_ocrset_remark" />
+	</resultMap>
+
+	<select id="selectToolsetById" parameterType="Integer"
+		resultMap="ToolsetResult">
+		select id, tool_ocrset_type, tool_ocrset_baiduocr_api_id,
+		tool_ocrset_baiduocr_api_key, tool_ocrset_baiduocr_secret_key,
+		tool_ocrset_remark from commontool_toolmanage_toolset
+		where id = #{id}
+	</select>
+
+
+
+	<update id="updateOcrToolset" parameterType="Toolset">
+		update commontool_toolmanage_toolset
+		<set>
+			tool_ocrset_type = #{toolOcrsetType},
+			tool_ocrset_baiduocr_api_id
+			=
+			#{toolOcrsetBaiduocrApiId}, tool_ocrset_baiduocr_api_key =
+			#{toolOcrsetBaiduocrApiKey},
+			tool_ocrset_baiduocr_secret_key =
+			#{toolOcrsetBaiduocrSecretKey},
+			tool_ocrset_remark =
+			#{toolOcrsetRemark}
+		</set>
+		where id = #{id}
+	</update>
+
+</mapper>

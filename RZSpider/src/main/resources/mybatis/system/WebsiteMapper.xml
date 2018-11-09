@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzspider.project.system.website.mapper.WebsiteMapper">
+
+	<resultMap type="Website" id="WebsiteResult">
+		<result property="websiteId" column="website_id" />
+		<result property="websiteTitleName" column="website_title_name" />
+		<result property="websiteIco" column="website_ico" />
+		<result property="websiteDes" column="website_des" />
+		<result property="websiteDomainName" column="website_domain_name" />
+		<result property="websitePublicIp" column="website_public_ip" />
+		<result property="websitePublicPort" column="website_public_port" />
+		<result property="websiteCopyrightInformation" column="website_copyright_information" />
+		<result property="websiteMailSmtpUrl" column="website_mail_smtp_url" />
+		<result property="websiteMailSmtpPort" column="website_mail_smtp_port" />
+		<result property="websiteMailSenderMailbox" column="website_mail_sender_mailbox" />
+		<result property="websiteMailSenderNickname" column="website_mail_sender_nickname" />
+		<result property="websiteMailSenderPassword" column="website_mail_sender_password" />
+		<result property="createBy" column="create_by" />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy" column="update_by" />
+		<result property="updateTime" column="update_time" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<select id="selectWebsiteById" parameterType="Integer"
+		resultMap="WebsiteResult">
+		select website_id, website_title_name,website_ico,
+		website_des,
+		website_domain_name,
+		website_public_ip,
+		website_public_port,
+		website_copyright_information,
+		website_mail_smtp_url,
+		website_mail_smtp_port,
+		website_mail_sender_mailbox,
+		website_mail_sender_nickname,
+		website_mail_sender_password, create_by,
+		create_time, update_by,
+		update_time, remark from sys_website
+		where
+		website_id = #{websiteId}
+	</select>
+
+	<select id="selectWebsiteList" parameterType="Website"
+		resultMap="WebsiteResult">
+		select website_id, website_title_name,website_ico, website_des,
+		website_domain_name, website_public_ip, website_public_port,
+		website_copyright_information, website_mail_smtp_url,
+		website_mail_smtp_port, website_mail_sender_mailbox,
+		website_mail_sender_nickname, website_mail_sender_password, create_by,
+		create_time, update_by, update_time, remark from sys_website
+		<where>
+			<if test="websiteId != null and websiteId != ''"> and website_id = #{websiteId}</if>
+			<if test="websiteTitleName != null and websiteTitleName != ''"> and website_title_name = #{websiteTitleName}</if>
+			<if test="websiteDes != null and websiteDes != ''"> and website_des = #{websiteDes}</if>
+			<if test="websiteDomainName != null and websiteDomainName != ''"> and website_domain_name = #{websiteDomainName}</if>
+			<if test="websitePublicIp != null and websitePublicIp != ''"> and website_public_ip = #{websitePublicIp}</if>
+			<if test="websitePublicPort != null and websitePublicPort != ''"> and website_public_port = #{websitePublicPort}</if>
+			<if
+				test="websiteCopyrightInformation != null and websiteCopyrightInformation != ''"> and website_copyright_information =
+				#{websiteCopyrightInformation}
+			</if>
+			<if test="websiteMailSmtpUrl != null and websiteMailSmtpUrl != ''"> and website_mail_smtp_url = #{websiteMailSmtpUrl}</if>
+			<if test="websiteMailSmtpPort != null and websiteMailSmtpPort != ''"> and website_mail_smtp_port = #{websiteMailSmtpPort}</if>
+			<if
+				test="websiteMailSenderMailbox != null and websiteMailSenderMailbox != ''"> and website_mail_sender_mailbox = #{websiteMailSenderMailbox}
+			</if>
+			<if
+				test="websiteMailSenderNickname != null and websiteMailSenderNickname != ''"> and website_mail_sender_nickname =
+				#{websiteMailSenderNickname}
+			</if>
+			<if
+				test="websiteMailSenderPassword != null and websiteMailSenderPassword != ''"> and website_mail_sender_password =
+				#{websiteMailSenderPassword}
+			</if>
+			<if test="createBy != null and createBy != ''"> and create_by = #{createBy}</if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+			<if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy}</if>
+			<if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+			<if test="remark != null and remark != ''"> and remark = #{remark}</if>
+		</where>
+	</select>
+
+	<select id="selectSomeWebsiteList" parameterType="Website"
+		resultMap="WebsiteResult">
+		select website_id, website_title_name, website_des,
+		website_domain_name, website_public_ip, website_public_port,
+		website_copyright_information, website_mail_smtp_url,
+		website_mail_smtp_port, website_mail_sender_mailbox,
+		website_mail_sender_nickname, website_mail_sender_password, create_by,
+		create_time, update_by, update_time, remark from sys_website
+	</select>
+
+	<insert id="insertWebsite" parameterType="Website">
+		insert into sys_website
+		(
+		website_title_name,
+		website_ico,
+		website_des,
+		website_domain_name,
+		website_public_ip,
+		website_public_port,
+		website_copyright_information,
+		create_by,
+		create_time,
+		update_by,
+		update_time,
+		remark
+		)values(
+		#{websiteTitleName},
+		#{websiteDes},
+		#{websiteDomainName},
+		#{websitePublicIp},
+		#{websitePublicPort},
+		#{websiteCopyrightInformation},
+		#{createBy},
+		sysdate(),
+		#{updateBy},
+		sysdate(),
+		#{remark}
+		)
+	</insert>
+
+	<update id="updateWebsite" parameterType="Website">
+		update sys_website
+		<set>
+			website_title_name = #{websiteTitleName},
+			website_ico =
+			#{websiteIco},
+			website_des =
+			#{websiteDes},
+			website_domain_name =
+			#{websiteDomainName},
+			website_public_ip = #{websitePublicIp},
+			website_public_port =
+			#{websitePublicPort},
+			website_copyright_information =
+			#{websiteCopyrightInformation},
+			update_by = #{updateBy},
+			update_time=sysdate(),
+			remark = #{remark}
+		</set>
+		where website_id = #{websiteId}
+	</update>
+
+	<insert id="insertMail" parameterType="Website">
+		insert into sys_website
+		(
+		website_mail_smtp_url,
+		website_mail_smtp_port,
+		website_mail_sender_mailbox,
+		website_mail_sender_nickname,
+		website_mail_sender_password,
+		create_by,
+		create_time,
+		update_by,
+		update_time
+		)values(
+		#{websiteMailSmtpUrl},
+		#{websiteMailSmtpPort},
+		#{websiteMailSenderMailbox},
+		#{websiteMailSenderNickname},
+		#{websiteMailSenderPassword},
+		#{createBy},
+		sysdate(),
+		#{updateBy},
+		sysdate()
+		)
+	</insert>
+
+	<update id="updateMail" parameterType="Website">
+		update sys_website
+		<set>
+			website_mail_smtp_url = #{websiteMailSmtpUrl},
+			website_mail_smtp_port = #{websiteMailSmtpPort},
+			website_mail_sender_mailbox = #{websiteMailSenderMailbox},
+			website_mail_sender_nickname = #{websiteMailSenderNickname},
+			website_mail_sender_password = #{websiteMailSenderPassword},
+			update_by = #{updateBy},
+			update_time=sysdate()
+		</set>
+		where website_id = #{websiteId}
+	</update>
+
+</mapper>

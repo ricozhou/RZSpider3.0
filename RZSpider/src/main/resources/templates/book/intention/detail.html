@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link href="/ajax/libs/star/star-rating.css" media="all"
+	rel="stylesheet" type="text/css"
+	th:href="@{/ajax/libs/star/star-rating.css}" />
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+	<form class="form-horizontal m-t" id="signupForm">
+		<div class="form-group">
+			<label class="col-sm-2 control-label">图书名称：</label>
+			<div class="form-control-static" th:text="${intention.bookName}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">图书作者：</label>
+			<div class="form-control-static" th:text="${intention.bookAuthor}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">图书出版社：</label>
+			<div class="form-control-static" th:text="${intention.bookPublisher}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">图书ISBN：</label>
+			<div class="form-control-static" th:text="${intention.bookIsbn}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">图书简介：</label>
+			<div class="form-control-static" th:text="${intention.bookDes}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">图书定价：</label>
+			<div class="form-control-static" th:text="${intention.bookOriginalPrice}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">图书分类：</label>
+			<div class="form-control-static" th:text="${intention.bookClassification}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">图书装帧：</label>
+			<div class="form-control-static" th:text="${intention.bookBinding}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">图书页数：</label>
+			<div class="form-control-static" th:text="${intention.bookPages}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">购买星级：</label>
+			<input id="bookReadStar" name="bookReadStar" class="rating" data-size="xs" th:value="${intention.bookReadStar}" disabled=true>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">图书备注：</label>
+			<div class="form-control-static" th:text="${intention.remark}">
+			</div>
+		</div>
+		<!-- <div class="form-group" th:style="'display:' + ${intention.status == 0 ? 'none' : 'block'}">
+			<label class="col-sm-2 control-label">异常信息：</label>
+			<div class="form-control-static" th:text="${operLog.errorMsg}">
+			</div>
+		</div> -->
+		<div class="form-group">
+			<div class="form-control-static col-sm-offset-9">
+				<button th:onclick="'javascript:layer_close()'" class="btn btn-danger" type="button">关闭</button>
+			</div>
+		</div>
+	</form>
+    </div>
+    <div th:include="include :: footer"></div>
+    	<script src="/js/star-rating.js" th:src="@{/js/star-rating.js}"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link href="/css/layui.css" th:href="@{/css/layui.css}" rel="stylesheet">
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<div class="form-horizontal m-t">
+			<div class="form-group">
+				<div class="col-sm-2">
+					<button type="button" class="btn btn-outline btn-default"
+						id="clearCacheFile" onclick="clearCacheFile()">
+						<i class="glyphicon fa fa-trash"></i>清除缓存文件
+					</button>
+				</div>
+				<div class="col-sm-8">
+					<label class="control-label">&nbsp;&nbsp;&nbsp;&nbsp;主要是上传的无用文件及无用的代码文件等</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2">
+					<button type="button" class="btn btn-outline btn-default"
+						id="clearCacheDB" onclick="clearCacheDB()">
+						<i class="glyphicon fa fa-trash"></i>清除缓存数据
+					</button>
+				</div>
+				<div class="col-sm-8">
+					<label class="control-label">&nbsp;&nbsp;&nbsp;&nbsp;清除数据库遗留数据</label>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script src="/js/layui.js" th:src="@{/js/layui.js}"></script>
+
+	<script src="/rzspider/tool/baseset/clear.js"
+		th:src="@{/rzspider/tool/baseset/clear.js}">
+		
+	</script>
+
+</body>
+</html>

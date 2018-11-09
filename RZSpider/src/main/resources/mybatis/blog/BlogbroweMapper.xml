@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzspider.project.blog.blogbrowe.mapper.BlogbroweMapper">
+
+	<resultMap type="Blogbrowe" id="BlogbroweResult">
+		<result property="blogBroweId" column="blog_browe_id" />
+		<result property="clientPlatform" column="client_platform" />
+		<result property="clientUserAgent" column="client_user_agent" />
+		<result property="clientBrowsePlatform" column="client_browse_platform" />
+		<result property="clientBrowseName" column="client_browse_name" />
+		<result property="clientBrowseVersion" column="client_browse_version" />
+		<result property="clientBrowseIp" column="client_browse_ip" />
+		<result property="clientBrowseCity" column="client_browse_city" />
+		<result property="clientBrowseAppAndPc" column="client_browse_app_and_pc" />
+		<result property="clientBrowseUrl" column="client_browse_url" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+
+	<select id="selectBlogbroweById" parameterType="Integer"
+		resultMap="BlogbroweResult">
+		select blog_browe_id, client_platform, client_user_agent,
+		client_browse_platform, client_browse_name, client_browse_version,
+		client_browse_ip, client_browse_city, client_browse_app_and_pc,
+		client_browse_url, create_time from blog_blogbrowe
+		where blog_browe_id
+		= #{blogBroweId}
+	</select>
+
+	<select id="selectBlogBroweNumPreByDayNum" parameterType="Integer"
+		resultType="Integer">
+		select count(*)
+		from
+		blog_blogbrowe where
+		DATEDIFF(NOW(),create_time)=#{dayNum}
+	</select>
+
+	<select id="selectBlogBroweNumByCityName" parameterType="String"
+		resultType="Integer">
+		select count(*)
+		from
+		blog_blogbrowe where client_browse_city
+		like concat(concat('%', #{clientBrowseCity}), '%')
+	</select>
+
+	<select id="selectAllBlogBroweNum" resultType="Integer">
+		select count(*)
+		from
+		blog_blogbrowe
+	</select>
+
+	<select id="selectDayBlogBroweNum" resultType="Integer">
+		select count(*)
+		from
+		blog_blogbrowe where to_days(create_time) = to_days(now())
+	</select>
+
+	<select id="selectMonthBlogBroweNum" resultType="Integer">
+		select count(*)
+		from
+		blog_blogbrowe where
+		DATE_FORMAT(create_time,"%Y%m")=DATE_FORMAT(CURDATE( ),"%Y%m")
+	</select>
+
+	<select id="selectYearBlogBroweNum" resultType="Integer">
+		select count(*)
+		from
+		blog_blogbrowe where YEAR(create_time)=YEAR(NOW())
+	</select>
+
+	<select id="selectDayBlogBroweNumPre" resultType="Integer">
+		select count(*)
+		from
+		blog_blogbrowe where DATEDIFF(create_time,NOW())=-1
+	</select>
+
+	<select id="selectMonthBlogBroweNumPre" resultType="Integer">
+		select
+		count(*)
+		from
+		blog_blogbrowe where PERIOD_DIFF(date_format(now(),"%Y%m")
+		, date_format(create_time,"%Y%m")) =1
+	</select>
+
+	<select id="selectYearBlogBroweNumPre" resultType="Integer">
+		select
+		count(*)
+		from
+		blog_blogbrowe where
+		year(create_time)=year(date_sub(now(),interval 1 year));
+	</select>
+
+	<select id="selectBlogbroweList" parameterType="Blogbrowe"
+		resultMap="BlogbroweResult">
+		select blog_browe_id, client_platform, client_user_agent,
+		client_browse_platform, client_browse_name, client_browse_version,
+		client_browse_ip, client_browse_city, client_browse_app_and_pc,
+		client_browse_url, create_time from blog_blogbrowe
+		<where>
+			<if test="blogBroweId != null and blogBroweId != ''"> and blog_browe_id = #{blogBroweId}</if>
+			<if test="clientPlatform != null and clientPlatform != ''"> and client_platform = #{clientPlatform}</if>
+			<if test="clientUserAgent != null and clientUserAgent != ''"> and client_user_agent = #{clientUserAgent}</if>
+			<if test="clientBrowsePlatform != null and clientBrowsePlatform != ''"> and client_browse_platform = #{clientBrowsePlatform}
+			</if>
+			<if test="clientBrowseName != null and clientBrowseName != ''"> and client_browse_name = #{clientBrowseName}</if>
+			<if test="clientBrowseVersion != null and clientBrowseVersion != ''"> and client_browse_version = #{clientBrowseVersion}</if>
+			<if test="clientBrowseIp != null and clientBrowseIp != ''"> and client_browse_ip = #{clientBrowseIp}</if>
+			<if test="clientBrowseCity != null and clientBrowseCity != ''"> and client_browse_city = #{clientBrowseCity}</if>
+			<if test="clientBrowseAppAndPc != null and clientBrowseAppAndPc != ''"> and client_browse_app_and_pc = #{clientBrowseAppAndPc}
+			</if>
+			<if test="clientBrowseUrl != null and clientBrowseUrl != ''"> and client_browse_url = #{clientBrowseUrl}</if>
+			<if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+			<if test="searchValue != null and searchValue != ''">
+				AND (client_platform like concat(concat('%',
+				#{searchValue}),
+				'%') OR client_browse_platform like
+				concat(concat('%', #{searchValue}), '%') OR client_browse_name
+				like
+				concat(concat('%', #{searchValue}), '%') OR
+				client_browse_version
+				like concat(concat('%', #{searchValue}), '%')
+				OR client_browse_ip
+				like concat(concat('%', #{searchValue}),
+				'%') OR client_browse_city
+				like concat(concat('%',
+				#{searchValue}), '%') OR
+				client_browse_app_and_pc like concat(concat('%',
+				#{searchValue}),
+				'%') OR client_browse_url like concat(concat('%',
+				#{searchValue}),
+				'%'))
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertBlogbrowe" parameterType="Blogbrowe">
+		insert into
+		blog_blogbrowe (
+		client_platform,
+		client_user_agent,
+		client_browse_platform,
+		client_browse_name,
+		client_browse_version,
+		client_browse_ip,
+		client_browse_city,
+		client_browse_app_and_pc,
+		client_browse_url,
+		create_time
+		)values(
+		#{clientPlatform},
+		#{clientUserAgent},
+		#{clientBrowsePlatform},
+		#{clientBrowseName},
+		#{clientBrowseVersion},
+		#{clientBrowseIp},
+		#{clientBrowseCity},
+		#{clientBrowseAppAndPc},
+		#{clientBrowseUrl},
+		sysdate()
+		)
+	</insert>
+
+	<delete id="deleteBlogbroweById" parameterType="Integer">
+		delete from
+		blog_blogbrowe where blog_browe_id = #{value}
+	</delete>
+
+	<delete id="batchDeleteBlogbrowe" parameterType="Integer">
+		delete from blog_blogbrowe where blog_browe_id in
+		<foreach item="blogBroweId" collection="array" open="("
+			separator="," close=")">
+			#{blogBroweId}
+		</foreach>
+	</delete>
+
+</mapper>

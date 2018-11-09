@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<!-- 图标动画 -->
+<link href="/css/font-awesome-animation.min.css"
+	th:href="@{/css/font-awesome-animation.min.css}" rel="stylesheet">
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+		<div class="btn-group hidden-xs" id="tableToolbar" role="group">
+			<button type="button" class="btn btn-outline btn-default"
+				th:onclick="'javascript:batchStart()'"
+				shiro:hasPermission="spider:spidertask:spidertaskinfo:start">
+				<i class="glyphicon glyphicon-play"></i>批量启动
+			</button>
+			<button type="button" class="btn btn-outline btn-default"
+				th:onclick="'javascript:batchStop()'"
+				shiro:hasPermission="spider:spidertask:spidertaskinfo:stop">
+				<i class="glyphicon glyphicon-pause"></i>批量中止
+			</button>
+			<button type="button" class="btn btn-outline btn-default"
+				th:onclick="'javascript:batchRemove()'"
+				shiro:hasPermission="spider:spidertask:spidertaskinfo:batchRemove">
+				<i class="glyphicon glyphicon-trash"></i>批量删除
+			</button>
+			<input id="taskId" name="taskId" th:value="${taskId}" type="hidden">
+		</div>
+		<table class="bootstrap-table" data-mobile-responsive="true"
+			data-sort-name="task_info_id" data-sort-order="desc">
+		</table>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script
+		src="/rzspider/spider/spidertask/spidertaskinfo/spidertaskinfo.js"
+		th:src="@{/rzspider/spider/spidertask/spidertaskinfo/spidertaskinfo.js}"></script>
+	<!-- 轮询 -->
+	<script
+		src="/rzspider/spider/spidertask/spidertaskinfo/websocketspidertask.js"
+		th:src="@{/rzspider/spider/spidertask/spidertaskinfo/websocketspidertask.js}"></script>
+	<script th:inline="javascript">
+        var removeFlag = [[${@permissionService.hasPermi('spider:spidertask:spidertaskinfo:remove')}]];
+        var downloadDataFlag = [[${@permissionService.hasPermi('spider:spidertask:spidertaskinfo:downloadData')}]];
+        var startFlag = [[${@permissionService.hasPermi('spider:spidertask:spidertaskinfo:start')}]];
+        var stopFlag = [[${@permissionService.hasPermi('spider:spidertask:spidertaskinfo:stop')}]];
+    </script>
+</body>
+</html>

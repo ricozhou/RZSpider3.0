@@ -1,0 +1,14 @@
+/*blogsbox*/
+.blogsbox {
+	width: 100%;
+	overflow: hidden;
+	float: none;
+	margin:0 auto;
+}
+
+.infosbox {
+	width: 100%;
+	overflow: hidden;
+	float: none;
+	margin:0 auto;
+}

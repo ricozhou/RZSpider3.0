@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzspider.project.blog.blogset.mapper.BlogsiderbarMapper">
+
+	<resultMap type="Blogsiderbar" id="BlogsiderbarResult">
+		<result property="blogSiderbrId" column="blog_siderbar_id" />
+		<result property="blogSiderbrName" column="blog_siderbar_name" />
+		<result property="blogShowRightSiderbr" column="blog_show_right_siderbar" />
+		<result property="blogShowLeftSiderbr" column="blog_show_left_siderbar" />
+		<result property="blogShowOrderNum" column="blog_show_order_num" />
+		<result property="blogInternalSiderbar" column="blog_internal_siderbar" />
+	</resultMap>
+
+	<select id="selectBlogsiderbarById" parameterType="Integer"
+		resultMap="BlogsiderbarResult">
+		select * from blog_blogsiderbar
+		where blog_siderbar_id =
+		#{blogSiderbrId}
+	</select>
+
+	<select id="selectBlogsiderbarList" parameterType="Blogsiderbar"
+		resultMap="BlogsiderbarResult">
+		select * from blog_blogsiderbar
+		<where>
+			<if test="blogSiderbrId != null and blogSiderbrId != ''"> and blog_siderbar_id = #{blogSiderbrId}</if>
+			<if test="blogSiderbrName != null and blogSiderbrName != ''"> and blog_siderbar_name = #{blogSiderbrName}</if>
+			<if test="blogShowRightSiderbr != null and blogShowRightSiderbr != ''"> and blog_show_right_siderbar = #{blogShowRightSiderbr}
+			</if>
+			<if test="blogShowLeftSiderbr != null and blogShowLeftSiderbr != ''"> and blog_show_left_siderbar = #{blogShowLeftSiderbr}
+			</if>
+			<if test="blogShowOrderNum != null and blogShowOrderNum != ''"> and blog_show_order_num = #{blogShowOrderNum}</if>
+		</where>
+	</select>
+
+	<insert id="insertBlogsiderbar" parameterType="Blogsiderbar">
+		insert into blog_blogsiderbar (
+		<if test="blogShowRightSiderbr != null and blogShowRightSiderbr != '' ">blog_show_right_siderbar, </if>
+		<if test="blogShowLeftSiderbr != null and blogShowLeftSiderbr != '' ">blog_show_left_siderbar, </if>
+		<if test="blogShowOrderNum != null and blogShowOrderNum != '' ">blog_show_order_num,</if>
+		blog_siderbar_name,
+		blog_internal_siderbar
+		)values(
+		<if test="blogShowRightSiderbr != null and blogShowRightSiderbr != ''">#{blogShowRightSiderbr}, </if>
+		<if test="blogShowLeftSiderbr != null and blogShowLeftSiderbr != ''">#{blogShowLeftSiderbr}, </if>
+		<if test="blogShowOrderNum != null and blogShowOrderNum != ''">#{blogShowOrderNum},</if>
+		#{blogSiderbrName},
+		#{blogInternalSiderbar}
+		)
+	</insert>
+
+	<update id="updateBlogsiderbar" parameterType="Blogsiderbar">
+		update blog_blogsiderbar
+		<set>
+			blog_siderbar_name = #{blogSiderbrName},
+			blog_show_right_siderbar
+			= #{blogShowRightSiderbr},
+			blog_show_left_siderbar =
+			#{blogShowLeftSiderbr},
+			blog_show_order_num = #{blogShowOrderNum}
+		</set>
+		where blog_siderbar_id = #{blogSiderbrId}
+	</update>
+
+	<update id="updateBlogsiderbarShowRight" parameterType="Integer">
+		update blog_blogsiderbar
+		<set>
+			blog_show_right_siderbar
+			= #{blogShowRightSiderbr}
+		</set>
+	</update>
+
+	<update id="updateBlogsiderbarShowLeft" parameterType="Integer">
+		update blog_blogsiderbar
+		<set>
+			blog_show_left_siderbar =
+			#{blogShowLeftSiderbr}
+		</set>
+	</update>
+
+	<update id="updateBlogsiderbarShowRightById">
+		update blog_blogsiderbar
+		<set>
+			blog_show_right_siderbar
+			= #{1}
+		</set>
+		where blog_siderbar_id = #{0}
+	</update>
+
+	<update id="updateBlogsiderbarShowLeftById">
+		update blog_blogsiderbar
+		<set>
+			blog_show_left_siderbar
+			= #{1}
+		</set>
+		where blog_siderbar_id = #{0}
+	</update>
+
+	<delete id="deleteBlogsiderbarById" parameterType="Integer">
+		delete from
+		blog_blogsiderbar where blog_siderbar_id = #{value}
+	</delete>
+
+	<delete id="deleteBlogsiderbarByInternal" parameterType="Integer">
+		delete
+		from blog_blogsiderbar where blog_internal_siderbar = #{value}
+	</delete>
+
+	<delete id="batchDeleteBlogsiderbar" parameterType="Integer">
+		delete from blog_blogsiderbar where blog_siderbar_id in
+		<foreach item="blogSiderbrId" collection="array" open="("
+			separator="," close=")">
+			#{blogSiderbrId}
+		</foreach>
+	</delete>
+
+</mapper>

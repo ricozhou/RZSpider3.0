@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+<body class="gray-bg top-navigation">
+	<!-- 横向导航 -->
+	<div id="wrapper">
+		<div id="page-wrapper" class="gray-bg">
+			<div class="row border-bottom white-bg">
+				<nav class="navbar navbar-static-top" role="navigation">
+					<div class="navbar-header">
+						<button aria-controls="navbar" aria-expanded="false"
+							data-target="#navbar" data-toggle="collapse"
+							class="navbar-toggle collapsed" type="button">
+							<i class="fa fa-reorder"></i>
+						</button>
+						<a href="index.html" class="navbar-brand">RZSpider</a>
+					</div>
+					<div class="navbar-collapse collapse" id="navbar">
+						<ul class="nav navbar-top-links navbar-right">
+							<li><span class="m-r-sm text-muted welcome-message">欢迎使用RZSpider工具箱</span>
+							<li class="active"><a aria-expanded="false" role="button"
+								href="index.html"> 登录</a></li>
+							<li class="hidden-xs"><a href="/rzblog" target="_Blank"
+								class=""><i class="fa fa-rss-square"></i>博客</a></li>
+							<li class="dropdown"><a aria-expanded="false" role="button"
+								href="#" class="dropdown-toggle" data-toggle="dropdown"> 菜单
+									<span class="caret"></span>
+							</a>
+								<ul role="menu" class="dropdown-menu">
+									<li><a href="">菜单列表</a></li>
+									<li><a href="">菜单列表</a></li>
+									<li><a href="">菜单列表</a></li>
+									<li><a href="">菜单列表</a></li>
+								</ul></li>
+							<!-- <li><a href="login.html"> <i class="fa fa-sign-out"></i>
+									退出
+							</a></li> -->
+						</ul>
+						<!-- <ul class="nav navbar-top-links navbar-right">
+							<li><a href="login.html"> <i class="fa fa-sign-out"></i>
+									退出
+							</a></li>
+						</ul> -->
+					</div>
+				</nav>
+			</div>
+
+			<!-- 中间 -->
+			<div class="wrapper wrapper-content"
+				style="width: 90%; margin: 0 auto;">
+				<div class="row">
+					<div class="col-sm-16">
+						<div id="tool"></div>
+					</div>
+				</div>
+			</div>
+			<!-- 结尾 -->
+			<div th:include="include::footer"></div>
+			<div class="footer">
+				<div class="pull-right">
+					By：<a href="http://47.96.106.161" target="_blank">RZSpider</a>
+				</div>
+				<div>
+					<strong>Copyright</strong> RZSpider &copy; 2018
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="/rzspider/commontool/toolrun/toolbox.js"
+		th:src="@{/rzspider/commontool/toolrun/toolbox.js}">
+		
+	</script>
+	<!-- <script>
+		$(document).ready(function() {
+			$(".contact-box").each(function() {
+				animationHover(this, "pulse")
+			})
+		});
+	</script> -->
+</body>
+
+
+</html>
